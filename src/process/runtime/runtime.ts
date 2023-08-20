@@ -169,6 +169,7 @@ export class BunProcessRuntime {
     const p = globalSubprocess.get(Number(pid));
     if (p) {
       p.kill();
+      globalSubprocess.delete(p.pid);
     } else {
       Bun.spawn(["kill", "-9", `${pid}`]).unref();
     }
