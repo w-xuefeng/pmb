@@ -1,7 +1,7 @@
 import { BunProcess } from "./runtime/bun-process";
 import { BunProcessRuntime } from "./runtime/runtime";
-import { L, nanoid, singleton } from "../../utils";
-import { BunProcessStatus } from "./const";
+import { L, intlTimeFormat, nanoid, singleton } from "../../utils";
+import { BunProcessStatus, BunProcessStatusColor } from "./const";
 
 class PMB {
   #processPool = new Map<string, BunProcess>();
@@ -62,7 +62,26 @@ class PMB {
 
   async list() {
     await this.#updateProcessPool();
-    console.log(this.#processPool);
+    const list = [...this.#processPool.entries()].map((e) => {
+      const [name, pc] = e;
+      const startTime = pc.startTimes.at(-1);
+      const item = Object.assign(
+        Object.create({
+          __statusColor: BunProcessStatusColor[BunProcessStatus[pc.status]],
+        }),
+        {
+          name,
+          pid: pc.pid,
+          starter: pc.starter,
+          entry: pc.entryFile,
+          status: BunProcessStatus[pc.status],
+          startTime: startTime ? intlTimeFormat(new Date(startTime)) : "-",
+        }
+      );
+      return item;
+    });
+    L.Logo();
+    L.table(list);
   }
 }
 

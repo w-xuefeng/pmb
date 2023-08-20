@@ -1,4 +1,6 @@
 import colors from "colors";
+import figlet from "figlet";
+import EasyTable from "easy-table";
 import { customAlphabet } from "nanoid";
 
 export const nanoid = customAlphabet(
@@ -76,6 +78,18 @@ export function firstLocaleUpperCase(word: string) {
   return lowerCase.replace(lowerCase[0], lowerCase[0].toUpperCase());
 }
 
+export function intlTimeFormat(date?: Date | number, lang = "zh-CN") {
+  return new Intl.DateTimeFormat(lang, {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
+  }).format(date);
+}
+
 export class L {
   static success(...args: any) {
     const tag = colors.bgGreen(" SUCCESS ");
@@ -112,5 +126,26 @@ export class L {
         return item;
       })
     );
+  }
+
+  static Logo() {
+    console.log(colors.green(figlet.textSync("PMB")));
+    console.log(colors.cyan(" P(rocess) M(anager) for B(un)\n\n"));
+  }
+
+  static table<T extends Record<string, any>>(data: T[]) {
+    const t = new EasyTable();
+    data.forEach((item) => {
+      Object.getOwnPropertyNames(item).forEach((k) => {
+        let value = item[k];
+        const colorKey = item[`__${k}Color`];
+        if (colorKey in colors) {
+          value = colors[colorKey](value);
+        }
+        t.cell(k, value);
+      });
+      t.newRow();
+    });
+    console.log(t.toString());
   }
 }
