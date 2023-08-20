@@ -68,7 +68,7 @@ export class BunProcessRuntime {
 
   static async processStatus(pid?: number | string) {
     if (!pid) {
-      return BunProcessStatus.NOT_RUNNING;
+      return false;
     }
     const sp = globalSubprocess.get(Number(pid));
     let isRunning = false;
@@ -81,7 +81,7 @@ export class BunProcessRuntime {
       const path = await new Response(subps.stdout).text();
       isRunning = !!path;
     }
-    return isRunning ? BunProcessStatus.RUNNING : BunProcessStatus.NOT_RUNNING;
+    return isRunning;
   }
 
   static async checkProcesses() {
@@ -94,26 +94,29 @@ export class BunProcessRuntime {
     ).then((rs) =>
       ps.map(([_, pc], i) => ({
         bunProcess: pc,
-        current: rs[i],
+        isRunning: rs[i],
       }))
     );
 
     for (let i = 0; i < res.length; i++) {
-      const { current, bunProcess } = res[i];
+      const { isRunning, bunProcess } = res[i];
       /**
        * if current status is not same process status,
        * run updateProcess to update status
        */
-      if (current !== bunProcess.status) {
-        bunProcess.status = current;
-        await this.updateProcess(bunProcess.name, bunProcess);
+      if (isRunning && bunProcess.status !== BunProcessStatus.RUNNING) {
+        bunProcess.status = BunProcessStatus.RUNNING;
       }
+      if (!isRunning && bunProcess.status == BunProcessStatus.RUNNING) {
+        bunProcess.status = BunProcessStatus.NOT_RUNNING;
+      }
+      await this.updateProcess(bunProcess.name, bunProcess);
 
       /**
        * if current status is NOT_RUNNING,
        * try to restart it
        */
-      if (current === BunProcessStatus.NOT_RUNNING) {
+      if (bunProcess.status === BunProcessStatus.NOT_RUNNING) {
         await this.tryReStartByName(bunProcess.name);
       }
     }
@@ -131,5 +134,42 @@ export class BunProcessRuntime {
     this.removeProcess(name);
     const next = new BunProcess(name, pc.entryFile);
     next.reStart();
+  }
+
+  static stop(pid?: number | string) {
+    if (!pid) {
+      return;
+    }
+    const p = globalSubprocess.get(Number(pid));
+    if (p) {
+      p.kill();
+    } else {
+      Bun.spawn(["kill", "-9", `${pid}`]).unref();
+    }
+  }
+
+  static async stopByPid(pid: number) {
+    const ps = await this.getProcesses();
+    const item = ps.find((e) => e[1].pid === pid);
+    if (item) {
+      const [name, pc] = item;
+      pc.status = BunProcessStatus.MANUAL_STOP;
+      await this.updateProcess(name, pc);
+    }
+    this.stop(pid);
+  }
+
+  static async stopByName(name: string) {
+    const bunFile = Bun.file(resolve(this.path, this.pName2fName(name)));
+    const exists = await bunFile.exists();
+    if (!exists) {
+      return;
+    }
+    const pc = (await bunFile.json()) as BunProcess;
+    if (pc) {
+      pc.status = BunProcessStatus.MANUAL_STOP;
+      await this.updateProcess(name, pc);
+    }
+    this.stop(pc.pid);
   }
 }

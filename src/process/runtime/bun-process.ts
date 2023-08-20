@@ -32,7 +32,7 @@ export class BunProcess {
   }
 
   async reStart() {
-    console.log(`Trying to restart task '${this.name}'\n`);
+    console.log(`Trying to restart task '${this.name}'`);
     await this.start();
   }
 }

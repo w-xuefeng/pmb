@@ -16,8 +16,12 @@ program
   .description("Start a bun service from the input entry")
   .argument("<entry>", "start a bun service from the entry file")
   .option("-n, --name <process-name>", "create a name for the service")
+  .option(
+    "-s, --starter <starter-program>",
+    "using the starter to launch service"
+  )
   .action((entry, options) => {
-    pmb.start(entry, options?.name);
+    pmb.start(entry, options?.name, options?.starter);
   });
 
 program
@@ -28,8 +32,12 @@ program
     "-n, --name <process-name>",
     "stop a bun service from the process name"
   )
-  .action((str, options) => {
-    console.log(str, options);
+  .action(({ name, pid }) => {
+    if (name) {
+      pmb.stop("name", name);
+    } else if (pid) {
+      pmb.stop("pid", pid);
+    }
   });
 
 program

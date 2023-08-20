@@ -15,7 +15,7 @@ class PMB {
     this.#processPool = new Map(ps);
   }
 
-  async start(entry: string, name?: string) {
+  async start(entry: string, name?: string, starter?: string) {
     /**
      * if name is undefined,
      * will create a name by entry file name and randomUUID
@@ -31,7 +31,7 @@ class PMB {
 
     let p = this.#processPool.get(name);
     if (!p) {
-      p = new BunProcess(name, entry);
+      p = new BunProcess(name, entry, starter);
     }
     if (p.status !== BunProcessStatus.RUNNING) {
       p.start();
@@ -39,6 +39,15 @@ class PMB {
       L.warn(
         `the service start from entry file "${entry}" has been run, name is "${p.name}", pid is "${p.pid}"`
       );
+    }
+  }
+
+  async stop(type: "pid" | "name", value: string) {
+    if (type === "pid") {
+      await BunProcessRuntime.stopByPid(Number(value));
+    }
+    if (type === "name") {
+      await BunProcessRuntime.stopByName(value);
     }
   }
 
