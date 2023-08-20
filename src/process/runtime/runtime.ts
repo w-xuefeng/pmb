@@ -70,7 +70,9 @@ export class BunProcessRuntime {
       return;
     }
     const pc = (await bunFile.json()) as BunProcess;
-    this.stop(pc.pid);
+    if (pc.status === BunProcessStatus.RUNNING) {
+      this.stop(pc.pid);
+    }
     try {
       unlinkSync(filePath);
       unlinkSync(daemonLogPath(name));

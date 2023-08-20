@@ -129,11 +129,25 @@ export class L {
   }
 
   static Logo() {
-    console.log(colors.green(figlet.textSync("PMB")));
-    console.log(colors.cyan(" P(rocess) M(anager) for B(un)\n\n"));
+    L.color(
+      [
+        figlet.textSync("PMB"),
+        "\n P(rocess) M(anager) for B(un)",
+        "\n-------------------------------",
+        "\n",
+      ],
+      ["green", "cyan", "cyan"]
+    );
   }
 
-  static table<T extends Record<string, any>>(data: T[]) {
+  static table<T extends Record<string, any>>(
+    data: T[],
+    emptyPlaceholder = "No data"
+  ) {
+    if (data.length === 0) {
+      L.color([` ${emptyPlaceholder}\n\n`], ["gray"]);
+      return;
+    }
     const t = new EasyTable();
     data.forEach((item) => {
       Object.getOwnPropertyNames(item).forEach((k) => {

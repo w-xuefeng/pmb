@@ -81,7 +81,7 @@ class PMB {
       return item;
     });
     L.Logo();
-    L.table(list);
+    L.table(list, "No process running by pmb!");
   }
 }
 
