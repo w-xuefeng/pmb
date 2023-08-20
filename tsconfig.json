@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "allowUnreachableCode": true,
+    "allowUnusedLabels": false,
+    "alwaysStrict": false,
+    "experimentalDecorators": true,
+    "sourceMap": false,
+    "module": "ESNext",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "ES5",
+      "ES2015",
+      "ES2016",
+      "ES2017",
+      "ES2018",
+      "ES2019",
+      "ES2020",
+      "ES2021",
+      "ES2022",
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "strict": true,
+    "types": [
+      "node",
+      "bun-types"
+    ]
+  }
+}

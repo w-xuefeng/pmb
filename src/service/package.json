@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "name": "pmb-service",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "dependencies": {
+    "hono": "^2.2.5"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
+  "module": "src/index.js"
+}

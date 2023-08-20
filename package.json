@@ -1,0 +1,31 @@
+{
+  "name": "pmb",
+  "version": "0.0.1",
+  "description": "P(rocess) M(anager) for B(un)",
+  "main": "index.ts",
+  "module": "index.ts",
+  "type": "module",
+  "bin": {
+    "pmb": "index.ts"
+  },
+  "scripts": {
+    "test": "pmb start test/app.ts"
+  },
+  "keywords": [
+    "pmb",
+    "bun",
+    "pm2"
+  ],
+  "author": "w-xuefeng",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "bun-types": "^0.7.3"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^11.0.0",
+    "glob": "^10.3.3",
+    "nanoid": "^4.0.2"
+  }
+}
