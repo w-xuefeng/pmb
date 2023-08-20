@@ -41,6 +41,19 @@ program
   });
 
 program
+  .command("rm")
+  .description("Stop and remove a bun service from the pid or name")
+  .option("-p, --pid <process-id>", "by the process id")
+  .option("-n, --name <process-name>", "by the process name")
+  .action(({ name, pid }) => {
+    if (name) {
+      pmb.rm("name", name);
+    } else if (pid) {
+      pmb.rm("pid", pid);
+    }
+  });
+
+program
   .command("ls")
   .description("Show list of bun service")
   .action(() => {

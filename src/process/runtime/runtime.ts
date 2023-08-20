@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { BunProcessStatus, processPath } from "../const";
+import { BunProcessStatus, daemonLogPath, processPath } from "../const";
 import {
   createPathSync,
   existsSync,
@@ -63,7 +63,32 @@ export class BunProcessRuntime {
   }
 
   static async removeProcess(name: string) {
-    unlinkSync(resolve(this.path, this.pName2fName(name)));
+    const filePath = resolve(this.path, this.pName2fName(name));
+    const bunFile = Bun.file(filePath);
+    const exists = await bunFile.exists();
+    if (!exists) {
+      return;
+    }
+    const pc = (await bunFile.json()) as BunProcess;
+    this.stop(pc.pid);
+    try {
+      unlinkSync(filePath);
+      unlinkSync(daemonLogPath(name));
+    } catch {
+      // ignore
+    }
+  }
+
+  static async removeProcessByPid(pid?: number | string) {
+    if (!pid) {
+      return false;
+    }
+    const ps = await this.getProcesses();
+    const item = ps.find((e) => e[1].pid === pid);
+    if (item) {
+      const [name] = item;
+      this.removeProcess(name);
+    }
   }
 
   static async processStatus(pid?: number | string) {
@@ -132,7 +157,8 @@ export class BunProcessRuntime {
     const pc = (await bunFile.json()) as BunProcess;
     pc.pid && globalSubprocess.delete(Number(pc.pid));
     this.removeProcess(name);
-    const next = new BunProcess(name, pc.entryFile);
+    const next = new BunProcess(name, pc.entryFile, pc.starter);
+    next.startTimes = pc.startTimes;
     next.reStart();
   }
 

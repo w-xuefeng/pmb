@@ -51,6 +51,15 @@ class PMB {
     }
   }
 
+  async rm(type: "pid" | "name", value: string) {
+    if (type === "pid") {
+      await BunProcessRuntime.removeProcessByPid(Number(value));
+    }
+    if (type === "name") {
+      await BunProcessRuntime.removeProcess(value);
+    }
+  }
+
   async list() {
     await this.#updateProcessPool();
     console.log(this.#processPool);

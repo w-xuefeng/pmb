@@ -17,7 +17,7 @@
 //     }
 //   }
 
-import { BunProcessRuntime } from "../src/process/runtime/runtime";
+// import { BunProcessRuntime } from "../src/process/runtime/runtime";
 
 //   return rs;
 // };
@@ -49,6 +49,6 @@ import { BunProcessRuntime } from "../src/process/runtime/runtime";
 
 // BunProcessRuntime.checkProcesses();
 
-BunProcessRuntime.tryReStartByName("OInD4h-app.ts");
+// BunProcessRuntime.tryReStartByName("OInD4h-app.ts");
 
 export {};
