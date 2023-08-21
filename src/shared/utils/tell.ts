@@ -31,4 +31,7 @@ export default class Tell {
   updatePort(port: number) {
     this.talk.port = port;
   }
+  uiPath() {
+    return new URL(`${this.talk.base}:${this.talk.port}`);
+  }
 }

@@ -1,7 +1,8 @@
 import { L, bunProcessVOToTable, nanoid, singleton } from "../shared/utils";
 import greetDaemon from "./daemon/run";
-import type { IBunProcessVO } from "../shared/utils/types";
 import { BunProcessStatus } from "../shared/const";
+import open from "open";
+import type { IBunProcessVO } from "../shared/utils/types";
 
 class PMB {
   /**
@@ -115,7 +116,12 @@ class PMB {
     }
   }
 
-  async ui() {}
+  async ui() {
+    const tell = await greetDaemon();
+    const url = tell.uiPath().toString();
+    L.success(`Please visit 【${url}】!\n`);
+    await open(url);
+  }
 }
 
 export default singleton<PMB, typeof PMB>(PMB);
