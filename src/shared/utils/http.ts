@@ -7,10 +7,10 @@ export interface IResponse<T> {
 }
 
 export default class Talk {
-  port = 9501;
+  port: string | number = 9501;
   base = "http://127.0.0.1";
 
-  constructor(port = 9501, base = "http://127.0.0.1") {
+  constructor(port: string | number = 9501, base = "http://127.0.0.1") {
     this.port = port;
     this.base = base;
   }

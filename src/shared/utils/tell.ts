@@ -5,7 +5,7 @@ import type { BunProcessStatus } from "../const";
 
 export default class Tell {
   talk = new Talk();
-  constructor(port?: number) {
+  constructor(port?: number | string) {
     this.talk = new Talk(port);
   }
   list(filter?: {
@@ -28,7 +28,7 @@ export default class Tell {
   ping() {
     return this.talk.ping();
   }
-  updatePort(port: number) {
+  updatePort(port: string | number) {
     this.talk.port = port;
   }
   uiPath() {

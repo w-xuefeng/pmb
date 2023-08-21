@@ -137,6 +137,16 @@ export class L {
     return console.log(tag, ...args.map((e: any) => colors.yellow(e)));
   }
 
+  static tips(...args: any) {
+    const tag = colors.bgCyan(" TIPS ");
+    return console.log(tag, ...args.map((e: any) => colors.cyan(e)));
+  }
+
+  static info(...args: any) {
+    const tag = colors.bgBlue(" INFO ");
+    return console.log(tag, ...args.map((e: any) => colors.blue(e)));
+  }
+
   static color(
     contents: string[],
     cs: (Color | BgColor | undefined | null)[] = [],

@@ -11,7 +11,7 @@ L.Logo();
 
 program
   .name("PMB")
-  .description("P(rocess) M(anager) for B(un)")
+  .description("Guarding the best processes in the world 💪")
   .version(pkg.version);
 
 program
@@ -61,6 +61,17 @@ program
   .description("Show list of bun service")
   .action(() => {
     pmb.list();
+  });
+
+program
+  .command("daemon")
+  .description("Start or stop daemon process")
+  .argument(
+    "<action>",
+    "action implemented on the daemon, Eg: status, start, stop, restart"
+  )
+  .action((actions) => {
+    pmb.daemon(actions);
   });
 
 program

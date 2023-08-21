@@ -1,8 +1,15 @@
-import { L, bunProcessVOToTable, nanoid, singleton } from "../shared/utils";
-import greetDaemon from "./daemon/run";
-import { BunProcessStatus } from "../shared/const";
 import open from "open";
+import greetDaemon from "./daemon/run";
+import { L, bunProcessVOToTable, nanoid, singleton } from "../shared/utils";
+import {
+  BunProcessStatus,
+  DAEMON_LOG_PATH,
+  DAEMON_PID_PATH,
+  DaemonPingStatus,
+} from "../shared/const";
+import { unlinkSync } from "../shared/utils/file";
 import type { IBunProcessVO } from "../shared/utils/types";
+import Tell from "../shared/utils/tell";
 
 class PMB {
   /**
@@ -11,6 +18,10 @@ class PMB {
   #createProcessName(entry: string) {
     return `${nanoid(6)}-${entry.split("/").at(-1)}`;
   }
+
+  /**
+   * manage process
+   */
 
   async start(entry: string, name?: string, starter?: string) {
     /**
@@ -121,6 +132,112 @@ class PMB {
     const url = tell.uiPath().toString();
     L.success(`Please visit 【${url}】!\n`);
     await open(url);
+  }
+
+  /**
+   * manage daemon
+   */
+
+  async daemonStatus(output = true) {
+    const file = Bun.file(DAEMON_PID_PATH);
+    const logPath = DAEMON_LOG_PATH();
+    const logFile = Bun.file(logPath);
+    const exists = await file.exists();
+    const logExists = await logFile.exists();
+    let pid: string | undefined = void 0;
+
+    /**
+     * if daemon file exists
+     * check file content and try ping port
+     */
+    if (exists) {
+      const content = await file.text();
+      const data = content?.split("|");
+      const port = data[1];
+      pid = data[0];
+      if (pid && port) {
+        const tell = new Tell(port);
+        try {
+          const pong = await tell.ping();
+          if (pong === DaemonPingStatus.PONG) {
+            output &&
+              L.info(
+                `The daemon has been running on port [${port}], pid is [${pid}]!\n`
+              );
+          } else {
+            output &&
+              L.warn(
+                `The daemon seems to have responded to unexpected results! Perhaps you can try upgrading the version to solve this problem.\n`
+              );
+          }
+        } catch {
+          output &&
+            L.warn(`The daemon seems to have not been stopped correctly!\n`);
+        }
+      } else {
+        output &&
+          L.warn(`The daemon seems to have not been stopped correctly!\n`);
+      }
+    } else {
+      output && L.info(`The daemon not running!\n`);
+    }
+
+    return {
+      file,
+      exists,
+      logExists,
+      logPath,
+      pid,
+    };
+  }
+
+  async daemonStart(type = "start") {
+    const tell = await greetDaemon();
+    const pong = await tell.ping();
+    if (pong === DaemonPingStatus.PONG) {
+      L.success(
+        `Daemon service ${type} successfully on port [${tell.talk.port}]\n`
+      );
+    }
+  }
+
+  async daemonStop(output = true) {
+    const { exists, pid, logExists, logPath } = await this.daemonStatus(false);
+    if (exists && pid) {
+      pid && Bun.spawn(["kill", "-9", `${pid}`]).unref();
+      unlinkSync(DAEMON_PID_PATH);
+    }
+    if (logExists) {
+      unlinkSync(logPath);
+    }
+    output && L.success(`Daemon service has been stopped!\n`);
+  }
+
+  async daemon(type: "status" | "start" | "stop" | "restart") {
+    switch (type) {
+      case "status":
+        await this.daemonStatus();
+        break;
+
+      case "start":
+        await this.daemonStart();
+        break;
+
+      case "stop":
+        await this.daemonStop();
+        break;
+
+      case "restart":
+        await this.daemonStop(false);
+        await this.daemonStart("restart");
+        break;
+
+      default:
+        L.tips(
+          "You can use status|start|stop|restart to manage the daemon process!"
+        );
+        break;
+    }
   }
 }
 
