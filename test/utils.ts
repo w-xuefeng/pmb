@@ -1,3 +1,4 @@
+import { readConf } from "../src/shared/const";
 import { L } from "../src/shared/utils";
 
 L.success("start ok!", "yes", "123");
@@ -19,3 +20,7 @@ L.color(
   ["  a  ", "  b  ", "  c  ", "  d  "],
   ["bgWhite", "bgBlue", "bgCyan", "bgCyan"]
 );
+
+const restart = await readConf("restart", 10);
+
+console.log(restart);

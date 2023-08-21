@@ -13,10 +13,11 @@ export class BunProcess {
   pid?: string | number;
   starter = "bun";
   restRestartCount = 10;
-  constructor(name: string, entryFile: string, starter = "bun") {
+  constructor(name: string, entryFile: string, starter = "bun", restart = 10) {
     this.name = name;
     this.entryFile = entryFile;
     this.starter = starter;
+    this.restRestartCount = restart;
   }
 
   async start() {

@@ -6,6 +6,7 @@ import {
   DAEMON_LOG_PATH,
   DAEMON_PID_PATH,
   DaemonPingStatus,
+  readConf,
 } from "../shared/const";
 import { unlinkSync } from "../shared/utils/file";
 import type { IBunProcessVO } from "../shared/utils/types";
@@ -52,9 +53,14 @@ class PMB {
     }
 
     /**
+     * the number of process-auto-restart
+     */
+    const restart = await readConf("restart", 10);
+
+    /**
      * Tell the daemon to start the service
      */
-    const res = await tell.start({ name, entry, starter });
+    const res = await tell.start({ name, entry, starter, restart });
 
     if (res.data) {
       this.list(res.data);

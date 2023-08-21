@@ -164,9 +164,20 @@ export class BunProcessRuntime {
       return;
     }
     const pc = (await bunFile.json()) as BunProcess;
+    /**
+     * Ignore if the remaining number of restarts is less than or equal to 0
+     */
+    if (pc.restRestartCount <= 0) {
+      return;
+    }
     pc.pid && globalSubprocess.delete(Number(pc.pid));
     this.removeProcess(name);
-    const next = new BunProcess(name, pc.entryFile, pc.starter);
+    const next = new BunProcess(
+      name,
+      pc.entryFile,
+      pc.starter,
+      pc.restRestartCount - 1
+    );
     next.startTimes = pc.startTimes;
     next.reStart();
   }

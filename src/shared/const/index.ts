@@ -1,15 +1,17 @@
 import { resolve } from "path";
 
 export async function readConf(name: string, defaultValue: any) {
-  const md = await import(`${process.cwd()}/.pmb.config`);
+  const md = await import(`${process.cwd()}/.pmb.config.ts`).catch(() => ({
+    default: void 0,
+  }));
   const config = md?.default;
   if (typeof config === "function") {
     return config()?.[name] ?? defaultValue;
   }
-
   if (typeof config === "object" && md.default !== null) {
     return config[name] ?? defaultValue;
   }
+  return defaultValue;
 }
 
 export const ROOT_DIR = resolve(import.meta.dir, "../../..");
