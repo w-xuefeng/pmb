@@ -1,7 +1,11 @@
 import colors from "colors";
 import figlet from "figlet";
 import EasyTable from "easy-table";
+import pkg from "../../../package.json";
 import { customAlphabet } from "nanoid";
+import { BunProcessStatus, BunProcessStatusColor } from "../const";
+import type { BunProcess } from "../../service/src/runtime/bun-process";
+import type { IBunProcessVO } from "./types";
 
 export const nanoid = customAlphabet(
   "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
@@ -90,6 +94,38 @@ export function intlTimeFormat(date?: Date | number, lang = "zh-CN") {
   }).format(date);
 }
 
+export function bunProcessToVO(pc: BunProcess) {
+  const startTime = pc.startTimes.at(-1);
+  return {
+    name: pc.name,
+    pid: pc.pid,
+    starter: pc.starter,
+    entry: pc.entryFile,
+    status: BunProcessStatus[pc.status],
+    startTime: startTime ? intlTimeFormat(new Date(startTime)) : "-",
+  } as IBunProcessVO;
+}
+
+export function bunProcessVOToTable(
+  pc: IBunProcessVO,
+  prototypeColor?: Record<string, string>
+) {
+  return Object.assign(
+    Object.create({
+      ...prototypeColor,
+      __statusColor: BunProcessStatusColor[pc.status],
+    }),
+    {
+      name: pc.name,
+      pid: pc.pid,
+      starter: pc.starter,
+      entry: pc.entry,
+      status: pc.status,
+      startTime: pc.startTime ? intlTimeFormat(new Date(pc.startTime)) : "-",
+    }
+  ) as IBunProcessVO;
+}
+
 export class L {
   static success(...args: any) {
     const tag = colors.bgGreen(" SUCCESS ");
@@ -133,10 +169,12 @@ export class L {
       [
         figlet.textSync("PMB"),
         "\n P(rocess) M(anager) for B(un)",
-        "\n-------------------------------",
+        ` v${pkg.version} `,
+        "\n---------------------------------------",
         "\n",
       ],
-      ["green", "cyan", "cyan"]
+      ["green", "cyan", "italic", "cyan"],
+      [, , "bgCyan"]
     );
   }
 

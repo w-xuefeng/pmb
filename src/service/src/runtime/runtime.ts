@@ -1,13 +1,17 @@
 import { resolve } from "path";
-import { BunProcessStatus, daemonLogPath, processPath } from "../const";
+import {
+  BunProcessStatus,
+  DAEMON_LOG_PATH,
+  processPath,
+} from "../../../shared/const";
 import {
   createPathSync,
   existsSync,
   getFilesFromDir,
   unlinkSync,
-} from "../../../utils/file";
-import { globalSubprocess } from "./schedule";
+} from "../../../shared/utils/file";
 import { BunProcess } from "./bun-process";
+import { globalSubprocess } from "./schedule";
 
 export class BunProcessRuntime {
   static path = processPath;
@@ -64,20 +68,23 @@ export class BunProcessRuntime {
 
   static async removeProcess(name: string) {
     const filePath = resolve(this.path, this.pName2fName(name));
+    const logPath = DAEMON_LOG_PATH(name);
+
     const bunFile = Bun.file(filePath);
+    const bunLogFile = Bun.file(logPath);
+
     const exists = await bunFile.exists();
-    if (!exists) {
-      return;
-    }
-    const pc = (await bunFile.json()) as BunProcess;
-    if (pc.status === BunProcessStatus.RUNNING) {
-      this.stop(pc.pid);
-    }
-    try {
+    const logExists = await bunLogFile.exists();
+
+    if (exists) {
+      const pc = (await bunFile.json()) as BunProcess;
+      if (pc.status === BunProcessStatus.RUNNING) {
+        this.stop(pc.pid);
+      }
       unlinkSync(filePath);
-      unlinkSync(daemonLogPath(name));
-    } catch {
-      // ignore
+    }
+    if (logExists) {
+      unlinkSync(logPath);
     }
   }
 

@@ -1,4 +1,4 @@
-import { L } from "../utils";
+import { L } from "../src/shared/utils";
 
 L.success("start ok!", "yes", "123");
 

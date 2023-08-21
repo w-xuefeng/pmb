@@ -8,10 +8,10 @@ export const globalSubprocess = new Map<number, Subprocess>();
 
 export function startHeadrCheck(interval = 10 * 1000) {
   globalAlive?.free?.();
-  globalAlive = KeepProcessAlive.create(
-    () => BunProcessRuntime.checkProcesses(),
-    interval
-  );
+  globalAlive = KeepProcessAlive.create(() => {
+    BunProcessRuntime.checkProcesses();
+    return Promise.resolve();
+  }, interval);
   globalAlive.start();
 }
 

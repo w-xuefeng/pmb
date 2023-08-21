@@ -1,10 +1,13 @@
 #!/usr/bin/env bun
 import { Command } from "commander";
 import pkg from "./package.json";
-import PMB from "./src/process/pmb";
+import PMB from "./src/local/pmb";
+import { L } from "./src/shared/utils";
 
 const pmb = new PMB();
 const program = new Command();
+
+L.Logo();
 
 program
   .name("PMB")
@@ -58,6 +61,13 @@ program
   .description("Show list of bun service")
   .action(() => {
     pmb.list();
+  });
+
+program
+  .command("ui")
+  .description("Show list of bun service in browser")
+  .action(() => {
+    pmb.ui();
   });
 
 program.parse();

@@ -1,7 +1,8 @@
+import { BunProcessStatus, DAEMON_LOG_PATH } from "../../../shared/const";
+import { bunProcessToVO } from "../../../shared/utils";
+import { createPathSync } from "../../../shared/utils/file";
 import { BunProcessRuntime } from "./runtime";
-import { BunProcessStatus, daemonLogPath } from "../const";
 import { globalSubprocess } from "./schedule";
-import greetDaemon from "../daemon/run";
 
 export class BunProcess {
   name: string;
@@ -11,6 +12,7 @@ export class BunProcess {
   port?: number;
   pid?: string | number;
   starter = "bun";
+  restRestartCount = 10;
   constructor(name: string, entryFile: string, starter = "bun") {
     this.name = name;
     this.entryFile = entryFile;
@@ -18,21 +20,30 @@ export class BunProcess {
   }
 
   async start() {
-    greetDaemon();
+    const logPath = DAEMON_LOG_PATH(this.name);
+    const log = Bun.file(logPath);
+    const exists = await log.exists();
+    if (!exists) {
+      createPathSync("file", logPath);
+    }
     const ps = Bun.spawn({
       cmd: [this.starter, this.entryFile],
-      stdout: Bun.file(daemonLogPath(this.name)),
+      stdout: log,
     });
     this.status = BunProcessStatus.RUNNING;
     this.startTimes.push(Date.now());
     this.pid = ps.pid;
-    globalSubprocess.set(ps.pid, ps);
-    BunProcessRuntime.addProcess(this);
     ps.unref();
+    BunProcessRuntime.addProcess(this);
+    globalSubprocess.set(ps.pid, ps);
   }
 
   async reStart() {
     console.log(`Trying to restart task '${this.name}'`);
     await this.start();
+  }
+
+  toVO() {
+    return bunProcessToVO(this);
   }
 }

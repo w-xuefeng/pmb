@@ -4,8 +4,6 @@ import { resolve } from "path";
 
 export { existsSync, unlinkSync } from "node:fs";
 
-export const ROOT_DIR = resolve(import.meta.dir, "..");
-
 export function pathJoin(
   prevPath: string | number | (string | number)[],
   nextPath: string | number | (string | number)[],

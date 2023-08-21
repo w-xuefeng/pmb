@@ -1,13 +1,11 @@
 import startService from "../../service/src";
-import { startHeadrCheck } from "../runtime/schedule";
-import { createPathSync } from "../../../utils/file";
-import { daemonPidPath } from "../const";
+import { createPathSync } from "../../shared/utils/file";
+import { DAEMON_PID_PATH } from "../../shared/const";
 
 (function main() {
   const server = startService();
-  startHeadrCheck();
   const pid = process.pid;
   const port = server.port;
-  createPathSync("file", daemonPidPath, `${pid}|${port}`);
+  createPathSync("file", DAEMON_PID_PATH, `${pid}|${port}`);
   console.log(`Daemon service start successfully on port [${port}]\n`);
 })();

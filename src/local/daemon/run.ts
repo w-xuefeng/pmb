@@ -1,24 +1,37 @@
-import { L } from "../../../utils";
-import { daemonLogPath, daemonPidPath } from "../const";
+import Tell from "../../shared/utils/tell";
+import { L } from "../../shared/utils";
 import { resolve } from "path";
-import pkg from "../../../package.json";
+import {
+  DAEMON_LOG_PATH,
+  DAEMON_PID_PATH,
+  DaemonPingStatus,
+} from "../../shared/const";
+import { createPathSync } from "../../shared/utils/file";
 
-enum DaemonPingStatus {
-  PONG = "pong",
-  ERROR = "error",
-  FAILED = "failed",
-  OUTDATED = "outdated",
-}
+/**
+ * create a talk
+ */
+const tell = new Tell();
 
-function startDaemon() {
-  Bun.spawn({
-    cmd: ["bun", resolve(import.meta.dir, "start-service.ts")],
-    stdout: Bun.file(daemonLogPath()),
-  }).unref();
-}
+/**
+ * update talk port
+ */
+const updatePort = (running: false | number[]) => {
+  if (!running) {
+    return;
+  }
+  const [_, port] = running;
+  if (!port) {
+    return;
+  }
+  tell.updatePort(port);
+};
 
+/**
+ * Check if the daemon is running
+ */
 async function checkDaemon() {
-  const file = Bun.file(daemonPidPath);
+  const file = Bun.file(DAEMON_PID_PATH);
   const exists = await file.exists();
   if (exists) {
     const content = await file.text();
@@ -28,15 +41,33 @@ async function checkDaemon() {
   return false;
 }
 
+/**
+ * Start daemon
+ */
+async function startDaemon() {
+  const logPath = DAEMON_LOG_PATH();
+  const log = Bun.file(logPath);
+  const exists = await log.exists();
+  if (!exists) {
+    createPathSync("file", logPath);
+  }
+  const ps = Bun.spawn({
+    cmd: ["bun", resolve(import.meta.dir, "start-service.ts")],
+    stdout: log,
+  });
+  await Bun.sleep(1800);
+  const running = await checkDaemon();
+  updatePort(running);
+  ps.unref();
+}
+
+/**
+ * Say hello to daemon
+ */
 async function pingDaemon(port: number) {
   try {
-    const res = await fetch(`http://127.0.0.1:${port}/ping`, {
-      headers: {
-        "x-action": "ping",
-        "x-version": pkg.version,
-      },
-    });
-    const text = await res.text();
+    tell.updatePort(port);
+    const text = await tell.ping();
     const actionMap = {
       [DaemonPingStatus.PONG]: () => DaemonPingStatus.PONG,
       [DaemonPingStatus.OUTDATED]: () => DaemonPingStatus.OUTDATED,
@@ -48,7 +79,7 @@ async function pingDaemon(port: number) {
   }
 }
 
-export default async function daemon() {
+export default async function greetDaemon() {
   /**
    * check daemon service has been running or not
    */
@@ -59,8 +90,8 @@ export default async function daemon() {
    * start it
    */
   if (!daemonHasRunning) {
-    startDaemon();
-    return;
+    await startDaemon();
+    return tell;
   }
 
   /**
@@ -69,8 +100,8 @@ export default async function daemon() {
    */
   const [pid, port] = daemonHasRunning;
   if (!pid || !port) {
-    startDaemon();
-    return;
+    await startDaemon();
+    return tell;
   }
 
   /**
@@ -83,8 +114,8 @@ export default async function daemon() {
    * start it
    */
   if (pong === DaemonPingStatus.ERROR) {
-    startDaemon();
-    return;
+    await startDaemon();
+    return tell;
   }
 
   /**
@@ -93,6 +124,8 @@ export default async function daemon() {
    */
   if (pong === DaemonPingStatus.OUTDATED) {
     L.warn("please upgrade your pmb version");
-    return;
+    return tell;
   }
+
+  return tell;
 }
