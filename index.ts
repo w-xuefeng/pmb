@@ -42,29 +42,27 @@ program
 program
   .command("stop")
   .description("Stop a bun service from the pid or name")
-  .option("-p, --pid <process-id>", "stop a bun service from the process id")
-  .option(
-    "-n, --name <process-name>",
-    "stop a bun service from the process name"
-  )
-  .action(({ name, pid }) => {
-    if (name) {
-      pmb.stop("name", name);
-    } else if (pid) {
-      pmb.stop("pid", pid);
+  .argument("<name-or-pid>", "stop a bun service from the name or pid")
+  .action((value) => {
+    if (isNaN(value)) {
+      pmb.stop("name", value);
+    } else {
+      pmb.stop("pid", value);
     }
   });
 
 program
   .command("rm")
   .description("Stop and remove a bun service from the pid or name")
-  .option("-p, --pid <process-id>", "by the process id")
-  .option("-n, --name <process-name>", "by the process name")
-  .action(({ name, pid }) => {
-    if (name) {
-      pmb.rm("name", name);
-    } else if (pid) {
-      pmb.rm("pid", pid);
+  .argument(
+    "<name-or-pid>",
+    "stop and remove a bun service from the name or pid"
+  )
+  .action((value) => {
+    if (isNaN(value)) {
+      pmb.rm("name", value);
+    } else {
+      pmb.rm("pid", value);
     }
   });
 

@@ -28,10 +28,10 @@ export default class Tell {
   restart(data: { name?: string; pid?: string | number }) {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.RESTART, data);
   }
-  stop(data: { name?: string; pid?: number }) {
+  stop(data: { name?: string; pid?: string | number }) {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.STOP, data);
   }
-  rm(data: { name?: string; pid?: number }) {
+  rm(data: { name?: string; pid?: string | number }) {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.REMOVE, data);
   }
   ping() {

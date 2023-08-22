@@ -78,6 +78,9 @@ class PMB {
      * say hello to daemon process
      */
     const tell = await greetDaemon();
+    /**
+     * tell the daemon to use name or pid to restart this service
+     */
     const res = await tell.restart({ [type]: value });
     res?.data && this.list(res.data);
   }
@@ -87,21 +90,11 @@ class PMB {
      * say hello to daemon process
      */
     const tell = await greetDaemon();
-
-    if (type === "pid") {
-      /**
-       * Tell the daemon to use pid to stop this service
-       */
-      const res = await tell.stop({ pid: Number(value) });
-      res?.data && this.list(res.data);
-    }
-    if (type === "name") {
-      /**
-       * Tell the daemon to use name to stop this service
-       */
-      const res = await tell.stop({ name: value });
-      res?.data && this.list(res.data);
-    }
+    /**
+     * tell the daemon to use name or pid to stop this service
+     */
+    const res = await tell.stop({ [type]: value });
+    res?.data && this.list(res.data);
   }
 
   async rm(type: "pid" | "name", value: string) {
@@ -109,20 +102,11 @@ class PMB {
      * say hello to daemon process
      */
     const tell = await greetDaemon();
-    if (type === "pid") {
-      /**
-       * Tell the daemon to use pid to stop and remove this service
-       */
-      const res = await tell.rm({ pid: Number(value) });
-      res?.data && this.list(res.data);
-    }
-    if (type === "name") {
-      /**
-       * Tell the daemon to use name to stop and remove this service
-       */
-      const res = await tell.rm({ name: value });
-      res?.data && this.list(res.data);
-    }
+    /**
+     * tell the daemon to use name or pid to stop and remove this service
+     */
+    const res = await tell.rm({ [type]: value });
+    res?.data && this.list(res.data);
   }
 
   async list(data?: IBunProcessVO[]) {
