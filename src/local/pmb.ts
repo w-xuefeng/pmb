@@ -73,6 +73,15 @@ class PMB {
     }
   }
 
+  async restart(type: "name" | "pid", value: string) {
+    /**
+     * say hello to daemon process
+     */
+    const tell = await greetDaemon();
+    const res = await tell.restart({ [type]: value });
+    res?.data && this.list(res.data);
+  }
+
   async stop(type: "pid" | "name", value: string) {
     /**
      * say hello to daemon process

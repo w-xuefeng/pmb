@@ -5,4 +5,5 @@ export interface IBunProcessVO {
   entry: string;
   status: string;
   startTime: string;
+  restRestartCount: number;
 }

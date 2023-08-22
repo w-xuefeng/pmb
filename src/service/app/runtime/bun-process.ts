@@ -48,8 +48,12 @@ export class BunProcess {
     globalSubprocess.set(ps.pid, ps);
   }
 
-  async reStart() {
-    console.log(`Trying to restart task '${this.name}'`);
+  async reStart(force = false) {
+    console.log(
+      `Trying to restart task '${this.name}' ${
+        force ? "manually" : "automatically"
+      }, the remaining number of automatic restarts is ${this.restRestartCount}`
+    );
     await this.start();
   }
 

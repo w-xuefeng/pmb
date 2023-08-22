@@ -156,7 +156,7 @@ export class BunProcessRuntime {
     }
   }
 
-  static async tryReStartByName(name: string) {
+  static async tryReStartByName(name: string, force = false) {
     const fileName = resolve(this.path, this.pName2fName(name));
     const bunFile = Bun.file(fileName);
     const exists = await bunFile.exists();
@@ -165,22 +165,36 @@ export class BunProcessRuntime {
     }
     const pc = (await bunFile.json()) as BunProcess;
     /**
+     * If it is not a forced restart,
      * Ignore if the remaining number of restarts is less than or equal to 0
      */
-    if (pc.restRestartCount <= 0) {
+    if (pc.restRestartCount <= 0 && !force) {
       return;
     }
     pc.pid && globalSubprocess.delete(Number(pc.pid));
-    this.removeProcess(name);
+    await this.removeProcess(name);
     const next = new BunProcess(
       name,
       pc.entryFile,
       pc.starter,
-      pc.restRestartCount - 1,
+      /**
+       * If it is a forced restart,
+       * it does not consume the number of times
+       */
+      force ? pc.restRestartCount : pc.restRestartCount - 1,
       pc.cwd
     );
     next.startTimes = pc.startTimes;
-    next.reStart();
+    next.reStart(force);
+  }
+
+  static async tryReStartByPid(pid: number, force = false) {
+    const ps = await this.getProcesses();
+    const item = ps.find((e) => e[1].pid === pid);
+    if (item) {
+      const [name] = item;
+      await this.tryReStartByName(name, force);
+    }
   }
 
   static stop(pid?: number | string) {

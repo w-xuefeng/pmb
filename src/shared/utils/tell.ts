@@ -25,6 +25,9 @@ export default class Tell {
   }) {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.START, data);
   }
+  restart(data: { name?: string; pid?: string | number }) {
+    return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.RESTART, data);
+  }
   stop(data: { name?: string; pid?: number }) {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.STOP, data);
   }

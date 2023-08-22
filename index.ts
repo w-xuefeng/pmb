@@ -28,6 +28,18 @@ program
   });
 
 program
+  .command("restart")
+  .description("Restart a bun service from the name or pid")
+  .argument("<name-or-pid>", "start a bun service from the name or pid")
+  .action((value) => {
+    if (isNaN(value)) {
+      pmb.restart("name", value);
+    } else {
+      pmb.restart("pid", value);
+    }
+  });
+
+program
   .command("stop")
   .description("Stop a bun service from the pid or name")
   .option("-p, --pid <process-id>", "stop a bun service from the process id")

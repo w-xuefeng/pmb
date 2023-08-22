@@ -103,6 +103,7 @@ export function bunProcessToVO(pc: BunProcess) {
     entry: pc.entryFile,
     status: BunProcessStatus[pc.status],
     startTime: startTime ? intlTimeFormat(new Date(startTime)) : "-",
+    restRestartCount: pc.restRestartCount,
   } as IBunProcessVO;
 }
 
@@ -122,6 +123,7 @@ export function bunProcessVOToTable(
       entry: pc.entry,
       status: pc.status,
       startTime: pc.startTime ? intlTimeFormat(new Date(pc.startTime)) : "-",
+      restRestartCount: pc.restRestartCount,
     }
   ) as IBunProcessVO;
 }
