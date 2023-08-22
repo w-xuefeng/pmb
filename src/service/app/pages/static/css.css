@@ -5,24 +5,33 @@
   --bg-color: #fff;
   --logo-color: #005524;
   --title-color: #008aff;
-  --start-btn-bg-color: #00aeec;
-  --start-btn-color: #fff;
   --table-border-color: #1f1f1f;
   --th-color: #1f1f1f;
   --td-color: #181818;
   --empty-color: gray;
+  --start-btn-color: #000;
+  --start-btn-bg-color: #91caff;
+  --restart-btn-color: #000;
+  --restart-btn-bg-color: #4096ff;
+  --stop-btn-color: #000;
+  --stop-btn-bg-color: #d9d9d9;
+  --remove-btn-color: #000;
+  --remove-btn-bg-color: #ff4d4f;
 }
 
 body {
   overflow-x: hidden;
   background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .app {
   width: 80%;
-  max-width: 1000px;
-  min-width: 350px;
-  margin: 50px auto;
+  max-width: 1300px;
+  min-width: 375px;
+  margin: 50px 0;
 
   .header {
     border-bottom: 2px solid var(--title-color);
@@ -58,6 +67,24 @@ body {
     background: var(--start-btn-bg-color);
   }
 
+  .restart-btn {
+    padding: 0 10px;
+    color: var(--restart-btn-color);
+    background: var(--restart-btn-bg-color);
+  }
+
+  .stop-btn {
+    padding: 0 10px;
+    color: var(--stop-btn-color);
+    background: var(--stop-btn-bg-color);
+  }
+
+  .remove-btn {
+    padding: 0 10px;
+    color: var(--remove-btn-color);
+    background: var(--remove-btn-bg-color);
+  }
+
   .table {
     width: 100%;
     margin-block-start: 18px;
@@ -71,6 +98,18 @@ body {
       align-items: center;
       justify-content: center;
     }
+
+    .action-container {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 10px;
+      .action {
+        white-space: nowrap;
+        cursor: pointer;
+        text-transform: uppercase;
+      }
+    }
   }
 }
 
@@ -78,6 +117,7 @@ td {
   padding: 8px;
   white-space: nowrap;
   color: var(--td-color);
+  text-align: center;
 }
 
 .thead td {
@@ -96,5 +136,76 @@ td {
     --th-color: #f1f1f1;
     --td-color: #b0b0b0;
     --empty-color: gray;
+    --start-btn-color: #fff;
+    --start-btn-bg-color: #002c8c;
+    --restart-btn-color: #fff;
+    --restart-btn-bg-color: #001d66;
+    --stop-btn-color: #fff;
+    --stop-btn-bg-color: #141414;
+    --remove-btn-color: #fff;
+    --remove-btn-bg-color: #5c0011;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .index,
+  .pid,
+  .starter,
+  .entry,
+  .startTime,
+  .restRestartCount,
+  .actions {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .index,
+  .pid,
+  .starter,
+  .entry,
+  .startTime,
+  .restRestartCount {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .index,
+  .starter,
+  .entry,
+  .startTime,
+  .restRestartCount {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .starter,
+  .entry,
+  .startTime,
+  .restRestartCount {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .starter,
+  .startTime,
+  .restRestartCount {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1090px) {
+  .startTime,
+  .restRestartCount {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .restRestartCount {
+    display: none;
   }
 }

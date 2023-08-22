@@ -1,12 +1,71 @@
+/**
+ * dom
+ */
+
 const STATUS_COLOR = {
   NOT_RUNNING: "red",
   RUNNING: "green",
   MANUAL_STOP: "gray",
 };
 
-function createTableAction(index, row) {
+const restartAction = {
+  text: "restart",
+  handler: restart,
+  classNames: "restart-btn btn action",
+};
+
+const stopAction = {
+  text: "stop",
+  handler: stop,
+  classNames: "stop-btn btn action",
+};
+
+const removeAction = {
+  text: "remove",
+  handler: remove,
+  classNames: "remove-btn btn action",
+};
+
+const ACTION_MAP = {
+  NOT_RUNNING: [restartAction, stopAction, removeAction],
+  RUNNING: [restartAction, stopAction, removeAction],
+  MANUAL_STOP: [restartAction, removeAction],
+};
+
+function createLoading() {
+  const div = document.createElement("div");
+  div.className = "loading";
+  div.innerText = "processing...";
+  return div;
+}
+
+function addEvent(dom, eventName, handler, options) {
+  (typeof dom === "string"
+    ? document.querySelector(dom)
+    : dom
+  )?.addEventListener(eventName, handler, options);
+}
+
+function createTableAction(row, index) {
   const td = document.createElement("td");
-  td.innerText = "action";
+  td.className = "actions";
+  const div = document.createElement("div");
+  div.className = `action-container action-container-${index}`;
+  const actions = ACTION_MAP[row.status].map((act) => {
+    const span = document.createElement("span");
+    span.className = act.classNames;
+    span.innerText = act.text;
+    addEvent(span, "click", async () => {
+      const container = document.querySelector(`.action-container-${index}`);
+      container.style.display = "none";
+      const lodaing = createLoading();
+      container.parentElement.append(lodaing);
+      await act.handler(row.name);
+    });
+    return span;
+  });
+  div.append(...actions);
+  td.append(div);
   return td;
 }
 
@@ -22,9 +81,11 @@ function createTableRow(index, row) {
     "restRestartCount",
   ];
   const indexTd = document.createElement("td");
+  indexTd.className = "index";
   indexTd.innerText = index;
   const keyTds = keys.map((k) => {
     const td = document.createElement("td");
+    td.className = k;
     if (k === "status") {
       td.innerHTML = `<span style="color:${STATUS_COLOR[row[k]]};">
         ${row[k]}
@@ -34,21 +95,13 @@ function createTableRow(index, row) {
     }
     return td;
   });
-  const actionTd = createTableAction(index, row);
+  const actionTd = createTableAction(row, index);
   tr.append(indexTd, ...keyTds, actionTd);
   return tr;
 }
 
 function appendTable(data) {
-  const empty = document.querySelector(".empty-container");
-  const emptyText = empty?.querySelector(".empty");
   const table = document.querySelector("table");
-  if (data?.length <= 0) {
-    empty.hidden = false;
-    emptyText.innerText = "No process running by pmb!";
-    return;
-  }
-  empty.hidden = true;
   const rows = data.map((row, index) => createTableRow(index + 1, row));
   table.append(...rows);
 }
@@ -64,9 +117,21 @@ function removeTableContent() {
 }
 
 function replaceTable(data) {
+  const empty = document.querySelector(".empty-container");
+  if (data?.length <= 0) {
+    const emptyText = empty?.querySelector(".empty");
+    empty.hidden = false;
+    emptyText.innerText = "No process running by pmb!";
+    return;
+  }
+  empty.hidden = true;
   removeTableContent();
   appendTable(data);
 }
+
+/**
+ * ajax
+ */
 
 class Talk {
   async get(path, params, config) {
@@ -89,7 +154,7 @@ class Talk {
       },
     }).then((rs) => rs.json());
   }
-  async pos(path, data, config) {
+  async post(path, data, config) {
     const url = path;
     return fetch(url, {
       ...config,
@@ -107,9 +172,11 @@ class Talk {
 const SERVICE_PATH = {
   LIST: "/process/list",
   START: "/process/start",
+  RESTART: "/process/restart",
   STOP: "/process/stop",
   REMOVE: "/process/remove",
 };
+
 class Tell {
   talk = new Talk();
   constructor() {
@@ -121,6 +188,9 @@ class Tell {
   start(data) {
     return this.talk.post(SERVICE_PATH.START, data);
   }
+  restart(data) {
+    return this.talk.post(SERVICE_PATH.RESTART, data);
+  }
   stop(data) {
     return this.talk.post(SERVICE_PATH.STOP, data);
   }
@@ -128,18 +198,47 @@ class Tell {
     return this.talk.post(SERVICE_PATH.REMOVE, data);
   }
 }
+
 const tell = new Tell();
 
-async function getList() {
+/**
+ * action
+ */
+
+async function list() {
   const list = await tell.list();
   replaceTable(list.data);
 }
 
-async function start(entry, name, starter, restart) {
-  const list = await tell.start({ entry, name, starter, restart });
-  console.log(list);
+async function start(entry, name, starter, restart, cwd) {
+  await tell.start({ entry, name, starter, restart, cwd });
+  await list();
+}
+
+async function stop(name) {
+  const list = await tell.stop({ name });
+  replaceTable(list.data);
+}
+
+async function remove(name) {
+  const list = await tell.rm({ name });
+  replaceTable(list.data);
+}
+
+async function restart(name) {
+  const list = await tell.restart({ name });
+  replaceTable(list.data);
+}
+
+let loopTimer = void 0;
+function startLoop(gapTime) {
+  clearInterval(loopTimer);
+  loopTimer = setInterval(() => {
+    list();
+  }, gapTime);
 }
 
 window.onload = async () => {
-  getList();
+  list();
+  startLoop(1000 * 10);
 };
