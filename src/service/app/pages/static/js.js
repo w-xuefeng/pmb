@@ -109,14 +109,16 @@ function appendTable(data) {
 function removeTableContent() {
   const table = document.querySelector("table");
   const trs = Array.from(table?.querySelectorAll("tr"));
-  trs.forEach((e, i) => {
-    if (i > 1) {
-      e?.remove();
+  const keepClassName = ["thead", "empty-container"];
+  trs.forEach((e) => {
+    if (!keepClassName.some((cls) => e.classList?.contains?.(cls))) {
+      e?.remove?.();
     }
   });
 }
 
 function replaceTable(data) {
+  removeTableContent();
   const empty = document.querySelector(".empty-container");
   if (data?.length <= 0) {
     const emptyText = empty?.querySelector(".empty");
@@ -125,7 +127,6 @@ function replaceTable(data) {
     return;
   }
   empty.hidden = true;
-  removeTableContent();
   appendTable(data);
 }
 
@@ -230,6 +231,83 @@ async function restart(name) {
   replaceTable(list.data);
 }
 
+function createName(entry) {
+  return `${Date.now()}-${entry.split("/").at(-1)}`;
+}
+
+async function startProcess(value) {
+  const {
+    cwd,
+    entry,
+    name = createName(entry),
+    starter = "bun",
+    restart = 10,
+  } = value;
+  await start(entry, name, starter, restart, cwd);
+}
+
+function initDialogValue() {
+  return {
+    entry: "",
+    cwd: "",
+    name: "",
+    starter: "bun",
+    restart: 10,
+  };
+}
+
+let dialogValue = initDialogValue();
+
+function initStartDialog() {
+  const startDialog = document.querySelector(".start-dialog");
+  const entryInput = document.querySelector("#entry");
+  const cwdInput = document.querySelector("#cwd");
+  const nameInput = document.querySelector("#name");
+  const starterInput = document.querySelector("#starter");
+  const restartInput = document.querySelector("#restart");
+  const closeBtn = document.querySelector(".close-btn");
+
+  addEvent(entryInput, "input", async (e) => {
+    dialogValue.entry = e?.target?.value;
+  });
+  addEvent(cwdInput, "input", (e) => {
+    dialogValue.cwd = e?.target?.value;
+  });
+  addEvent(nameInput, "input", (e) => {
+    dialogValue.name = e?.target?.value;
+  });
+  addEvent(starterInput, "input", (e) => {
+    dialogValue.starter = e?.target?.value;
+  });
+  addEvent(restartInput, "input", (e) => {
+    dialogValue.restart = e?.target?.value;
+  });
+  addEvent(closeBtn, "click", () => {
+    startDialog?.close?.();
+  });
+  startDialog?.addEventListener("close", () => {
+    if (startDialog.returnValue !== "confirm") {
+      return;
+    }
+    if (dialogValue.entry && dialogValue.cwd) {
+      startProcess(dialogValue);
+      entryInput.value = "";
+      cwdInput.value = "";
+      nameInput.value = "";
+      starterInput.value = "bun";
+      restartInput.value = 10;
+    } else {
+      console.log("missing param");
+    }
+  });
+}
+
+function showStartDialog() {
+  const startDialog = document.querySelector(".start-dialog");
+  startDialog?.showModal?.();
+  dialogValue = initDialogValue();
+}
+
 let loopTimer = void 0;
 function startLoop(gapTime) {
   clearInterval(loopTimer);
@@ -239,6 +317,8 @@ function startLoop(gapTime) {
 }
 
 window.onload = async () => {
+  initStartDialog();
+  addEvent(".start-btn", "click", showStartDialog);
   list();
   startLoop(1000 * 10);
 };

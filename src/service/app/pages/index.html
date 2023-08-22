@@ -22,6 +22,38 @@
       <span class="title">P(rocess) M(anager) for B(un)</span>
     </header>
     <span class="btn start-btn">START</span>
+    <dialog class="start-dialog">
+      <span class="close-btn">X</span>
+      <form method="dialog">
+        <div class="form-container">
+          <label for="cwd">
+            <span>CWD</span>
+            <input class="input" placeholder="fill in the cwd" id="cwd" required>
+          </label>
+          <label for="entry">
+            <span>ENTRY</span>
+            <input class="input" placeholder="fill in the entry file path relative cwd" id="entry" required>
+          </label>
+          <label for="name">
+            <span>NAME</span>
+            <input class="input" placeholder="fill in the name" id="name">
+          </label>
+          <label for="starter">
+            <span>STARTER</span>
+            <input class="input" placeholder="fill in the starter" id="starter" type="text" value="bun">
+          </label>
+          <label for="restart">
+            <span>RESTART</span>
+            <input class="input" placeholder="fill in the restart count" id="restart" type="number" value="10">
+          </label>
+        </div>
+        <div>
+          <button class="confirm-btn" value="confirm">CONFIRM</button>
+        </div>
+      </form>
+    </dialog>
+
+
     <table class="table">
       <tr class="thead">
         <td class="index">index</td>

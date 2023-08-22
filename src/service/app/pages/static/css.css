@@ -111,6 +111,25 @@ body {
       }
     }
   }
+
+  .start-dialog {
+    position: relative;
+    padding: 40px;
+    max-width: 350px;
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+    }
+    .input {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .confirm-btn {
+      cursor: pointer;
+    }
+  }
 }
 
 td {
