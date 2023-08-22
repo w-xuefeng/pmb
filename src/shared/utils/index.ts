@@ -103,7 +103,9 @@ export function bunProcessToVO(pc: BunProcess) {
     entry: pc.entryFile,
     status: BunProcessStatus[pc.status],
     startTime: startTime ? intlTimeFormat(new Date(startTime)) : "-",
-    restRestartCount: pc.restRestartCount,
+    restRestartCount: [null, void 0, Infinity].includes(pc.restRestartCount)
+      ? "Infinity"
+      : pc.restRestartCount,
   } as IBunProcessVO;
 }
 
@@ -116,15 +118,7 @@ export function bunProcessVOToTable(
       ...prototypeColor,
       __statusColor: BunProcessStatusColor[pc.status],
     }),
-    {
-      name: pc.name,
-      pid: pc.pid,
-      starter: pc.starter,
-      entry: pc.entry,
-      status: pc.status,
-      startTime: pc.startTime ? intlTimeFormat(new Date(pc.startTime)) : "-",
-      restRestartCount: pc.restRestartCount,
-    }
+    pc
   ) as IBunProcessVO;
 }
 

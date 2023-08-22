@@ -1,5 +1,5 @@
 export default function () {
   return {
-    restart: 20,
+    restart: Infinity,
   };
 }

@@ -70,4 +70,6 @@ async function start(entry, name, starter, restart) {
   console.log(list);
 }
 
-window.onload = async () => {};
+window.onload = async () => {
+  getList();
+};

@@ -164,6 +164,7 @@ export class BunProcessRuntime {
       return;
     }
     const pc = (await bunFile.json()) as BunProcess;
+    pc.restRestartCount = pc.restRestartCount ?? Infinity;
     /**
      * If it is not a forced restart,
      * Ignore if the remaining number of restarts is less than or equal to 0

@@ -24,7 +24,7 @@ export default class Talk {
     let search = "";
     if (params) {
       const searchParams = new URLSearchParams();
-      const keys = Object.getOwnPropertyNames(params).forEach((k) => {
+      Object.getOwnPropertyNames(params).forEach((k) => {
         searchParams.append(k, params[k]);
       });
       search = searchParams.toString();
