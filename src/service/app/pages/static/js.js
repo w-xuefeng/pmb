@@ -1,3 +1,58 @@
+const STATUS_COLOR = {
+  NOT_RUNNING: "red",
+  RUNNING: "green",
+  MANUAL_STOP: "gray",
+};
+
+function createTableAction(index, row) {
+  const td = document.createElement("td");
+  td.innerText = "action";
+  return td;
+}
+
+function createTableRow(index, row) {
+  const tr = document.createElement("tr");
+  const keys = [
+    "name",
+    "pid",
+    "starter",
+    "entry",
+    "status",
+    "startTime",
+    "restRestartCount",
+  ];
+  const indexTd = document.createElement("td");
+  indexTd.innerText = index;
+  const keyTds = keys.map((k) => {
+    const td = document.createElement("td");
+    if (k === "status") {
+      td.innerHTML = `<span style="color:${STATUS_COLOR[row[k]]};">
+        ${row[k]}
+      </span>`;
+    } else {
+      td.innerText = row[k];
+    }
+    return td;
+  });
+  const actionTd = createTableAction(index, row);
+  tr.append(indexTd, ...keyTds, actionTd);
+  return tr;
+}
+
+function appendTable(data) {
+  const empty = document.querySelector(".empty-container");
+  const emptyText = empty?.querySelector(".empty");
+  const table = document.querySelector("table");
+  if (data?.length <= 0) {
+    empty.hidden = false;
+    emptyText.innerText = "No process running by pmb!";
+    return;
+  }
+  empty.hidden = true;
+  const rows = data.map((row, index) => createTableRow(index + 1, row));
+  table.append(...rows);
+}
+
 class Talk {
   async get(path, params, config) {
     const url = path;
@@ -62,7 +117,7 @@ const tell = new Tell();
 
 async function getList() {
   const list = await tell.list();
-  console.log(list);
+  appendTable(list.data);
 }
 
 async function start(entry, name, starter, restart) {
