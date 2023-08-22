@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { BunProcessStatus, DAEMON_LOG_PATH } from "../../../shared/const";
 import { bunProcessToVO } from "../../../shared/utils";
 import { createPathSync } from "../../../shared/utils/file";
@@ -29,6 +30,11 @@ export class BunProcess {
   }
 
   async start() {
+    const entryBunfFile = Bun.file(resolve(this.cwd, this.entryFile));
+    const entryBunfFileExists = await entryBunfFile.exists();
+    if (!entryBunfFileExists) {
+      return;
+    }
     const logPath = DAEMON_LOG_PATH(this.name);
     const log = Bun.file(logPath);
     const exists = await log.exists();

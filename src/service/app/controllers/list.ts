@@ -22,5 +22,5 @@ export default async function list(c: Context) {
 
   const data = list.map(([_, e]) => bunProcessToVO(e));
 
-  return c.json({ data });
+  return c.json({ data, success: true, message: "success", code: 200 });
 }

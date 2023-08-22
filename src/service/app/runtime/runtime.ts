@@ -165,6 +165,16 @@ export class BunProcessRuntime {
     }
     const pc = (await bunFile.json()) as BunProcess;
 
+    const entryBunfFile = Bun.file(resolve(pc.cwd, pc.entryFile));
+    const entryBunfFileExists = await entryBunfFile.exists();
+    /**
+     * if entry file not exists,
+     * cancel restart
+     */
+    if (!entryBunfFileExists) {
+      return;
+    }
+
     /**
      * if restRestartCount is null or undefined,
      * it means it is Infinity
