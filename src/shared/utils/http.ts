@@ -45,8 +45,8 @@ export default class Talk {
       });
   }
 
-  async ping() {
-    const url = new URL("/ping", `${this.base}:${this.port}`);
+  async ping(path: string) {
+    const url = new URL(path, `${this.base}:${this.port}`);
     return fetch(url, {
       method: "GET",
       headers: {

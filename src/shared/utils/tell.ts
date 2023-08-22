@@ -19,6 +19,7 @@ export default class Tell {
   start(data: {
     name: string;
     entry: string;
+    cwd: string;
     starter?: string;
     restart?: number;
   }) {
@@ -31,7 +32,7 @@ export default class Tell {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.REMOVE, data);
   }
   ping() {
-    return this.talk.ping();
+    return this.talk.ping(SERVICE_PATH.PING);
   }
   updatePort(port: string | number) {
     this.talk.port = port;

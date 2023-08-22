@@ -6,6 +6,7 @@ import {
   DAEMON_LOG_PATH,
   DAEMON_PID_PATH,
   DaemonPingStatus,
+  PROCESS_MAX_RESTART_COUNT,
   readConf,
 } from "../shared/const";
 import { unlinkSync } from "../shared/utils/file";
@@ -55,12 +56,17 @@ class PMB {
     /**
      * the number of process-auto-restart
      */
-    const restart = await readConf("restart", 10);
+    const restart = await readConf("restart", PROCESS_MAX_RESTART_COUNT);
+
+    /**
+     * the current working directory of the process
+     */
+    const cwd = await readConf("cwd", process.cwd());
 
     /**
      * Tell the daemon to start the service
      */
-    const res = await tell.start({ name, entry, starter, restart });
+    const res = await tell.start({ name, entry, cwd, starter, restart });
 
     if (res.data) {
       this.list(res.data);
@@ -136,7 +142,7 @@ class PMB {
   async ui() {
     const tell = await greetDaemon();
     const url = tell.uiPath().toString();
-    L.success(`Please visit 【${url}】!\n`);
+    L.success(`Please visit [${url}]\n`);
     await open(url);
   }
 

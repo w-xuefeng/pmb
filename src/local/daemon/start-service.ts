@@ -1,4 +1,4 @@
-import startService from "../../service/src";
+import startService from "../../service/app";
 import { createPathSync } from "../../shared/utils/file";
 import { DAEMON_PID_PATH } from "../../shared/const";
 

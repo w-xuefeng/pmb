@@ -176,7 +176,8 @@ export class BunProcessRuntime {
       name,
       pc.entryFile,
       pc.starter,
-      pc.restRestartCount - 1
+      pc.restRestartCount - 1,
+      pc.cwd
     );
     next.startTimes = pc.startTimes;
     next.reStart();
@@ -200,10 +201,12 @@ export class BunProcessRuntime {
     const item = ps.find((e) => e[1].pid === pid);
     if (item) {
       const [name, pc] = item;
-      pc.status = BunProcessStatus.MANUAL_STOP;
-      await this.updateProcess(name, pc);
+      pc.status === BunProcessStatus.RUNNING && this.stop(pid);
+      if (pc.status !== BunProcessStatus.MANUAL_STOP) {
+        pc.status = BunProcessStatus.MANUAL_STOP;
+        await this.updateProcess(name, pc);
+      }
     }
-    this.stop(pid);
   }
 
   static async stopByName(name: string) {
@@ -213,10 +216,10 @@ export class BunProcessRuntime {
       return;
     }
     const pc = (await bunFile.json()) as BunProcess;
-    if (pc) {
+    if (pc && pc.status !== BunProcessStatus.MANUAL_STOP) {
+      pc.status === BunProcessStatus.RUNNING && this.stop(pc.pid);
       pc.status = BunProcessStatus.MANUAL_STOP;
       await this.updateProcess(name, pc);
     }
-    this.stop(pc.pid);
   }
 }

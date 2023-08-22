@@ -8,15 +8,10 @@ import { SERVICE_PATH } from "../../../shared/const/service-path";
 import type { Hono } from "hono";
 
 export function useRouters(app: Hono) {
-  app.use("/favicon.ico", serveStatic({ path: "./public/favicon.ico" }));
-  app.get("/", (c) => {
-    return c.json({ message: "Hello World!" });
-  });
-
+  app.get(SERVICE_PATH.PING, ping);
   app.get(SERVICE_PATH.LIST, list);
   app.post(SERVICE_PATH.START, start);
   app.post(SERVICE_PATH.STOP, stop);
   app.post(SERVICE_PATH.REMOVE, remove);
-
-  app.get("/ping", ping);
+  app.use("/*", serveStatic({ root: "app/pages" }));
 }

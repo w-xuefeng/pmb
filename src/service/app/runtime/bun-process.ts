@@ -13,11 +13,19 @@ export class BunProcess {
   pid?: string | number;
   starter = "bun";
   restRestartCount = 10;
-  constructor(name: string, entryFile: string, starter = "bun", restart = 10) {
+  cwd = process.cwd();
+  constructor(
+    name: string,
+    entryFile: string,
+    starter = "bun",
+    restart = 10,
+    cwd = process.cwd()
+  ) {
     this.name = name;
     this.entryFile = entryFile;
     this.starter = starter;
     this.restRestartCount = restart;
+    this.cwd = cwd;
   }
 
   async start() {
@@ -29,6 +37,7 @@ export class BunProcess {
     }
     const ps = Bun.spawn({
       cmd: [this.starter, this.entryFile],
+      cwd: this.cwd,
       stdout: log,
     });
     this.status = BunProcessStatus.RUNNING;

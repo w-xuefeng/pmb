@@ -6,9 +6,9 @@ export default async function start(c: Context) {
     return c.json({ data: [] });
   }
   const body = await new Response(c.req.body).json();
-  const { name, entry, starter, restart } = body;
+  const { name, entry, cwd, starter, restart } = body;
 
-  const p = new BunProcess(name, entry, starter, restart);
+  const p = new BunProcess(name, entry, starter, restart, cwd);
   await p.start();
 
   return c.json({

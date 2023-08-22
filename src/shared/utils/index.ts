@@ -4,7 +4,7 @@ import EasyTable from "easy-table";
 import pkg from "../../../package.json";
 import { customAlphabet } from "nanoid";
 import { BunProcessStatus, BunProcessStatusColor } from "../const";
-import type { BunProcess } from "../../service/src/runtime/bun-process";
+import type { BunProcess } from "../../service/app/runtime/bun-process";
 import type { IBunProcessVO } from "./types";
 
 export const nanoid = customAlphabet(

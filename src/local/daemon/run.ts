@@ -4,6 +4,7 @@ import { resolve } from "path";
 import {
   DAEMON_LOG_PATH,
   DAEMON_PID_PATH,
+  SERVICE_ROOT_DIR,
   DaemonPingStatus,
 } from "../../shared/const";
 import { createPathSync } from "../../shared/utils/file";
@@ -53,6 +54,7 @@ async function startDaemon() {
   }
   const ps = Bun.spawn({
     cmd: ["bun", resolve(import.meta.dir, "start-service.ts")],
+    cwd: SERVICE_ROOT_DIR,
     stdout: log,
   });
   await Bun.sleep(1800);

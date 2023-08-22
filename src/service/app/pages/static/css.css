@@ -1,0 +1,66 @@
+@charset "UTF-8";
+@import "./base.css";
+
+:root {
+  --bg-color: #fff;
+  --logo-color: #005524;
+  --title-color: #008aff;
+  --start-btn-bg-color: #00aeec;
+  --start-btn-color: #fff;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+.app {
+  width: 80%;
+  max-width: 1000px;
+  min-width: 350px;
+  margin: 50px auto;
+
+  .header {
+    border-bottom: 2px solid var(--title-color);
+    padding-bottom: 5px;
+    .logo {
+      color: var(--logo-color);
+      margin: 0;
+    }
+    .title {
+      color: var(--title-color);
+    }
+  }
+
+  .btn {
+    box-sizing: border-box;
+    padding: 0;
+    line-height: 30px;
+    height: 30px;
+    border-radius: 2px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+  }
+
+  .start-btn {
+    width: 80px;
+    margin-top: 18px;
+    color: var(--start-btn-color);
+    background: var(--start-btn-bg-color);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1f1f1f;
+    --logo-color: #5ec08c;
+    --title-color: #4a9fc0;
+  }
+}

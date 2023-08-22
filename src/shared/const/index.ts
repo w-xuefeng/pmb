@@ -15,6 +15,7 @@ export async function readConf(name: string, defaultValue: any) {
 }
 
 export const ROOT_DIR = resolve(import.meta.dir, "../../..");
+export const SERVICE_ROOT_DIR = resolve(import.meta.dir, "../../service");
 
 export const PROCESS_MAX_RESTART_COUNT = 10;
 
