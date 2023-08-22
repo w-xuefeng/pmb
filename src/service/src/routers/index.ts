@@ -1,11 +1,11 @@
 import ping from "../controllers/ping";
-import { serveStatic } from "hono/bun";
-import { SERVICE_PATH } from "../../../shared/const/service-path";
-import type { Hono } from "hono";
 import list from "../controllers/list";
 import start from "../controllers/start";
 import stop from "../controllers/stop";
 import remove from "../controllers/remove";
+import { serveStatic } from "hono/bun";
+import { SERVICE_PATH } from "../../../shared/const/service-path";
+import type { Hono } from "hono";
 
 export function useRouters(app: Hono) {
   app.use("/favicon.ico", serveStatic({ path: "./public/favicon.ico" }));
