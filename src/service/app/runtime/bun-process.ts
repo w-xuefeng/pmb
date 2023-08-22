@@ -24,7 +24,7 @@ export class BunProcess {
     this.name = name;
     this.entryFile = entryFile;
     this.starter = starter;
-    this.restRestartCount = restart || Infinity;
+    this.restRestartCount = restart ?? Infinity;
     this.cwd = cwd;
   }
 

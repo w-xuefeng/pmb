@@ -10,12 +10,12 @@ import {
 import { createPathSync } from "../../shared/utils/file";
 
 /**
- * create a talk
+ * Create a talk
  */
 const tell = new Tell();
 
 /**
- * update talk port
+ * Update talk port
  */
 const updatePort = (running: false | number[]) => {
   if (!running) {

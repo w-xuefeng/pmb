@@ -53,6 +53,21 @@ function appendTable(data) {
   table.append(...rows);
 }
 
+function removeTableContent() {
+  const table = document.querySelector("table");
+  const trs = Array.from(table?.querySelectorAll("tr"));
+  trs.forEach((e, i) => {
+    if (i > 1) {
+      e?.remove();
+    }
+  });
+}
+
+function replaceTable(data) {
+  removeTableContent();
+  appendTable(data);
+}
+
 class Talk {
   async get(path, params, config) {
     const url = path;
@@ -117,7 +132,7 @@ const tell = new Tell();
 
 async function getList() {
   const list = await tell.list();
-  appendTable(list.data);
+  replaceTable(list.data);
 }
 
 async function start(entry, name, starter, restart) {
