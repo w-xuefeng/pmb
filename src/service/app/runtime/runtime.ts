@@ -164,10 +164,15 @@ export class BunProcessRuntime {
       return;
     }
     const pc = (await bunFile.json()) as BunProcess;
+
+    /**
+     * if restRestartCount is null or undefined,
+     * it means it is Infinity
+     */
     pc.restRestartCount = pc.restRestartCount ?? Infinity;
     /**
-     * If it is not a forced restart,
-     * Ignore if the remaining number of restarts is less than or equal to 0
+     * if it is not a forced restart,
+     * ignore if the remaining number of restarts is less than or equal to 0
      */
     if (pc.restRestartCount <= 0 && !force) {
       return;
@@ -179,7 +184,7 @@ export class BunProcessRuntime {
       pc.entryFile,
       pc.starter,
       /**
-       * If it is a forced restart,
+       * if it is a forced restart,
        * it does not consume the number of times
        */
       force ? pc.restRestartCount : pc.restRestartCount - 1,
