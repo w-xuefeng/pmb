@@ -1,32 +1,31 @@
+import R, { bodyCheck, checkException } from "./r";
 import { resolve } from "path";
 import { BunProcess } from "../runtime/bun-process";
 import type { Context } from "hono";
 
 export default async function start(c: Context) {
-  if (!c.req.body) {
-    return c.json({ data: [] });
+  const { hasBody, res } = bodyCheck(c);
+  if (!hasBody) {
+    return res;
   }
-  const body = await new Response(c.req.body).json();
+  const body = await res.json();
   const { name, entry, cwd, starter, restart } = body;
 
   const entryBunfFile = Bun.file(resolve(cwd, entry));
   const entryBunfFileExists = await entryBunfFile.exists();
-  if (!entryBunfFileExists) {
-    return c.json({
-      success: false,
-      message: "entry file not exists",
-      code: 1001,
-      data: [],
-    });
+
+  const { next, res: exception } = await checkException(
+    c,
+    !entryBunfFileExists,
+    "ENTRY_NOT_EXISTS"
+  );
+
+  if (!next && exception) {
+    return exception;
   }
 
   const p = new BunProcess(name, entry, starter, restart, cwd);
   await p.start();
 
-  return c.json({
-    success: true,
-    message: "success",
-    code: 200,
-    data: [p.toVO()],
-  });
+  return c.json(R.ok([p.toVO()]));
 }

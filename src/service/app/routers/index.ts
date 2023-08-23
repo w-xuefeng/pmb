@@ -4,6 +4,7 @@ import start from "../controllers/start";
 import restart from "../controllers/restart";
 import stop from "../controllers/stop";
 import remove from "../controllers/remove";
+import setLang from "../controllers/lang";
 import { serveStatic } from "hono/bun";
 import { SERVICE_PATH } from "../../../shared/const/service-path";
 import type { Hono } from "hono";
@@ -15,5 +16,6 @@ export function useRouters(app: Hono) {
   app.post(SERVICE_PATH.RESTART, restart);
   app.post(SERVICE_PATH.STOP, stop);
   app.post(SERVICE_PATH.REMOVE, remove);
+  app.post(SERVICE_PATH.SETLANG, setLang);
   app.use("/*", serveStatic({ root: "app/pages" }));
 }

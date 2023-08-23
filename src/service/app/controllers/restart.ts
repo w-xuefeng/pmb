@@ -1,12 +1,14 @@
-import { BunProcessRuntime } from "../runtime/runtime";
 import list from "./list";
+import { bodyCheck } from "./r";
+import { BunProcessRuntime } from "../runtime/runtime";
 import type { Context } from "hono";
 
 export default async function restart(c: Context) {
-  if (!c.req.body) {
-    return c.json({ data: [] });
+  const { hasBody, res } = bodyCheck(c);
+  if (!hasBody) {
+    return res;
   }
-  const body = await new Response(c.req.body).json();
+  const body = await res.json();
   const { name, pid } = body;
   if (name) {
     await BunProcessRuntime.tryReStartByName(name, true);

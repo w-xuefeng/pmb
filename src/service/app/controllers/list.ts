@@ -1,3 +1,4 @@
+import R from "./r";
 import { BunProcessRuntime } from "../runtime/runtime";
 import { bunProcessToVO } from "../../../shared/utils";
 import type { Context } from "hono";
@@ -22,5 +23,5 @@ export default async function list(c: Context) {
 
   const data = list.map(([_, e]) => bunProcessToVO(e));
 
-  return c.json({ data, success: true, message: "success", code: 200 });
+  return c.json(R.ok(data));
 }

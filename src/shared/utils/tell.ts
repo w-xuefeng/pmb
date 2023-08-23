@@ -1,4 +1,5 @@
-import Talk from "./http";
+import { L } from ".";
+import Talk, { type IResponse } from "./http";
 import { SERVICE_PATH } from "../const/service-path";
 import type { IBunProcessVO } from "./types";
 import type { BunProcessStatus } from "../const";
@@ -34,6 +35,9 @@ export default class Tell {
   rm(data: { name?: string; pid?: string | number }) {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.REMOVE, data);
   }
+  setLang(data: { lang: string }) {
+    return this.talk.post<string>(SERVICE_PATH.SETLANG, data);
+  }
   ping() {
     return this.talk.ping(SERVICE_PATH.PING);
   }
@@ -42,5 +46,18 @@ export default class Tell {
   }
   uiPath() {
     return new URL(`${this.talk.base}:${this.talk.port}`);
+  }
+  handleResponse<T>(
+    res: IResponse<T>,
+    onSuccess: (res: IResponse<T>) => void,
+    onError: (res: IResponse<T>) => void = (res) => {
+      L.error(res.message);
+    }
+  ) {
+    if (!res.success && res.message) {
+      onError.call(this, res);
+    } else if (res.success) {
+      onSuccess.call(this, res);
+    }
   }
 }

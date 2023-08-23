@@ -3,20 +3,19 @@ import { Command } from "commander";
 import pkg from "./package.json";
 import PMB from "./src/local/pmb";
 import { L } from "./src/shared/utils";
+import { useI18n } from "./src/langs/i18n";
 
 const pmb = new PMB();
 const program = new Command();
+const { t } = await useI18n();
 
 L.Logo();
 
-program
-  .name("PMB")
-  .description("Guarding the best processes in the world 💪")
-  .version(pkg.version);
+program.name("PMB").description(t("cli.pmb.description")).version(pkg.version);
 
 program
   .command("start")
-  .description("Start a bun service from the input entry")
+  .description(t("cli.start.description"))
   .argument("<entry>", "start a bun service from the entry file")
   .option("-n, --name <process-name>", "create a name for the service")
   .option(
@@ -29,7 +28,7 @@ program
 
 program
   .command("restart")
-  .description("Restart a bun service from the name or pid")
+  .description(t("cli.restart.description"))
   .argument("<name-or-pid>", "start a bun service from the name or pid")
   .action((value) => {
     if (isNaN(value)) {
@@ -41,7 +40,7 @@ program
 
 program
   .command("stop")
-  .description("Stop a bun service from the pid or name")
+  .description(t("cli.stop.description"))
   .argument("<name-or-pid>", "stop a bun service from the name or pid")
   .action((value) => {
     if (isNaN(value)) {
@@ -53,7 +52,7 @@ program
 
 program
   .command("rm")
-  .description("Stop and remove a bun service from the pid or name")
+  .description(t("cli.rm.description"))
   .argument(
     "<name-or-pid>",
     "stop and remove a bun service from the name or pid"
@@ -68,14 +67,14 @@ program
 
 program
   .command("ls")
-  .description("Show list of bun service")
+  .description(t("cli.ls.description"))
   .action(() => {
     pmb.list();
   });
 
 program
   .command("daemon")
-  .description("Start or stop daemon process")
+  .description(t("cli.daemon.description"))
   .argument(
     "<action>",
     "action implemented on the daemon, Eg: status, start, stop, restart"
@@ -86,9 +85,16 @@ program
 
 program
   .command("ui")
-  .description("Show list of bun service in browser")
+  .description(t("cli.ui.description"))
   .action(() => {
     pmb.ui();
+  });
+
+program
+  .command("lang")
+  .description(t("cli.lang.description"))
+  .action(() => {
+    pmb.setLang();
   });
 
 program.parse();

@@ -47,6 +47,13 @@ export const DAEMON_PID_PATH = resolve(
 );
 
 /**
+ * i18n config file path
+ * to save current display language
+ * just support [zhCN] and [enUS]
+ */
+export const LANGUAGE_PATH = resolve(ROOT_DIR, ".runtime", ".pmb", ".pmb-lang");
+
+/**
  * daemon service and other process log path
  */
 export const DAEMON_LOG_PATH = (name = "") =>

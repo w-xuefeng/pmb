@@ -1,5 +1,6 @@
 import open from "open";
 import greetDaemon from "./daemon/run";
+import Tell from "../shared/utils/tell";
 import { L, bunProcessVOToTable, nanoid, singleton } from "../shared/utils";
 import {
   BunProcessStatus,
@@ -9,9 +10,10 @@ import {
   PROCESS_MAX_RESTART_COUNT,
   readConf,
 } from "../shared/const";
+import { getCurrentLang, useI18n } from "../langs/i18n";
 import { unlinkSync } from "../shared/utils/file";
 import type { IBunProcessVO } from "../shared/utils/types";
-import Tell from "../shared/utils/tell";
+import type { IResponse } from "../shared/utils/http";
 
 class PMB {
   /**
@@ -19,6 +21,15 @@ class PMB {
    */
   #createProcessName(entry: string) {
     return `${nanoid(6)}-${entry.split("/").at(-1)}`;
+  }
+
+  /**
+   * common output handler
+   */
+  #output(tell: Tell, res: IResponse<IBunProcessVO[]>) {
+    tell.handleResponse(res, ({ data }) => {
+      data && this.list(data);
+    });
   }
 
   /**
@@ -67,10 +78,7 @@ class PMB {
      * Tell the daemon to start the service
      */
     const res = await tell.start({ name, entry, cwd, starter, restart });
-
-    if (res.data) {
-      this.list(res.data);
-    }
+    this.#output(tell, res);
   }
 
   async restart(type: "name" | "pid", value: string) {
@@ -82,7 +90,7 @@ class PMB {
      * tell the daemon to use name or pid to restart this service
      */
     const res = await tell.restart({ [type]: value });
-    res?.data && this.list(res.data);
+    this.#output(tell, res);
   }
 
   async stop(type: "pid" | "name", value: string) {
@@ -94,7 +102,7 @@ class PMB {
      * tell the daemon to use name or pid to stop this service
      */
     const res = await tell.stop({ [type]: value });
-    res?.data && this.list(res.data);
+    this.#output(tell, res);
   }
 
   async rm(type: "pid" | "name", value: string) {
@@ -106,7 +114,7 @@ class PMB {
      * tell the daemon to use name or pid to stop and remove this service
      */
     const res = await tell.rm({ [type]: value });
-    res?.data && this.list(res.data);
+    this.#output(tell, res);
   }
 
   async list(data?: IBunProcessVO[]) {
@@ -243,6 +251,18 @@ class PMB {
         );
         break;
     }
+  }
+
+  async setLang() {
+    const tell = await greetDaemon();
+    const current = await getCurrentLang();
+    const res = await tell.setLang({
+      lang: current === "zhCN" ? "enUS" : "zhCN",
+    });
+    tell.handleResponse(res, async ({ data }) => {
+      const { t } = await useI18n();
+      L.success(t("cli.lang.set"));
+    });
   }
 }
 

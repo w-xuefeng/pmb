@@ -133,6 +133,11 @@ export class L {
     return console.log(tag, ...args.map((e: any) => colors.yellow(e)));
   }
 
+  static error(...args: any) {
+    const tag = colors.bgRed(" ERROR ");
+    return console.log(tag, ...args.map((e: any) => colors.red(e)));
+  }
+
   static tips(...args: any) {
     const tag = colors.bgCyan(" TIPS ");
     return console.log(tag, ...args.map((e: any) => colors.cyan(e)));

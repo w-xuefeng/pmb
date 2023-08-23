@@ -1,12 +1,14 @@
 import list from "./list";
 import { BunProcessRuntime } from "../runtime/runtime";
 import type { Context } from "hono";
+import { bodyCheck } from "./r";
 
 export default async function remove(c: Context) {
-  if (!c.req.body) {
-    return c.json({ data: [] });
+  const { hasBody, res } = bodyCheck(c);
+  if (!hasBody) {
+    return res;
   }
-  const body = await new Response(c.req.body).json();
+  const body = await res.json();
   const { name, pid } = body;
 
   if (name) {
