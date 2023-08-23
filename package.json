@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "bun run scripts/set-env.ts dev",
     "prod": "bun run scripts/set-env.ts prod",
-    "prepublish": "bun run prod && npm version patch",
+    "prepublishOnly": "bun run prod && npm version patch",
     "test-bun": "pmb start test/app.ts -n bun-app",
     "test-deno": "pmb start test/deno.ts -n deno-app -s 'deno run -A'",
     "test-node": "pmb start test/node.js -n node-app -s node",
