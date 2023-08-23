@@ -23,32 +23,43 @@
     </header>
     <span class="btn start-btn">START</span>
     <dialog class="start-dialog">
-      <span class="close-btn">X</span>
+      <header class="start-dialog-header">
+        <span>Start a process</span>
+        <svg class="close-btn" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4008"
+          width="20" height="20">
+          <path
+            d="M507.168 473.232L716.48 263.936a16 16 0 0 1 22.624 0l11.312 11.312a16 16 0 0 1 0 22.624L541.12 507.168 750.4 716.48a16 16 0 0 1 0 22.624l-11.312 11.312a16 16 0 0 1-22.624 0L507.168 541.12 297.872 750.4a16 16 0 0 1-22.624 0l-11.312-11.312a16 16 0 0 1 0-22.624l209.296-209.312-209.296-209.296a16 16 0 0 1 0-22.624l11.312-11.312a16 16 0 0 1 22.624 0l209.296 209.296z"
+            fill="#ffffff" p-id="4009"></path>
+        </svg>
+      </header>
+
       <form method="dialog">
         <div class="form-container">
           <label for="cwd">
-            <span>CWD</span>
+            <span class="label"><span class="required">* </span>CWD</span>
             <input class="input" placeholder="fill in the cwd" id="cwd" required>
           </label>
           <label for="entry">
-            <span>ENTRY</span>
+            <span class="label"><span class="required">* </span>ENTRY</span>
             <input class="input" placeholder="fill in the entry file path relative cwd" id="entry" required>
           </label>
           <label for="name">
-            <span>NAME</span>
+            <span class="label">NAME</span>
             <input class="input" placeholder="fill in the name" id="name">
           </label>
           <label for="starter">
-            <span>STARTER</span>
+            <span class="label">STARTER</span>
             <input class="input" placeholder="fill in the starter" id="starter" type="text" value="bun">
           </label>
           <label for="restart">
-            <span>RESTART</span>
+            <span class="label">RESTART</span>
             <input class="input" placeholder="fill in the restart count" id="restart" type="number" value="10">
           </label>
         </div>
         <div>
-          <button class="confirm-btn" value="confirm">CONFIRM</button>
+          <button class="btn confirm-btn" value="confirm">
+            <span>CONFIRM</span>
+          </button>
         </div>
       </form>
     </dialog>
