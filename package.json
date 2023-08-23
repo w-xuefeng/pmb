@@ -9,6 +9,8 @@
     "pmb": "index.ts"
   },
   "scripts": {
+    "dev": "bun run scripts/set-env.ts dev",
+    "prepublish": "bun run scripts/set-env.ts prod && npm version patch",
     "test-bun": "pmb start test/app.ts -n bun-app",
     "test-deno": "pmb start test/deno.ts -n deno-app -s 'deno run -A'",
     "test-node": "pmb start test/node.js -n node-app -s node",
