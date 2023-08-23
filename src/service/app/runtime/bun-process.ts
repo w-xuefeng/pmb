@@ -42,7 +42,7 @@ export class BunProcess {
       createPathSync("file", logPath);
     }
     const ps = Bun.spawn({
-      cmd: [this.starter, this.entryFile],
+      cmd: [...this.starter.split(" "), this.entryFile],
       cwd: this.cwd,
       stdout: log,
     });

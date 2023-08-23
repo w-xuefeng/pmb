@@ -1,5 +1,5 @@
 {
-  "name": "pmb",
+  "name": "pm-bun",
   "version": "0.0.1",
   "description": "P(rocess) M(anager) for B(un)",
   "main": "index.ts",
@@ -9,7 +9,10 @@
     "pmb": "index.ts"
   },
   "scripts": {
-    "test": "pmb start test/app.ts"
+    "test-bun": "pmb start test/app.ts -n bun-app",
+    "test-deno": "pmb start test/deno.ts -n deno-app -s 'deno run -A'",
+    "test-node": "pmb start test/node.js -n node-app -s node",
+    "test-all": "bun test-bun && bun test-deno && bun test-node"
   },
   "keywords": [
     "pmb",
@@ -17,7 +20,7 @@
     "pm2"
   ],
   "author": "w-xuefeng",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/figlet": "^1.5.6",
     "@types/node": "^20.5.0",
