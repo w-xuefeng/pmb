@@ -3,7 +3,7 @@ import figlet from "figlet";
 import EasyTable from "easy-table";
 import pkg from "../../../package.json";
 import { customAlphabet } from "nanoid";
-import { BunProcessStatus, BunProcessStatusColor } from "../const";
+import { BunProcessStatus, BunProcessStatusColor, __DEV__ } from "../const";
 import type { BunProcess } from "../../service/app/runtime/bun-process";
 import type { IBunProcessVO } from "./types";
 
@@ -175,8 +175,8 @@ export class L {
       [
         figlet.textSync("PMB"),
         "\n P(rocess) M(anager) for B(un)",
-        ` v${pkg.version} `,
-        "\n---------------------------------------",
+        ` v${pkg.version} ${__DEV__ ? "dev " : ""}`,
+        `\n---------------------------------------${__DEV__ ? "----" : ""}`,
         "\n",
       ],
       ["green", "cyan", "italic", "cyan"],
