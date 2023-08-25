@@ -1,6 +1,7 @@
 import zhCN from "./zh-CN";
 import enUS from "./en-US";
 import { peek } from "bun";
+import { deepGet } from "../shared/utils";
 import { LANGUAGE_PATH } from "../shared/const";
 import { createPathSync } from "../shared/utils/file";
 import type { DeepKeyOf } from "../shared/utils/types";
@@ -52,17 +53,7 @@ export function i18n<EM>(lang: Langs, extraMsg?: ExtraMessage<EM>) {
           enUS: Object.assign(messages.enUS, extraMsg?.enUS),
         }
       )[lang];
-      const pathArray = path.split(".");
-      let res: string | Record<string, any> = obj;
-      for (let i = 0; i < pathArray.length; i++) {
-        if (res?.[pathArray[i]] !== void 0 && res?.[pathArray[i]] !== null) {
-          res = res[pathArray[i]];
-        } else {
-          res = path;
-          break;
-        }
-      }
-      return res as string;
+      return deepGet(obj, path as DeepKeyOf<typeof obj>, path) as string;
     },
   };
 }

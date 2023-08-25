@@ -54,6 +54,17 @@ export const DAEMON_PID_PATH = resolve(
 export const LANGUAGE_PATH = resolve(ROOT_DIR, ".runtime", ".pmb", ".pmb-lang");
 
 /**
+ * custom setting file path
+ * to save some setting-config for customer
+ */
+export const CUSTOM_SETTING_PATH = resolve(
+  ROOT_DIR,
+  ".runtime",
+  ".pmb",
+  ".pmb-setting"
+);
+
+/**
  * daemon service and other process log path
  */
 export const DAEMON_LOG_PATH = (name = "") =>

@@ -5,7 +5,7 @@ import pkg from "../../../package.json";
 import { customAlphabet } from "nanoid";
 import { BunProcessStatus, BunProcessStatusColor, __DEV__ } from "../const";
 import type { BunProcess } from "../../service/app/runtime/bun-process";
-import type { IBunProcessVO } from "./types";
+import type { DeepKeyOf, IBunProcessVO } from "./types";
 
 export const nanoid = customAlphabet(
   "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
@@ -229,4 +229,21 @@ export class L {
     });
     console.log(t.toString());
   }
+}
+
+export function deepGet<T>(obj: T, path?: DeepKeyOf<T>, defaultValue?: any) {
+  if (!path) {
+    return obj;
+  }
+  const pathArray = path.split(".");
+  let res: string | T = obj;
+  for (let i = 0; i < pathArray.length; i++) {
+    if (res?.[pathArray[i]] !== void 0 && res?.[pathArray[i]] !== null) {
+      res = res[pathArray[i]];
+    } else {
+      res = defaultValue;
+      break;
+    }
+  }
+  return res as string;
 }

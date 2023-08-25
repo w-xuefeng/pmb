@@ -5,30 +5,43 @@ export default {
     },
     start: {
       description: "Start a service from the entry file",
+      entry: "specify the entry file path for service startup",
+      name: "create a name for the service",
+      starter: "specify the application to start the service",
     },
     restart: {
       description: "Restart a service from the name or pid",
+      nameOrPid: "specify a name or pid to restart the service",
     },
     stop: {
       description: "Stop a service from the pid or name",
+      nameOrPid: "specify a name or pid to stop the service",
     },
     rm: {
       description: "Stop and remove a service from the pid or name",
+      nameOrPid: "specify a name or pid to stop and remove the service",
     },
     ls: {
       description: "Show list of service started by pmb",
     },
     daemon: {
       description: "Manage daemon process",
+      action:
+        "action implemented on the daemon, Eg: status, start, stop, restart",
     },
     ui: {
       description: "Show list of service started by pmb in browser",
+      enabled: "enabled Web UI",
+      disabled: "disabled Web UI",
+      visit: "Please visit",
+      enabledSuccess: "Web UI has been enabled",
+      disabledSuccess: "Web UI has been disabled",
     },
     log: {
       description: "Show log of service from the pid or name",
     },
     lang: {
-      description: "Switch display language",
+      description: "Switch display language to 【简体中文】",
       set: "Current display language is [en-US]",
     },
   },
@@ -47,5 +60,6 @@ export default {
   exception: {
     ENTRY_NOT_EXISTS: "Entry file not exists",
     MISSING_BODY: "Required parameter missing",
+    NOT_ENABLED: "This feature is not enabled",
   },
 };

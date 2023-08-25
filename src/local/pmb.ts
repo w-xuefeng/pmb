@@ -10,6 +10,7 @@ import {
   PROCESS_MAX_RESTART_COUNT,
   readConf,
 } from "../shared/const";
+import { Setting } from "../shared/utils/setting";
 import { getCurrentLang, useI18n } from "../langs/i18n";
 import { unlinkSync } from "../shared/utils/file";
 import type { IBunProcessVO } from "../shared/utils/types";
@@ -150,11 +151,35 @@ class PMB {
     }
   }
 
-  async ui() {
+  async ui(enabled?: boolean) {
+    const { t } = await useI18n();
     const tell = await greetDaemon();
-    const url = tell.uiPath().toString();
-    L.success(`Please visit [${url}]\n`);
-    await open(url);
+
+    const openUI = async (logPrefix = "") => {
+      const url = tell.uiPath().toString();
+      L.success(
+        `${logPrefix ? `${logPrefix}, ` : ""}${t("cli.ui.visit")} [${url}]\n`
+      );
+      await open(url);
+    };
+
+    if (enabled === void 0) {
+      const enableUI = await Setting.getSetting("ui.enable", true);
+      if (!enableUI) {
+        L.warn(t("exception.NOT_ENABLED"));
+        return;
+      }
+      await openUI();
+    }
+
+    if (typeof enabled === "boolean") {
+      await Setting.setSetting("ui", { enable: enabled });
+      if (enabled) {
+        await openUI(t("cli.ui.enabledSuccess"));
+      } else {
+        L.success(t("cli.ui.disabledSuccess"));
+      }
+    }
   }
 
   async log(type: "pid" | "name", value: string) {
