@@ -3,7 +3,7 @@ import { setCurrentLang } from "../../../langs/i18n";
 import type { Context } from "hono";
 
 export default async function setLang(c: Context) {
-  const { hasBody, res } = bodyCheck(c);
+  const { hasBody, res } = await bodyCheck(c);
   if (!hasBody) {
     return res;
   }

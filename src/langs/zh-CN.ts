@@ -24,6 +24,9 @@ export default {
     ui: {
       description: "在浏览器中列出通过PMB启动的服务",
     },
+    log: {
+      description: "通过名称或者PID查询服务日志",
+    },
     lang: {
       description: "切换展示语言",
       set: "当前展示语言为【简体中文】",
@@ -38,5 +41,11 @@ export default {
     startTime: "启动时间",
     restRestartCount: "剩余重启次数",
     listEmpty: "暂无通过PMB启动的进程",
+    notExist: "进程不存在",
+    notLog: "暂无日志",
+  },
+  exception: {
+    ENTRY_NOT_EXISTS: "入口文件不存在",
+    MISSING_BODY: "缺少必要参数",
   },
 };

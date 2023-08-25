@@ -4,7 +4,7 @@ import { BunProcess } from "../runtime/bun-process";
 import type { Context } from "hono";
 
 export default async function start(c: Context) {
-  const { hasBody, res } = bodyCheck(c);
+  const { hasBody, res } = await bodyCheck(c);
   if (!hasBody) {
     return res;
   }

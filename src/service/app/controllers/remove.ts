@@ -4,7 +4,7 @@ import type { Context } from "hono";
 import { bodyCheck } from "./r";
 
 export default async function remove(c: Context) {
-  const { hasBody, res } = bodyCheck(c);
+  const { hasBody, res } = await bodyCheck(c);
   if (!hasBody) {
     return res;
   }

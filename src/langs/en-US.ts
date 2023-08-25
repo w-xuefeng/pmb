@@ -24,6 +24,9 @@ export default {
     ui: {
       description: "Show list of service started by pmb in browser",
     },
+    log: {
+      description: "Show log of service from the pid or name",
+    },
     lang: {
       description: "Switch display language",
       set: "Current display language is [en-US]",
@@ -38,5 +41,11 @@ export default {
     startTime: "startTime",
     restRestartCount: "restRestartCount",
     listEmpty: "No process running by pmb",
+    notExist: "Process does not exist",
+    notLog: "There are currently no logs available",
+  },
+  exception: {
+    ENTRY_NOT_EXISTS: "Entry file not exists",
+    MISSING_BODY: "Required parameter missing",
   },
 };

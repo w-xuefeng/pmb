@@ -33,6 +33,15 @@ class PMB {
   }
 
   /**
+   * output log handler
+   */
+  #outputLog(tell: Tell, res: IResponse<string>) {
+    tell.handleResponse(res, ({ data }) => {
+      console.log(data);
+    });
+  }
+
+  /**
    * manage process
    */
 
@@ -146,6 +155,18 @@ class PMB {
     const url = tell.uiPath().toString();
     L.success(`Please visit [${url}]\n`);
     await open(url);
+  }
+
+  async log(type: "pid" | "name", value: string) {
+    /**
+     * say hello to daemon process
+     */
+    const tell = await greetDaemon();
+    /**
+     * tell the daemon to use name or pid to get logs
+     */
+    const res = await tell.log({ [type]: value });
+    this.#outputLog(tell, res);
   }
 
   /**

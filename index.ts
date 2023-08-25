@@ -66,6 +66,18 @@ program
   });
 
 program
+  .command("log")
+  .description(t("cli.log.description"))
+  .argument("<name-or-pid>", t("cli.log.description"))
+  .action((value) => {
+    if (isNaN(value)) {
+      pmb.log("name", value);
+    } else {
+      pmb.log("pid", value);
+    }
+  });
+
+program
   .command("ls")
   .description(t("cli.ls.description"))
   .action(() => {

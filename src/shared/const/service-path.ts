@@ -5,5 +5,6 @@ export enum SERVICE_PATH {
   RESTART = "/process/restart",
   STOP = "/process/stop",
   REMOVE = "/process/remove",
+  LOG = "/process/log",
   SETLANG = "/config/set-lang",
 }

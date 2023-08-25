@@ -1,13 +1,10 @@
+import { useI18n } from "../../../langs/i18n";
 import type { Context } from "hono";
 import type { IResponse } from "../../../shared/utils/http";
 
-enum HTTP_CODE {
+export enum HTTP_CODE {
   ENTRY_NOT_EXISTS = 1001,
   MISSING_BODY = 1004,
-}
-enum HTTP_MSG {
-  ENTRY_NOT_EXISTS = "Entry file not exists",
-  MISSING_BODY = "Required parameter missing",
 }
 
 export default class R {
@@ -34,11 +31,12 @@ export default class R {
   }
 }
 
-export function bodyCheck(c: Context) {
+export async function bodyCheck(c: Context) {
   if (!c.req.body) {
+    const { t } = await useI18n();
     return {
       hasBody: false,
-      res: c.json(R.fail(HTTP_CODE.MISSING_BODY, HTTP_MSG.MISSING_BODY)),
+      res: c.json(R.fail(HTTP_CODE.MISSING_BODY, t("exception.MISSING_BODY"))),
     };
   }
   return {
@@ -53,9 +51,10 @@ export async function checkException(
   codeMsg: keyof typeof HTTP_CODE
 ) {
   if (judgement) {
+    const { t } = await useI18n();
     return {
       next: false,
-      res: c.json(R.fail(HTTP_CODE[codeMsg], HTTP_MSG[codeMsg])),
+      res: c.json(R.fail(HTTP_CODE[codeMsg], t(`exception.${codeMsg}`))),
     };
   }
   return {

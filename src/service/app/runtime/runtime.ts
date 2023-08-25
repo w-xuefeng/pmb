@@ -10,6 +10,7 @@ import {
   getFilesFromDir,
   unlinkSync,
 } from "../../../shared/utils/file";
+import { useI18n } from "../../../langs/i18n";
 import { BunProcess } from "./bun-process";
 import { globalSubprocess } from "./schedule";
 
@@ -251,5 +252,43 @@ export class BunProcessRuntime {
       pc.status = BunProcessStatus.MANUAL_STOP;
       await this.updateProcess(name, pc);
     }
+  }
+
+  static async catLogByName(name: string) {
+    const { t } = await useI18n();
+    const logPath = DAEMON_LOG_PATH(name);
+    const log = Bun.file(logPath);
+    const exists = await log.exists();
+    if (!exists) {
+      return {
+        status: false,
+        content: t("process.notExist"),
+      };
+    }
+    /**
+     * log content
+     * the log content may be large,
+     * and further optimization processing is needed
+     * !!TODO optimization
+     */
+    const logContent = await log.text();
+    return {
+      status: true,
+      content: logContent,
+    };
+  }
+
+  static async catLogByPid(pid: number | string) {
+    const ps = await this.getProcesses();
+    const { t } = await useI18n();
+    const item = ps.find((e) => e[1].pid === pid);
+    if (item) {
+      const [name] = item;
+      return await this.catLogByName(name);
+    }
+    return {
+      status: false,
+      content: t("process.notExist"),
+    };
   }
 }
