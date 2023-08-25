@@ -111,14 +111,32 @@ export function bunProcessToVO(pc: BunProcess) {
 
 export function bunProcessVOToTable(
   pc: IBunProcessVO,
-  prototypeColor?: Record<string, string>
+  prototypeColor?: Record<string, string>,
+  /**
+   * i18n
+   */
+  t?: (path: any) => string
 ) {
+  const obj =
+    typeof t === "function"
+      ? Object.fromEntries(
+          Object.getOwnPropertyNames(pc).map((k) => [
+            t(`process.${k as keyof IBunProcessVO}`),
+            pc[k],
+          ])
+        )
+      : pc;
+
   return Object.assign(
     Object.create({
       ...prototypeColor,
       __statusColor: BunProcessStatusColor[pc.status],
+      /**
+       * for i18n zh-CN
+       */
+      __状态Color: BunProcessStatusColor[pc.status],
     }),
-    pc
+    obj
   ) as IBunProcessVO;
 }
 

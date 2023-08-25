@@ -118,10 +118,11 @@ class PMB {
   }
 
   async list(data?: IBunProcessVO[]) {
+    const { t } = await useI18n();
     const render = (list: IBunProcessVO[]) => {
       L.table(
-        list.map((e) => bunProcessVOToTable(e)),
-        "No process running by pmb!"
+        list.map((e) => bunProcessVOToTable(e, void 0, t)),
+        t("process.listEmpty")
       );
     };
 

@@ -29,4 +29,14 @@ export default {
       set: "Current display language is [en-US]",
     },
   },
+  process: {
+    name: "name",
+    pid: "pid",
+    starter: "starter",
+    entry: "entry",
+    status: "status",
+    startTime: "startTime",
+    restRestartCount: "restRestartCount",
+    listEmpty: "No process running by pmb",
+  },
 };
