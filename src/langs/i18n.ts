@@ -1,5 +1,6 @@
 import zhCN from "./zh-CN";
 import enUS from "./en-US";
+import { peek } from "bun";
 import { LANGUAGE_PATH } from "../shared/const";
 import { createPathSync } from "../shared/utils/file";
 import type { DeepKeyOf } from "../shared/utils/types";
@@ -10,6 +11,10 @@ export const messages = {
 };
 
 export type Langs = keyof typeof messages;
+
+export type ExtraMessage<T> = {
+  [k in Langs]: T;
+};
 
 export async function getCurrentLang() {
   const bunFile = Bun.file(LANGUAGE_PATH);
@@ -34,8 +39,7 @@ export async function setCurrentLang(lang: Langs) {
   await Bun.write(LANGUAGE_PATH, lang);
 }
 
-export async function useI18n<EM>(extraMsg?: { zhCN: EM; enUS: EM }) {
-  const lang = await getCurrentLang();
+export function i18n<EM>(lang: Langs, extraMsg?: ExtraMessage<EM>) {
   return {
     lang,
     t: function (
@@ -61,4 +65,17 @@ export async function useI18n<EM>(extraMsg?: { zhCN: EM; enUS: EM }) {
       return res as string;
     },
   };
+}
+
+export async function useI18n<EM>(extraMsg?: ExtraMessage<EM>) {
+  const lang = await getCurrentLang();
+  return i18n(lang, extraMsg);
+}
+
+export function useI18nSync<EM>(
+  defaultLangs: Langs = "enUS",
+  extraMsg?: ExtraMessage<EM>
+) {
+  const lang = peek(getCurrentLang());
+  return i18n(typeof lang === "string" ? lang : defaultLangs, extraMsg);
 }
