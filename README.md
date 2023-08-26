@@ -89,7 +89,7 @@ pmb daemon stop
 pmb daemon restart
 ```
 
-- `ui` 在浏览器中列出通过PMB启动的服务
+- `ui` Show list of service started by pmb in browser
 
 ```bash
 # pmb ui [-e] [-d]
