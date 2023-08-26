@@ -7,6 +7,7 @@ import {
   SERVICE_ROOT_DIR,
   DaemonPingStatus,
 } from "../../shared/const";
+import { useI18n } from "../../langs/i18n";
 import { createPathSync } from "../../shared/utils/file";
 
 /**
@@ -122,10 +123,11 @@ export default async function greetDaemon() {
 
   /**
    * if pong response is OUTDATED,
-   * may be your local pmb version is outdated
+   * may be your local-cli or daemon of pmb is outdated
    */
   if (pong === DaemonPingStatus.OUTDATED) {
-    L.warn("please upgrade your pmb version");
+    const { t } = await useI18n();
+    L.warn(`${t("exception.OUTDATED")}\n`);
     return tell;
   }
 

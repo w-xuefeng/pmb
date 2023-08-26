@@ -61,5 +61,7 @@ export default {
     ENTRY_NOT_EXISTS: "Entry file not exists",
     MISSING_BODY: "Required parameter missing",
     NOT_ENABLED: "This feature is not enabled",
+    OUTDATED:
+      "Please upgrade your pmb version or restart daemon via [pmb daemon restart]",
   },
 };

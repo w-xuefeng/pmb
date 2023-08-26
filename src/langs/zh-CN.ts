@@ -61,5 +61,6 @@ export default {
     ENTRY_NOT_EXISTS: "入口文件不存在",
     MISSING_BODY: "缺少必要参数",
     NOT_ENABLED: "未启用该功能",
+    OUTDATED: "请升级您的 pmb 版本或通过【pmb daemon restart】重启守护进程",
   },
 };
