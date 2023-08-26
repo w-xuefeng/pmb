@@ -1,16 +1,17 @@
 import type { Subprocess } from "bun";
 import { KeepProcessAlive } from "./keep-alive";
 import { BunProcessRuntime } from "./runtime";
+import { Setting } from "../../../shared/utils/setting";
 
 export let globalAlive: KeepProcessAlive;
 
 export const globalSubprocess = new Map<number, Subprocess>();
 
-export function startHeadrCheck(interval = 10 * 1000) {
+export async function startHeadrCheck() {
+  const interval = await Setting.getSetting("polling.interval", 10 * 1000);
   globalAlive?.free?.();
   globalAlive = KeepProcessAlive.create(() => {
-    BunProcessRuntime.checkProcesses();
-    return Promise.resolve();
+    return BunProcessRuntime.checkProcesses();
   }, interval);
   globalAlive.start();
 }

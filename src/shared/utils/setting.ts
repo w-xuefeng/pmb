@@ -1,14 +1,23 @@
 import { deepGet } from ".";
 import { CUSTOM_SETTING_PATH } from "../const";
 import { createPathSync } from "./file";
-import type { DeepKeyOf } from "./types";
+import type { DeepKeyOf, DeepValueOf } from "./types";
 
 /**
  * customer setting
  */
 export interface ISetting {
+  /**
+   * web ui
+   */
   ui: {
     enable: boolean;
+  };
+  /**
+   * process status polling by daemon
+   */
+  polling: {
+    interval: number;
   };
 }
 
@@ -20,11 +29,17 @@ export function getDefaultSetting(): ISetting {
     ui: {
       enable: true,
     },
+    polling: {
+      interval: 10 * 1000,
+    },
   };
 }
 
 export class Setting {
-  static async getSetting(path?: DeepKeyOf<ISetting>, defaultValue?: any) {
+  static async getSetting<
+    K extends DeepKeyOf<ISetting> | undefined,
+    V = DeepValueOf<ISetting, K>
+  >(path?: K, defaultValue?: V) {
     const settingFile = Bun.file(CUSTOM_SETTING_PATH);
     const exists = await settingFile.exists();
     let setting = getDefaultSetting();
@@ -37,7 +52,11 @@ export class Setting {
     } else {
       setting = await settingFile.json();
     }
-    return deepGet(setting, path, defaultValue);
+    return deepGet<ISetting, K, V>(
+      setting,
+      path,
+      defaultValue
+    ) as K extends undefined ? ISetting : V;
   }
 
   static async setSetting(

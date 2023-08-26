@@ -6,12 +6,12 @@ const port = 9501;
 const app = new Hono();
 useRouters(app);
 
-function startService() {
+async function startService() {
   const server = Bun.serve({
     port,
     fetch: app.fetch,
   });
-  startHeadrCheck();
+  await startHeadrCheck();
   return server;
 }
 

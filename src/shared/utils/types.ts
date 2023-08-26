@@ -17,3 +17,18 @@ export type DeepKeyOf<T> = T extends Record<string, any>
         : never;
     }[keyof T]
   : never;
+
+export type DeepValueOf<
+  T,
+  K extends DeepKeyOf<T> | undefined = undefined
+> = T extends Record<string, any>
+  ? K extends undefined
+    ? T
+    : K extends keyof T
+    ? T[K]
+    : K extends `${infer A}.${infer B}`
+    ? B extends DeepKeyOf<T[A]>
+      ? DeepValueOf<T[A], B>
+      : never
+    : never
+  : never;

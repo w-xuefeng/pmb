@@ -8,35 +8,35 @@
 
 # P(rocess) M(anager) for B(un)
 
-[简体中文](README_zh.md) | English
+简体中文 | [English](README.md)
 
-## install bun
+## 安装 bun 环境
 
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```
 
-## install pm-bun
+## 安装 pm-bun
 
 ```bash
 bun add -g pm-bun
 ```
 
-## use pmb
+## 查看 pmb 用法
 ```bash
 pmb -h
 pmb <command> -h
 ```
 
-## Commands
+## 常用命令
 
-- `ls` Show list of service started by pmb
+- `ls` 列出通过PMB启动的服务
 
 ```bash
 pmb ls 
 ```
 
-- `start` Start a service from the entry file
+- `start` 过项目入口文件启动一个服务
 
 ```bash
 # pmb start <entry-file-path> [-n name] [-s starter]
@@ -47,7 +47,7 @@ pmb start path/deno-app.ts -n deno-project -s 'deno run -A'
 
 ```
 
-- `stop` Stop a service from the pid or name
+- `stop` 通过名称或者PID停止服务
 
 ```bash
 # pmb stop <name-or-pid>
@@ -55,7 +55,7 @@ pmb stop node-app
 pmb stop 12345
 ```
 
-- `restart` Restart a service from the name or pid
+- `restart` 通过名称或者PID重启服务
 
 ```bash
 # pmb restart <name-or-pid>
@@ -63,7 +63,7 @@ pmb restart bun-app
 pmb restart 12346
 ```
 
-- `rm` Stop and remove a service from the pid or name
+- `rm` 通过名称或者PID停止并删除服务
 
 ```bash
 # pmb rm <name-or-pid>
@@ -71,7 +71,7 @@ pmb rm deno-app
 pmb rm 12347
 ```
 
-- `log` Show log of service from the pid or name
+- `log` 通过名称或者PID查询服务日志
 
 ```bash
 # pmb log <name-or-pid>
@@ -79,26 +79,26 @@ pmb log node-app
 pmb log 12345
 ```
 
-- `daemon` Manage daemon process
+- `daemon` 管理守护进程
 
 ```bash
 # pmb daemon <status | start | stop | restart>
-pmb daemon status
-pmb daemon start
-pmb daemon stop
-pmb daemon restart
+pmb daemon status   # 查看守护进程状态
+pmb daemon start    # 启动守护进程
+pmb daemon stop     # 停止守护进程
+pmb daemon restart  # 重启守护进程
 ```
 
 - `ui` 在浏览器中列出通过PMB启动的服务
 
 ```bash
 # pmb ui [-e] [-d]
-pmb ui     # Show list of service started by pmb in browser
-pmb ui -e  # enabled Web UI
-pmb ui -d  # disabled Web UI
+pmb ui     # 在浏览器中列出通过PMB启动的服务
+pmb ui -e  # 启用 Web UI 功能
+pmb ui -d  # 停用 Web UI 功能
 ```
 
-- `lang` Switch display language between Chinese and English
+- `lang` 切换展示语言, 中英切换
 
 ```bash
 pmb lang

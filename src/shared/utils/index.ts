@@ -231,12 +231,16 @@ export class L {
   }
 }
 
-export function deepGet<T>(obj: T, path?: DeepKeyOf<T>, defaultValue?: any) {
+export function deepGet<T, K extends DeepKeyOf<T> | undefined, V>(
+  obj: T,
+  path?: K,
+  defaultValue?: V
+) {
   if (!path) {
     return obj;
   }
   const pathArray = path.split(".");
-  let res: string | T = obj;
+  let res: V | T | undefined = obj;
   for (let i = 0; i < pathArray.length; i++) {
     if (res?.[pathArray[i]] !== void 0 && res?.[pathArray[i]] !== null) {
       res = res[pathArray[i]];
@@ -245,5 +249,5 @@ export function deepGet<T>(obj: T, path?: DeepKeyOf<T>, defaultValue?: any) {
       break;
     }
   }
-  return res as string;
+  return res;
 }

@@ -18,9 +18,11 @@
     "test-all": "bun test-bun && bun test-deno && bun test-node"
   },
   "keywords": [
+    "pm",
     "pmb",
     "bun",
-    "pm2"
+    "pm2",
+    "process manager"
   ],
   "author": "w-xuefeng",
   "license": "MIT",
