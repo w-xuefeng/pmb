@@ -11,7 +11,7 @@ import {
   readConf,
 } from "../shared/const";
 import { Setting } from "../shared/utils/setting";
-import { getCurrentLang, useI18n } from "../langs/i18n";
+import { getCurrentLang, useI18n } from "../i18n";
 import { unlinkSync } from "../shared/utils/file";
 import type { IBunProcessVO } from "../shared/utils/types";
 import type { IResponse } from "../shared/utils/http";

@@ -1,5 +1,5 @@
 import R, { bodyCheck } from "./r";
-import { setCurrentLang } from "../../../langs/i18n";
+import { setCurrentLang } from "../../../i18n";
 import type { Context } from "hono";
 
 export default async function setLang(c: Context) {

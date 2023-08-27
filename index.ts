@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
-import { Command } from "commander";
 import pkg from "./package.json";
-import PMB from "./src/local/pmb";
+import PMB from "./src/cli/pmb";
 import { L } from "./src/shared/utils";
-import { useI18n } from "./src/langs/i18n";
+import { Command } from "commander";
+import { useI18n } from "./src/i18n";
 
 const pmb = new PMB();
 const program = new Command();

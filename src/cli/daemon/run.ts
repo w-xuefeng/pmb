@@ -7,7 +7,7 @@ import {
   SERVICE_ROOT_DIR,
   DaemonPingStatus,
 } from "../../shared/const";
-import { useI18n } from "../../langs/i18n";
+import { useI18n } from "../../i18n";
 import { createPathSync } from "../../shared/utils/file";
 
 /**

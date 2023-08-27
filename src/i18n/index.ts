@@ -1,5 +1,5 @@
-import zhCN from "./zh-CN";
-import enUS from "./en-US";
+import zhCN from "./langs/zh-CN";
+import enUS from "./langs/en-US";
 import { peek } from "bun";
 import { deepGet } from "../shared/utils";
 import { LANGUAGE_PATH } from "../shared/const";

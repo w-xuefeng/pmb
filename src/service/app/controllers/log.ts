@@ -1,5 +1,5 @@
 import R, { checkException } from "./r";
-import { useI18n } from "../../../langs/i18n";
+import { useI18n } from "../../../i18n";
 import { BunProcessRuntime } from "../runtime/runtime";
 import type { Context } from "hono";
 

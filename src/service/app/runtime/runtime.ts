@@ -10,7 +10,7 @@ import {
   getFilesFromDir,
   unlinkSync,
 } from "../../../shared/utils/file";
-import { useI18n } from "../../../langs/i18n";
+import { useI18n } from "../../../i18n";
 import { BunProcess } from "./bun-process";
 import { globalSubprocess } from "./schedule";
 

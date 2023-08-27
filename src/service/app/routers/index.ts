@@ -7,7 +7,7 @@ import stop from "../controllers/stop";
 import remove from "../controllers/remove";
 import setLang from "../controllers/lang";
 import { serveStatic } from "hono/bun";
-import { useI18n } from "../../../langs/i18n";
+import { useI18n } from "../../../i18n";
 import { Setting } from "../../../shared/utils/setting";
 import { SERVICE_PATH } from "../../../shared/const/service-path";
 import type { Hono } from "hono";
