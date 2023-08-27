@@ -8,6 +8,10 @@
 
 # P(rocess) M(anager) for B(un)
 
+![npm](https://img.shields.io/npm/v/pm-bun?style=flat-square)
+![npm](https://img.shields.io/npm/dt/pm-bun?style=flat-square)
+
+
 [简体中文](README_zh.md) | English
 
 ## install bun
