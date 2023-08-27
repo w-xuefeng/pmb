@@ -64,9 +64,14 @@ class PMB {
       });
       const exists = rs?.data?.length > 0;
       if (exists) {
+        const { t } = await useI18n();
         const ps = rs.data[0];
         L.warn(
-          `the service started by "${ps.entry}" has been run, name is "${name}", pid is "${ps.pid}"`
+          t("exception.NAME_EXISTS", {
+            name,
+            entry: ps.entry,
+            pid: ps.pid,
+          })
         );
         return;
       }

@@ -62,5 +62,7 @@ export default {
     MISSING_BODY: "缺少必要参数",
     NOT_ENABLED: "未启用该功能",
     OUTDATED: "请升级您的 pmb 版本或通过【pmb daemon restart】重启守护进程",
+    NAME_EXISTS:
+      "具体相同名称【{name}】的服务已经在运行, 入口文件为【{entry}】, PID为【{pid}】",
   },
 };

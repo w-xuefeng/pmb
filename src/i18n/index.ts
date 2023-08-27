@@ -44,7 +44,8 @@ export function i18n<EM>(lang: Langs, extraMsg?: ExtraMessage<EM>) {
   return {
     lang,
     t: function (
-      path: DeepKeyOf<typeof zhCN> | DeepKeyOf<typeof enUS> | DeepKeyOf<EM>
+      path: DeepKeyOf<typeof zhCN> | DeepKeyOf<typeof enUS> | DeepKeyOf<EM>,
+      replacer?: Record<string, any>
     ) {
       const obj = Object.assign(
         {},
@@ -53,7 +54,15 @@ export function i18n<EM>(lang: Langs, extraMsg?: ExtraMessage<EM>) {
           enUS: Object.assign(messages.enUS, extraMsg?.enUS),
         }
       )[lang];
-      return deepGet(obj, path as DeepKeyOf<typeof obj>, path) as string;
+      let value = deepGet(obj, path as DeepKeyOf<typeof obj>, path) as string;
+      if (replacer && value) {
+        Object.keys(replacer).forEach((k) => {
+          if (value.includes(`{${k}}`)) {
+            value = value.replace(`{${k}}`, replacer[k]);
+          }
+        });
+      }
+      return value;
     },
   };
 }

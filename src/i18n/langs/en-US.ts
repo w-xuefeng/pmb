@@ -63,5 +63,7 @@ export default {
     NOT_ENABLED: "This feature is not enabled",
     OUTDATED:
       "Please upgrade your pmb version or restart daemon via [pmb daemon restart]",
+    NAME_EXISTS:
+      "A service with the same name [{name}] is already running, entry is [{entry}], pid is [{pid}]",
   },
 };
