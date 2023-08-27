@@ -2,7 +2,9 @@ import { resolve } from "path";
 import {
   BunProcessStatus,
   DAEMON_LOG_PATH,
+  PROCESS_MAX_RESTART_COUNT,
   processPath,
+  readConf,
 } from "../../../shared/const";
 import {
   createPathSync,
@@ -157,7 +159,11 @@ export class BunProcessRuntime {
     }
   }
 
-  static async tryReStartByName(name: string, force = false) {
+  static async tryReStartByName(
+    name: string,
+    force = false,
+    reset: boolean | number = false
+  ) {
     const fileName = resolve(this.path, this.pName2fName(name));
     const bunFile = Bun.file(fileName);
     const exists = await bunFile.exists();
@@ -188,6 +194,30 @@ export class BunProcessRuntime {
     if (pc.restRestartCount <= 0 && !force) {
       return;
     }
+
+    /**
+     * reset rest restart count
+     */
+    if (force && reset) {
+      /**
+       * if typeof reset is boolean and value is true, reset to initial value
+       */
+      if (typeof reset === "boolean") {
+        const initialRestartCount = await readConf(
+          "restart",
+          PROCESS_MAX_RESTART_COUNT,
+          pc.cwd
+        );
+        pc.restRestartCount = initialRestartCount;
+      }
+      /**
+       * if typeof reset is number and value is not 0, reset to this value
+       */
+      if (typeof reset === "number") {
+        pc.restRestartCount = reset;
+      }
+    }
+
     pc.pid && globalSubprocess.delete(Number(pc.pid));
     await this.removeProcess(name);
     const next = new BunProcess(
@@ -205,12 +235,16 @@ export class BunProcessRuntime {
     next.reStart(force);
   }
 
-  static async tryReStartByPid(pid: number, force = false) {
+  static async tryReStartByPid(
+    pid: number,
+    force = false,
+    reset: boolean | number = false
+  ) {
     const ps = await this.getProcesses();
     const item = ps.find((e) => e[1].pid === pid);
     if (item) {
       const [name] = item;
-      await this.tryReStartByName(name, force);
+      await this.tryReStartByName(name, force, reset);
     }
   }
 

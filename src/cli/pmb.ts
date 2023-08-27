@@ -96,7 +96,7 @@ class PMB {
     this.#output(tell, res);
   }
 
-  async restart(type: "name" | "pid", value: string) {
+  async restart(type: "name" | "pid", value: string, reset?: number | boolean) {
     /**
      * say hello to daemon process
      */
@@ -104,7 +104,7 @@ class PMB {
     /**
      * tell the daemon to use name or pid to restart this service
      */
-    const res = await tell.restart({ [type]: value });
+    const res = await tell.restart({ [type]: value, reset });
     this.#output(tell, res);
   }
 

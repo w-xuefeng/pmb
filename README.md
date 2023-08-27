@@ -65,9 +65,11 @@ pmb stop 12345
 - `restart` Restart a service from the name or pid
 
 ```bash
-# pmb restart <name-or-pid>
-pmb restart bun-app
+# pmb restart <name-or-pid> [-r]
 pmb restart 12346
+pmb restart bun-app
+pmb restart bun-app -r   # reset the restRestartCount to the initial value
+pmb restart 12346 -r 50  # reset the restRestartCount to 50
 ```
 
 - `rm` Stop and remove a service from the pid or name

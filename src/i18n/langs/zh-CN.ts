@@ -12,6 +12,7 @@ export default {
     restart: {
       description: "通过名称或者PID重启服务",
       nameOrPid: "指定名称或PID来重启服务",
+      reset: "重置剩余重启次数",
     },
     stop: {
       description: "通过名称或者PID停止服务",

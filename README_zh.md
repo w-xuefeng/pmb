@@ -64,9 +64,11 @@ pmb stop 12345
 - `restart` 通过名称或者PID重启服务
 
 ```bash
-# pmb restart <name-or-pid>
-pmb restart bun-app
+# pmb restart <name-or-pid> [-r]
 pmb restart 12346
+pmb restart bun-app
+pmb restart bun-app -r   # 重置剩余重启次数为初始值
+pmb restart 12346 -r 50  # 重置剩余重启次数为 50
 ```
 
 - `rm` 通过名称或者PID停止并删除服务

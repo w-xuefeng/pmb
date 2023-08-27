@@ -27,11 +27,23 @@ program
   .command("restart")
   .description(t("cli.restart.description"))
   .argument("<name-or-pid>", t("cli.restart.nameOrPid"))
-  .action((value) => {
+  .option("-r, --reset [rest-restart-count]", t("cli.restart.reset"))
+  .action((value, { reset }) => {
+    let restart: number | boolean | undefined = void 0;
+    if (reset) {
+      if (typeof reset === "boolean") {
+        restart = reset;
+      } else if (typeof reset === "string" && /\d+/.test(reset)) {
+        const count = parseInt(reset);
+        if (count >= 0) {
+          restart = count;
+        }
+      }
+    }
     if (isNaN(value)) {
-      pmb.restart("name", value);
+      pmb.restart("name", value, restart);
     } else {
-      pmb.restart("pid", value);
+      pmb.restart("pid", value, restart);
     }
   });
 

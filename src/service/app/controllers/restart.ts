@@ -9,11 +9,11 @@ export default async function restart(c: Context) {
     return res;
   }
   const body = await res.json();
-  const { name, pid } = body;
+  const { name, pid, reset } = body;
   if (name) {
-    await BunProcessRuntime.tryReStartByName(name, true);
+    await BunProcessRuntime.tryReStartByName(name, true, reset);
   } else if (pid) {
-    await BunProcessRuntime.tryReStartByPid(Number(pid), true);
+    await BunProcessRuntime.tryReStartByPid(Number(pid), true, reset);
   }
   return list(c);
 }

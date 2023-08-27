@@ -12,6 +12,7 @@ export default {
     restart: {
       description: "Restart a service from the name or pid",
       nameOrPid: "specify a name or pid to restart the service",
+      reset: "reset remaining restarts",
     },
     stop: {
       description: "Stop a service from the pid or name",
