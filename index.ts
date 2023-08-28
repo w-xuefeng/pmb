@@ -74,13 +74,13 @@ program
 program
   .command("log")
   .description(t("cli.log.description"))
-  .argument("<name-or-pid>", t("cli.log.description"))
+  .argument("[name-or-pid]", t("cli.log.description"))
   .action((value) => {
-    if (isNaN(value)) {
-      pmb.log("name", value);
-    } else {
+    if (!isNaN(value)) {
       pmb.log("pid", value);
+      return;
     }
+    pmb.log("name", value);
   });
 
 program

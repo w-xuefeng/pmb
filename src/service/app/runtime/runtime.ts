@@ -288,8 +288,12 @@ export class BunProcessRuntime {
     }
   }
 
-  static async catLogByName(name: string) {
+  static async catLogByName(name?: string) {
     const { t } = await useI18n();
+    /**
+     * if not name,
+     * return daemon log
+     */
     const logPath = DAEMON_LOG_PATH(name);
     const log = Bun.file(logPath);
     const exists = await log.exists();
@@ -312,10 +316,17 @@ export class BunProcessRuntime {
     };
   }
 
-  static async catLogByPid(pid: number | string) {
+  static async catLogByPid(pid?: number | string) {
+    if (!pid) {
+      /**
+       * if not pid,
+       * return daemon log
+       */
+      return await this.catLogByName();
+    }
     const ps = await this.getProcesses();
     const { t } = await useI18n();
-    const item = ps.find((e) => e[1].pid === pid);
+    const item = ps.find((e) => Number(e[1].pid) === Number(pid));
     if (item) {
       const [name] = item;
       return await this.catLogByName(name);

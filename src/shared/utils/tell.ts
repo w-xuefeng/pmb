@@ -45,7 +45,7 @@ export default class Tell {
   ping() {
     return this.talk.ping(SERVICE_PATH.PING);
   }
-  log(data: { name?: string; pid?: string | number }) {
+  log(data?: { name?: string; pid?: string | number }) {
     return this.talk.get<string>(SERVICE_PATH.LOG, data);
   }
   updatePort(port: string | number) {

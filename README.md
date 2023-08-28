@@ -83,9 +83,10 @@ pmb rm 12347
 - `log` Show log of service from the pid or name
 
 ```bash
-# pmb log <name-or-pid>
-pmb log node-app
-pmb log 12345
+# pmb log [name-or-pid]
+pmb log           # Show log of daemon
+pmb log node-app  # Show log with the name of node-app
+pmb log 12345     # Show log with the pid of 12345 
 ```
 
 - `daemon` Manage daemon process

@@ -82,9 +82,10 @@ pmb rm 12347
 - `log` 通过名称或者PID查询服务日志
 
 ```bash
-# pmb log <name-or-pid>
-pmb log node-app
-pmb log 12345
+# pmb log [name-or-pid]
+pmb log           # 查看守护进程日志
+pmb log node-app  # 查看名称为 node-app 进程的日志
+pmb log 12345     # 查看pid为 12345 进程的日志
 ```
 
 - `daemon` 管理守护进程

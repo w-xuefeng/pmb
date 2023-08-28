@@ -52,6 +52,8 @@ export default {
     },
     log: {
       description: "Show log of service from the pid or name",
+      outputLogTip: "The log with a {type} of [{value}] is as follows:",
+      outputDaeemonLogTip: "The log of the daemon are as follows:",
     },
     lang: {
       description: "Switch display language to 【简体中文】",

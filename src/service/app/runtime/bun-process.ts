@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { BunProcessStatus, DAEMON_LOG_PATH } from "../../../shared/const";
-import { bunProcessToVO } from "../../../shared/utils";
+import { bunProcessToVO, intlTimeFormat } from "../../../shared/utils";
 import { createPathSync } from "../../../shared/utils/file";
 import { BunProcessRuntime } from "./runtime";
 import { globalSubprocess } from "./schedule";
@@ -41,8 +41,9 @@ export class BunProcess {
     if (!exists) {
       createPathSync("file", logPath);
     }
+    const cmd = [...this.starter.split(" "), this.entryFile];
     const ps = Bun.spawn({
-      cmd: [...this.starter.split(" "), this.entryFile],
+      cmd,
       cwd: this.cwd,
       stdout: log,
     });
@@ -52,6 +53,16 @@ export class BunProcess {
     ps.unref();
     BunProcessRuntime.addProcess(this);
     globalSubprocess.set(ps.pid, ps);
+    console.log(`\n------------------------------------------`);
+    console.log(`time: ${intlTimeFormat(new Date())}`);
+    console.log(`name: ${this.name}`);
+    console.log(`pid: ${this.pid}`);
+    console.log(`cwd: ${this.cwd}`);
+    console.log(`cmd: ${cmd.join(" ")}`);
+    console.log(`signalCode: ${ps.signalCode}`);
+    console.log(`exitCode: ${ps.exitCode}`);
+    console.log(`killed: ${ps.killed}`);
+    console.log(`------------------------------------------\n`);
   }
 
   async reStart(force = false) {

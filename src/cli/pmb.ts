@@ -36,8 +36,23 @@ class PMB {
   /**
    * output log handler
    */
-  #outputLog(tell: Tell, res: IResponse<string>) {
-    tell.handleResponse(res, ({ data }) => {
+  #outputLog(
+    tell: Tell,
+    res: IResponse<string>,
+    tips?: { type: "name" | "pid"; value: string }
+  ) {
+    tell.handleResponse(res, async ({ data }) => {
+      const { t } = await useI18n();
+      if (tips) {
+        L.info(
+          `${t("cli.log.outputLogTip", {
+            type: t(`process.${tips.type}`),
+            value: tips.value,
+          })}\n`
+        );
+      } else {
+        L.info(`${t("cli.log.outputDaeemonLogTip")}\n`);
+      }
       console.log(data);
     });
   }
@@ -187,16 +202,22 @@ class PMB {
     }
   }
 
-  async log(type: "pid" | "name", value: string) {
+  async log(type?: "pid" | "name", value?: string) {
     /**
      * say hello to daemon process
      */
     const tell = await greetDaemon();
     /**
      * tell the daemon to use name or pid to get logs
+     * if not value, get daemon log
      */
-    const res = await tell.log({ [type]: value });
-    this.#outputLog(tell, res);
+    const data =
+      type && value
+        ? { [type]: type === "pid" ? Number(value) : value }
+        : void 0;
+    const tips = type && value ? { type, value } : void 0;
+    const res = await tell.log(data);
+    this.#outputLog(tell, res, tips);
   }
 
   /**

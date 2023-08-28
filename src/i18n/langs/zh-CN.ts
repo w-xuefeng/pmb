@@ -50,6 +50,8 @@ export default {
     },
     log: {
       description: "通过名称或者PID查询服务日志",
+      outputLogTip: "{type}为[{value}]的日志如下：",
+      outputDaeemonLogTip: "守护进程的日志如下：",
     },
     lang: {
       description: "切换展示语言为 【en-US】",
