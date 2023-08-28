@@ -113,3 +113,7 @@ pmb ui -d  # disabled Web UI
 ```bash
 pmb lang
 ```
+
+## Component Architecture Diagram
+
+<img src="component-diagram.svg" wdith="100%" />

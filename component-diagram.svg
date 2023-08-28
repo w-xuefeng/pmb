@@ -1,0 +1,238 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="868"
+  height="379" style="background:#fff;">
+  <defs />
+  <g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#C0C0C0" stroke="none" x="289" y="159" width="293" height="44" opacity="0.2" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="282" y="152" width="293" height="44" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 282 152 L 575 152 L 575 196 L 282 196 L 282 152 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="272" y="159" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 272 159 L 292 159 L 292 169 L 272 169 L 272 159 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="272" y="179" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 272 179 L 292 179 L 292 189 L 272 189 L 272 179 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="bold" text-decoration="none" x="389.421875" y="171.5">Command Line</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#C0C0C0" stroke="none" x="289" y="311" width="622" height="44" opacity="0.2" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="282" y="304" width="622" height="44" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 282 304 L 904 304 L 904 348 L 282 348 L 282 304 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="272" y="311" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 272 311 L 292 311 L 292 321 L 272 321 L 272 311 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="272" y="331" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 272 331 L 292 331 L 292 341 L 272 341 L 272 331 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="bold" text-decoration="none" x="549.951416015625" y="323.5">Daemon
+          Service</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#C0C0C0" stroke="none" x="81" y="159" width="190" height="264" opacity="0.2" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="74" y="152" width="190" height="264" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 74 152 L 264 152 L 264 416 L 74 416 L 74 152 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="64" y="159" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 64 159 L 84 159 L 84 169 L 64 169 L 64 159 Z Z" stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="64" y="179" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 64 179 L 84 179 L 84 189 L 64 189 L 64 179 Z Z" stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="bold" text-decoration="none" x="98.853271484375" y="171.5">Shared
+          [const、utils、i8n]</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#C0C0C0" stroke="none" x="81" y="439" width="838" height="79" opacity="0.2" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="74" y="432" width="838" height="79" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 74 432 L 912 432 L 912 511 L 74 511 L 74 432 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="64" y="439" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 64 439 L 84 439 L 84 449 L 64 449 L 64 439 Z Z" stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="64" y="459" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 64 459 L 84 459 L 84 469 L 64 469 L 64 459 Z Z" stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="bold" text-decoration="none" x="473.79638671875" y="451.5">Runtime</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#C0C0C0" stroke="none" x="617" y="159" width="294" height="44" opacity="0.2" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="610" y="152" width="294" height="44" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 610 152 L 904 152 L 904 196 L 610 196 L 610 152 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="600" y="159" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 600 159 L 620 159 L 620 169 L 600 169 L 600 159 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <rect fill="#ffffff" stroke="none" x="600" y="179" width="20" height="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 600 179 L 620 179 L 620 189 L 600 189 L 600 179 Z Z"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="bold" text-decoration="none" x="740.446533203125" y="171.5">Web UI</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 440 196 L 440 304" stroke-miterlimit="10" stroke-dasharray="3" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000"
+        d="M 435.790482243984 293.83732514237585 L 440 304 L 444.209517756016 293.83732514237585"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="normal" text-decoration="none" x="374.5" y="235.5">+Request</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 720 196 L 720 304" stroke-miterlimit="10" stroke-dasharray="3" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000"
+        d="M 715.790482243984 293.83732514237585 L 720 304 L 724.209517756016 293.83732514237585"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="normal" text-decoration="none" x="654.5" y="227.5">+Request</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 456 304 L 456 196" stroke-miterlimit="10" stroke-dasharray="3" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000"
+        d="M 460.209517756016 206.16267485762415 L 456 196 L 451.790482243984 206.16267485762415"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="normal" text-decoration="none" x="461.5" y="275.5">+Response</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 736 304 L 736 196" stroke-miterlimit="10" stroke-dasharray="3" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000"
+        d="M 740.209517756016 206.16267485762415 L 736 196 L 731.790482243984 206.16267485762415"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="normal" text-decoration="none" x="750.5" y="275.5">+Response</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 512 348 L 512 432" stroke-miterlimit="10" stroke-dasharray="3" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000"
+        d="M 507.790482243984 421.83732514237585 L 512 432 L 516.209517756016 421.83732514237585"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="normal" text-decoration="none" x="463.5" y="394.5">+Call</text>
+      </g>
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000" d="M 600 348 L 600 432" stroke-miterlimit="10" stroke-dasharray="3" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <path fill="none" stroke="#000000"
+        d="M 595.790482243984 421.83732514237585 L 600 432 L 604.209517756016 421.83732514237585"
+        stroke-miterlimit="10" />
+    </g>
+    <g transform="translate(-54,-142) scale(1,1)">
+      <g>
+        <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
+          font-style="normal" font-weight="normal" text-decoration="none" x="611.5" y="396.5">+Round-robin</text>
+      </g>
+    </g>
+  </g>
+</svg>

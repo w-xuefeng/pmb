@@ -112,3 +112,7 @@ pmb ui -d  # 停用 Web UI 功能
 ```bash
 pmb lang
 ```
+
+## 架构图
+
+<img src="component-diagram.svg" wdith="100%" />
