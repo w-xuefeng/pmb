@@ -29,6 +29,16 @@ export default {
       description: "管理守护进程",
       action:
         "守护进程的操作，例如：status（查看状态）、start（启动）、stop（停止）、restart（重启）",
+      hasRunning: "守护进程已在端口【{port}】上运行，PID为【{pid}】!",
+      unexpected:
+        "守护进程似乎响应了一个不期待的结果！也许可以尝试升级版本或者重启守护进程来解决这个问题.",
+      stopException: "守护进程似乎没有正确停止！",
+      notRunning: "守护进程尚未运行！",
+      started: "守护进程已经成功在端口[{port}]上{type}！",
+      start: "启动",
+      restart: "重启",
+      stopped: "守护进程已经停止！",
+      manageTips: "你可以使用 status|start|stop|restart 指令来管理守护进程!",
     },
     ui: {
       description: "在浏览器中列出通过PMB启动的服务",

@@ -29,6 +29,18 @@ export default {
       description: "Manage daemon process",
       action:
         "action implemented on the daemon, Eg: status, start, stop, restart",
+      hasRunning:
+        "The daemon has been running on port [{port}], pid is [{pid}]!",
+      unexpected:
+        "The daemon seems to have responded to unexpected results! Perhaps you can try upgrading the version or restart  daemon to solve this problem.",
+      stopException: "The daemon seems to have not been stopped correctly!",
+      notRunning: "The daemon not running!",
+      started: "Daemon service {type} successfully on port [{port}]！",
+      start: "start",
+      restart: "restart",
+      stopped: "Daemon service has been stopped!",
+      manageTips:
+        "You can use status|start|stop|restart to manage the daemon process!",
     },
     ui: {
       description: "Show list of service started by pmb in browser",

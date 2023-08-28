@@ -209,6 +209,7 @@ class PMB {
     const logFile = Bun.file(logPath);
     const exists = await file.exists();
     const logExists = await logFile.exists();
+    const { t } = await useI18n();
     let pid: string | undefined = void 0;
 
     /**
@@ -225,26 +226,18 @@ class PMB {
         try {
           const pong = await tell.ping();
           if (pong === DaemonPingStatus.PONG) {
-            output &&
-              L.info(
-                `The daemon has been running on port [${port}], pid is [${pid}]!\n`
-              );
+            output && L.info(`${t("cli.daemon.hasRunning", { port, pid })}\n`);
           } else {
-            output &&
-              L.warn(
-                `The daemon seems to have responded to unexpected results! Perhaps you can try upgrading the version to solve this problem.\n`
-              );
+            output && L.warn(`${t("cli.daemon.unexpected")}\n`);
           }
         } catch {
-          output &&
-            L.warn(`The daemon seems to have not been stopped correctly!\n`);
+          output && L.warn(`${t("cli.daemon.stopException")}\n`);
         }
       } else {
-        output &&
-          L.warn(`The daemon seems to have not been stopped correctly!\n`);
+        output && L.warn(`${t("cli.daemon.stopException")}\n`);
       }
     } else {
-      output && L.info(`The daemon not running!\n`);
+      output && L.info(`${t("cli.daemon.notRunning")}\n`);
     }
 
     return {
@@ -256,12 +249,16 @@ class PMB {
     };
   }
 
-  async daemonStart(type = "start") {
+  async daemonStart(type: "start" | "restart" = "start") {
     const tell = await greetDaemon();
     const pong = await tell.ping();
+    const { t } = await useI18n();
     if (pong === DaemonPingStatus.PONG) {
       L.success(
-        `Daemon service ${type} successfully on port [${tell.talk.port}]\n`
+        `${t("cli.daemon.started", {
+          type: t(`cli.daemon.${type}`),
+          port: tell.talk.port,
+        })}\n`
       );
     }
   }
@@ -275,7 +272,8 @@ class PMB {
     if (logExists) {
       unlinkSync(logPath);
     }
-    output && L.success(`Daemon service has been stopped!\n`);
+    const { t } = await useI18n();
+    output && L.success(`${t("cli.daemon.stopped")}\n`);
   }
 
   async daemon(type: "status" | "start" | "stop" | "restart") {
@@ -298,9 +296,8 @@ class PMB {
         break;
 
       default:
-        L.tips(
-          "You can use status|start|stop|restart to manage the daemon process!"
-        );
+        const { t } = await useI18n();
+        L.tips(`${t("cli.daemon.manageTips")}\n`);
         break;
     }
   }
