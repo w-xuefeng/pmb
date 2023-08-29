@@ -83,7 +83,7 @@
 											"font": "Arial;13;0",
 											"left": 112,
 											"top": -400,
-											"width": 73.67724609375,
+											"width": 78.28593444824219,
 											"height": 13,
 											"text": "(from Model)"
 										},
@@ -263,7 +263,7 @@
 											"font": "Arial;13;0",
 											"left": -16,
 											"top": -272,
-											"width": 73.67724609375,
+											"width": 78.28593444824219,
 											"height": 13,
 											"text": "(from Model)"
 										},
@@ -431,7 +431,7 @@
 											"top": 159,
 											"width": 171,
 											"height": 13,
-											"text": "Shared [const、utils、i8n]"
+											"text": "Shared [const、utils、i18n]"
 										},
 										{
 											"_type": "LabelView",
@@ -443,7 +443,7 @@
 											"font": "Arial;13;0",
 											"left": -16,
 											"top": 112,
-											"width": 73.67724609375,
+											"width": 78.28593444824219,
 											"height": 13,
 											"text": "(from Model)"
 										},
@@ -623,7 +623,7 @@
 											"font": "Arial;13;0",
 											"left": -16,
 											"top": 32,
-											"width": 73.67724609375,
+											"width": 78.28593444824219,
 											"height": 13,
 											"text": "(from Model)"
 										},
@@ -803,7 +803,7 @@
 											"font": "Arial;13;0",
 											"left": 16,
 											"top": -38,
-											"width": 73.67724609375,
+											"width": 78.28593444824219,
 											"height": 13,
 											"text": "(from Model)"
 										},
@@ -950,7 +950,7 @@
 									"font": "Arial;13;0",
 									"left": 375,
 									"top": 223,
-									"width": 56.01171875,
+									"width": 57.16094970703125,
 									"height": 13,
 									"alpha": -2.066348298524159,
 									"distance": 42.05948168962618,
@@ -1044,7 +1044,7 @@
 									"font": "Arial;13;0",
 									"left": 655,
 									"top": 215,
-									"width": 56.01171875,
+									"width": 57.16094970703125,
 									"height": 13,
 									"alpha": -2.218608068958294,
 									"distance": 46.400431032480725,
@@ -1138,7 +1138,7 @@
 									"font": "Arial;13;0",
 									"left": 462,
 									"top": 263,
-									"width": 66.1298828125,
+									"width": 66.7159423828125,
 									"height": 13,
 									"alpha": -2.0446473739920514,
 									"distance": 43.829214001622255,
@@ -1233,7 +1233,7 @@
 									"font": "Arial;13;0",
 									"left": 751,
 									"top": 263,
-									"width": 66.1298828125,
+									"width": 66.7159423828125,
 									"height": 13,
 									"alpha": -1.965587187344989,
 									"distance": 52,
@@ -1326,9 +1326,9 @@
 										"$ref": "AAAAAAGKPHJZp7N9B9Y="
 									},
 									"font": "Arial;13;0",
-									"left": 464,
+									"left": 463,
 									"top": 382,
-									"width": 29.986328125,
+									"width": 30.705963134765625,
 									"height": 13,
 									"alpha": -1.6001998617371844,
 									"distance": 34.0147027033899,
@@ -1420,9 +1420,9 @@
 										"$ref": "AAAAAAGKPHPLNbO1ieA="
 									},
 									"font": "Arial;13;0",
-									"left": 612,
+									"left": 609,
 									"top": 384,
-									"width": 79.13623046875,
+									"width": 84.87693786621094,
 									"height": 13,
 									"alpha": 1.5707960886996586,
 									"distance": 52,
@@ -1593,7 +1593,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Shared [const、utils、i8n]"
+					"name": "Shared [const、utils、i18n]"
 				},
 				{
 					"_type": "UMLComponent",

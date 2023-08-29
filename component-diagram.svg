@@ -88,8 +88,8 @@
     <g transform="translate(-54,-142) scale(1,1)">
       <g>
         <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
-          font-style="normal" font-weight="bold" text-decoration="none" x="98.853271484375" y="171.5">Shared
-          [const、utils、i8n]</text>
+          font-style="normal" font-weight="bold" text-decoration="none" x="95.23828125" y="171.5">Shared
+          [const、utils、i18n]</text>
       </g>
     </g>
     <g transform="translate(-54,-142) scale(1,1)">
@@ -161,7 +161,8 @@
     <g transform="translate(-54,-142) scale(1,1)">
       <g>
         <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
-          font-style="normal" font-weight="normal" text-decoration="none" x="374.5" y="235.5">+Request</text>
+          font-style="normal" font-weight="normal" text-decoration="none" x="375.0746154785156"
+          y="235.5">+Request</text>
       </g>
     </g>
     <g transform="translate(-54,-142) scale(1,1)">
@@ -175,7 +176,8 @@
     <g transform="translate(-54,-142) scale(1,1)">
       <g>
         <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
-          font-style="normal" font-weight="normal" text-decoration="none" x="654.5" y="227.5">+Request</text>
+          font-style="normal" font-weight="normal" text-decoration="none" x="655.0746154785156"
+          y="227.5">+Request</text>
       </g>
     </g>
     <g transform="translate(-54,-142) scale(1,1)">
@@ -189,7 +191,8 @@
     <g transform="translate(-54,-142) scale(1,1)">
       <g>
         <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
-          font-style="normal" font-weight="normal" text-decoration="none" x="461.5" y="275.5">+Response</text>
+          font-style="normal" font-weight="normal" text-decoration="none" x="461.79302978515625"
+          y="275.5">+Response</text>
       </g>
     </g>
     <g transform="translate(-54,-142) scale(1,1)">
@@ -203,7 +206,8 @@
     <g transform="translate(-54,-142) scale(1,1)">
       <g>
         <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
-          font-style="normal" font-weight="normal" text-decoration="none" x="750.5" y="275.5">+Response</text>
+          font-style="normal" font-weight="normal" text-decoration="none" x="750.7930297851562"
+          y="275.5">+Response</text>
       </g>
     </g>
     <g transform="translate(-54,-142) scale(1,1)">
@@ -217,7 +221,7 @@
     <g transform="translate(-54,-142) scale(1,1)">
       <g>
         <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
-          font-style="normal" font-weight="normal" text-decoration="none" x="463.5" y="394.5">+Call</text>
+          font-style="normal" font-weight="normal" text-decoration="none" x="462.8598175048828" y="394.5">+Call</text>
       </g>
     </g>
     <g transform="translate(-54,-142) scale(1,1)">
@@ -231,7 +235,8 @@
     <g transform="translate(-54,-142) scale(1,1)">
       <g>
         <path fill="none" stroke="none" /><text fill="#000000" stroke="none" font-family="Arial" font-size="13px"
-          font-style="normal" font-weight="normal" text-decoration="none" x="611.5" y="396.5">+Round-robin</text>
+          font-style="normal" font-weight="normal" text-decoration="none" x="611.3703536987305"
+          y="396.5">+Round-robin</text>
       </g>
     </g>
   </g>
