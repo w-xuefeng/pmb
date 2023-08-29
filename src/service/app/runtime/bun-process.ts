@@ -46,6 +46,24 @@ export class BunProcess {
       cmd,
       cwd: this.cwd,
       stdout: log,
+      onExit: (proc, exitCode, signalCode, error) => {
+        console.log(`\n------------------exit------------------`);
+        console.log(`time: ${intlTimeFormat(new Date())}`);
+        console.log(`name: ${this.name}`);
+        console.log(`pid: ${proc.pid}`);
+        console.log(`cwd: ${this.cwd}`);
+        console.log(`cmd: ${cmd.join(" ")}`);
+        console.log(`signalCode: ${signalCode}`);
+        console.log(`exitCode: ${exitCode}`);
+        console.log(`killed: ${proc.killed}`);
+        console.log(`errno: ${error?.errno}`);
+        console.log(`errorCause: ${error?.cause}`);
+        console.log(`errorCode: ${error?.code}`);
+        console.log(`errorName: ${error?.name}`);
+        console.log(`errorMessage: ${error?.message}`);
+        console.log(`errorSyscall: ${error?.syscall}`);
+        console.log(`----------------------------------------\n`);
+      },
     });
     this.status = BunProcessStatus.RUNNING;
     this.startTimes.push(Date.now());
@@ -53,7 +71,7 @@ export class BunProcess {
     ps.unref();
     BunProcessRuntime.addProcess(this);
     globalSubprocess.set(ps.pid, ps);
-    console.log(`\n------------------------------------------`);
+    console.log(`\n------------------start------------------`);
     console.log(`time: ${intlTimeFormat(new Date())}`);
     console.log(`name: ${this.name}`);
     console.log(`pid: ${this.pid}`);
@@ -62,7 +80,7 @@ export class BunProcess {
     console.log(`signalCode: ${ps.signalCode}`);
     console.log(`exitCode: ${ps.exitCode}`);
     console.log(`killed: ${ps.killed}`);
-    console.log(`------------------------------------------\n`);
+    console.log(`----------------------------------------\n`);
   }
 
   async reStart(force = false) {
