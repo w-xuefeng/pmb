@@ -1,6 +1,10 @@
 import { resolve } from "path";
 import { BunProcessStatus, DAEMON_LOG_PATH } from "../../../shared/const";
-import { bunProcessToVO, intlTimeFormat } from "../../../shared/utils";
+import {
+  bunProcessToVO,
+  logProcessExit,
+  logProcessStart,
+} from "../../../shared/utils";
 import { createPathSync } from "../../../shared/utils/file";
 import { BunProcessRuntime } from "./runtime";
 import { globalSubprocess } from "./schedule";
@@ -47,40 +51,16 @@ export class BunProcess {
       cwd: this.cwd,
       stdout: log,
       onExit: (proc, exitCode, signalCode, error) => {
-        console.log(`\n------------------exit------------------`);
-        console.log(`time: ${intlTimeFormat(new Date())}`);
-        console.log(`name: ${this.name}`);
-        console.log(`pid: ${proc.pid}`);
-        console.log(`cwd: ${this.cwd}`);
-        console.log(`cmd: ${cmd.join(" ")}`);
-        console.log(`signalCode: ${signalCode}`);
-        console.log(`exitCode: ${exitCode}`);
-        console.log(`killed: ${proc.killed}`);
-        console.log(`errno: ${error?.errno}`);
-        console.log(`errorCause: ${error?.cause}`);
-        console.log(`errorCode: ${error?.code}`);
-        console.log(`errorName: ${error?.name}`);
-        console.log(`errorMessage: ${error?.message}`);
-        console.log(`errorSyscall: ${error?.syscall}`);
-        console.log(`----------------------------------------\n`);
+        logProcessExit(cmd, this, proc, signalCode, exitCode, error);
       },
     });
     this.status = BunProcessStatus.RUNNING;
     this.startTimes.push(Date.now());
     this.pid = ps.pid;
-    ps.unref();
     BunProcessRuntime.addProcess(this);
     globalSubprocess.set(ps.pid, ps);
-    console.log(`\n------------------start------------------`);
-    console.log(`time: ${intlTimeFormat(new Date())}`);
-    console.log(`name: ${this.name}`);
-    console.log(`pid: ${this.pid}`);
-    console.log(`cwd: ${this.cwd}`);
-    console.log(`cmd: ${cmd.join(" ")}`);
-    console.log(`signalCode: ${ps.signalCode}`);
-    console.log(`exitCode: ${ps.exitCode}`);
-    console.log(`killed: ${ps.killed}`);
-    console.log(`----------------------------------------\n`);
+    logProcessStart(cmd, this, ps);
+    ps.unref();
   }
 
   async reStart(force = false) {

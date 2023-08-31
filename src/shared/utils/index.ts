@@ -6,6 +6,7 @@ import { customAlphabet } from "nanoid";
 import { BunProcessStatus, BunProcessStatusColor, __DEV__ } from "../const";
 import type { BunProcess } from "../../service/app/runtime/bun-process";
 import type { DeepKeyOf, IBunProcessVO } from "./types";
+import type { Errorlike, Subprocess } from "bun";
 
 export const nanoid = customAlphabet(
   "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
@@ -250,4 +251,43 @@ export function deepGet<T, K extends DeepKeyOf<T> | undefined, V>(
     }
   }
   return res;
+}
+
+export function logProcessExit(
+  cmd: string[],
+  pc: BunProcess,
+  ps: Subprocess,
+  signalCode?: Subprocess["signalCode"] | number,
+  exitCode?: Subprocess["exitCode"],
+  error?: Errorlike
+) {
+  console.log(`\n------------------exit------------------`);
+  console.log(`time: ${intlTimeFormat(new Date())}`);
+  console.log(`name: ${pc.name}`);
+  console.log(`pid: ${ps.pid}`);
+  console.log(`cwd: ${pc.cwd}`);
+  console.log(`cmd: ${cmd.join(" ")}`);
+  console.log(`signalCode: ${signalCode}`);
+  console.log(`exitCode: ${exitCode}`);
+  console.log(`killed: ${ps.killed}`);
+  console.log(`errno: ${error?.errno}`);
+  console.log(`errorCause: ${error?.cause}`);
+  console.log(`errorCode: ${error?.code}`);
+  console.log(`errorName: ${error?.name}`);
+  console.log(`errorMessage: ${error?.message}`);
+  console.log(`errorSyscall: ${error?.syscall}`);
+  console.log(`----------------------------------------\n`);
+}
+
+export function logProcessStart(cmd: string[], pc: BunProcess, ps: Subprocess) {
+  console.log(`\n------------------start------------------`);
+  console.log(`time: ${intlTimeFormat(new Date())}`);
+  console.log(`name: ${pc.name}`);
+  console.log(`pid: ${ps.pid}`);
+  console.log(`cwd: ${pc.cwd}`);
+  console.log(`cmd: ${cmd.join(" ")}`);
+  console.log(`signalCode: ${ps.signalCode}`);
+  console.log(`exitCode: ${ps.exitCode}`);
+  console.log(`killed: ${ps.killed}`);
+  console.log(`----------------------------------------\n`);
 }
