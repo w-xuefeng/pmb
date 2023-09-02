@@ -1,14 +1,8 @@
 import Tell from "../../shared/utils/tell";
 import { L } from "../../shared/utils";
-import { resolve } from "path";
-import {
-  DAEMON_LOG_PATH,
-  DAEMON_PID_PATH,
-  SERVICE_ROOT_DIR,
-  DaemonPingStatus,
-} from "../../shared/const";
+import { DAEMON_PID_PATH, DaemonPingStatus } from "../../shared/const";
 import { useI18n } from "../../i18n";
-import { createPathSync } from "../../shared/utils/file";
+import daemonStarter from "../../shared/daemon/daemon-starter";
 
 /**
  * Create a talk
@@ -37,8 +31,8 @@ async function checkDaemon() {
   const exists = await file.exists();
   if (exists) {
     const content = await file.text();
-    const [pid, port] = content?.split("|");
-    return [pid, port].map((e) => Number(e)).filter((e) => !!e);
+    const [pid, port, startTime] = content?.split("|");
+    return [pid, port, startTime].map((e) => Number(e)).filter((e) => !!e);
   }
   return false;
 }
@@ -47,17 +41,7 @@ async function checkDaemon() {
  * Start daemon
  */
 async function startDaemon() {
-  const logPath = DAEMON_LOG_PATH();
-  const log = Bun.file(logPath);
-  const exists = await log.exists();
-  if (!exists) {
-    createPathSync("file", logPath);
-  }
-  const ps = Bun.spawn({
-    cmd: ["bun", resolve(import.meta.dir, "start-service.ts")],
-    cwd: SERVICE_ROOT_DIR,
-    stdout: log,
-  });
+  const ps = await daemonStarter();
   await Bun.sleep(1800);
   const running = await checkDaemon();
   updatePort(running);
