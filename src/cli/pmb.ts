@@ -1,7 +1,13 @@
 import open from "open";
 import greetDaemon from "./daemon/run";
 import Tell from "../shared/utils/tell";
-import { L, bunProcessVOToTable, nanoid, singleton } from "../shared/utils";
+import {
+  L,
+  bunProcessVOToTable,
+  intlTimeFormat,
+  nanoid,
+  singleton,
+} from "../shared/utils";
 import {
   BunProcessStatus,
   DAEMON_LOG_PATH,
@@ -241,13 +247,21 @@ class PMB {
       const content = await file.text();
       const data = content?.split("|");
       const port = data[1];
+      const time = data[2] ? intlTimeFormat(Number(data[2])) : void 0;
       pid = data[0];
-      if (pid && port) {
+      if (pid && port && time) {
         const tell = new Tell(port);
         try {
           const pong = await tell.ping();
           if (pong === DaemonPingStatus.PONG) {
-            output && L.info(`${t("cli.daemon.hasRunning", { port, pid })}\n`);
+            output &&
+              L.info(
+                `${t("cli.daemon.hasRunning", {
+                  port,
+                  pid,
+                  time,
+                })}\n`
+              );
           } else {
             output && L.warn(`${t("cli.daemon.unexpected")}\n`);
           }

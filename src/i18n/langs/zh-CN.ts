@@ -29,7 +29,8 @@ export default {
       description: "管理守护进程",
       action:
         "守护进程的操作，例如：status（查看状态）、start（启动）、stop（停止）、restart（重启）",
-      hasRunning: "守护进程已在端口【{port}】上运行，PID为【{pid}】!",
+      hasRunning:
+        "守护进程已在端口【{port}】上运行，PID为【{pid}】, 上次启动时间为【{time}】!",
       unexpected:
         "守护进程似乎响应了一个不期待的结果！也许可以尝试升级版本或者重启守护进程来解决这个问题.",
       stopException: "守护进程似乎没有正确停止！",

@@ -30,7 +30,7 @@ export default {
       action:
         "action implemented on the daemon, Eg: status, start, stop, restart",
       hasRunning:
-        "The daemon has been running on port [{port}], pid is [{pid}]!",
+        "The daemon has been running on port [{port}], pid is [{pid}]，last started at [{time}]!",
       unexpected:
         "The daemon seems to have responded to unexpected results! Perhaps you can try upgrading the version or restart  daemon to solve this problem.",
       stopException: "The daemon seems to have not been stopped correctly!",
