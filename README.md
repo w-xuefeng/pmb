@@ -40,6 +40,12 @@ pmb <command> -h
 pmb ls 
 ```
 
+- `monit` Monitoring services started by pmb
+
+```bash
+pmb monit 
+```
+
 - `start` Start a service from the entry file
 
 ```bash

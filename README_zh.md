@@ -39,6 +39,12 @@ pmb <command> -h
 pmb ls 
 ```
 
+- `monit` 监控通过PMB启动的服务
+
+```bash
+pmb monit 
+```
+
 - `start` 通过项目入口文件启动一个服务
 
 ```bash
