@@ -1,5 +1,6 @@
 import open from "open";
 import greetDaemon from "./daemon/run";
+import monit from "./daemon/monit";
 import Tell from "../shared/utils/tell";
 import {
   L,
@@ -101,14 +102,16 @@ class PMB {
     }
 
     /**
-     * the number of process-auto-restart
+     * restart: the number of process-auto-restart
+     * cwd: the current working directory of the process
      */
-    const restart = await readConf("restart", PROCESS_MAX_RESTART_COUNT);
-
-    /**
-     * the current working directory of the process
-     */
-    const cwd = await readConf("cwd", process.cwd());
+    const { restart, cwd } = await readConf<["restart", "cwd"]>(
+      ["restart", "cwd"],
+      {
+        restart: PROCESS_MAX_RESTART_COUNT,
+        cwd: process.cwd(),
+      }
+    );
 
     /**
      * Tell the daemon to start the service
@@ -175,6 +178,10 @@ class PMB {
     if (rs.data) {
       render(rs.data);
     }
+  }
+
+  async monit() {
+    await monit();
   }
 
   async ui(enabled?: boolean) {

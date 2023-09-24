@@ -91,6 +91,13 @@ program
   });
 
 program
+  .command("monit")
+  .description(t("cli.monit.description"))
+  .action(() => {
+    pmb.monit();
+  });
+
+program
   .command("daemon")
   .description(t("cli.daemon.description"))
   .argument("<action>", t("cli.daemon.action"))

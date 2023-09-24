@@ -32,6 +32,8 @@
     "bun-types": "^0.7.3"
   },
   "dependencies": {
+    "@types/blessed": "^0.1.23",
+    "blessed": "^0.1.81",
     "colors": "^1.4.0",
     "commander": "^11.0.0",
     "easy-table": "^1.2.0",

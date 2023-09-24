@@ -107,6 +107,7 @@ export function bunProcessToVO(pc: BunProcess) {
     restRestartCount: [null, void 0, Infinity].includes(pc.restRestartCount)
       ? "Infinity"
       : pc.restRestartCount,
+    cwd: pc.cwd,
   } as IBunProcessVO;
 }
 

@@ -26,7 +26,7 @@ const updatePort = (running: false | number[]) => {
 /**
  * Check if the daemon is running
  */
-async function checkDaemon() {
+export async function checkDaemon() {
   const file = Bun.file(DAEMON_PID_PATH);
   const exists = await file.exists();
   if (exists) {

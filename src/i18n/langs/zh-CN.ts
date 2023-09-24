@@ -25,6 +25,13 @@ export default {
     ls: {
       description: "列出通过PMB启动的服务",
     },
+    monit: {
+      description: "监控通过PMB启动的服务",
+      processList: "进程列表",
+      processLog: "进程日志",
+      processMetadata: "进程元信息",
+      customMetrics: "自定义指标",
+    },
     daemon: {
       description: "管理守护进程",
       action:
@@ -67,7 +74,9 @@ export default {
     status: "状态",
     startTime: "启动时间",
     restRestartCount: "剩余重启次数",
+    cwd: "当前工作目录",
     listEmpty: "暂无通过PMB启动的进程",
+    listError: "获取进程列表时出错",
     notExist: "进程不存在",
     notLog: "暂无日志",
   },

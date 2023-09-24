@@ -25,6 +25,13 @@ export default {
     ls: {
       description: "Show list of service started by pmb",
     },
+    monit: {
+      description: "Monitoring services started by pmb",
+      processList: "Process list",
+      processLog: "Process log",
+      processMetadata: "Metadata",
+      customMetrics: "Custom metrics",
+    },
     daemon: {
       description: "Manage daemon process",
       action:
@@ -68,7 +75,9 @@ export default {
     status: "status",
     startTime: "startTime",
     restRestartCount: "restRestartCount",
+    cwd: "cwd",
     listEmpty: "No process running by pmb",
+    listError: "Error fetching process list",
     notExist: "Process does not exist",
     notLog: "There are currently no logs available",
   },

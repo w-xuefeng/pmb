@@ -122,18 +122,29 @@ export enum BunProcessStatusColor {
  * use default value if not custom config
  * custom config could be created via a ".pmb.config.ts" file in project root directory
  */
-export async function readConf(name: string, defaultValue: any, cwd?: string) {
+export async function readConf<K extends string | string[]>(
+  nameOrNames: K,
+  defaultValue: K extends string[] ? Record<K[number], any> : any,
+  cwd?: string
+) {
+  const names: string[] =
+    typeof nameOrNames === "string" ? [nameOrNames] : nameOrNames;
   const md = await import(`${cwd || process.cwd()}/.pmb.config.ts`).catch(
     () => ({
       default: void 0,
     })
   );
   const config = md?.default;
-  if (typeof config === "function") {
-    return config()?.[name] ?? defaultValue;
+  const rs =
+    typeof config === "function"
+      ? config()
+      : typeof config === "object" && md.default !== null
+      ? config
+      : defaultValue;
+  if (!Array.isArray(nameOrNames)) {
+    return rs?.[names[0]] ?? defaultValue;
   }
-  if (typeof config === "object" && md.default !== null) {
-    return config[name] ?? defaultValue;
-  }
-  return defaultValue;
+  return Object.fromEntries(
+    names.map((name) => [name, rs?.[name] ?? defaultValue?.[name]])
+  );
 }
