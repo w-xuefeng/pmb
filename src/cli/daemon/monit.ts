@@ -32,6 +32,7 @@ const commonBoxOption: Partial<blessed.Widgets.BoxOptions> = {
 };
 
 const globalRef = {
+  processList: [] as IBunProcessVO[],
   currentProcess: null as IBunProcessVO | null,
   config: "\n",
   timer: void 0 as NodeJS.Timeout | undefined,
@@ -54,11 +55,19 @@ const createBox = (
   return box;
 };
 
+const getMemeryOrCPUByPID = (pid: string, type: "mem" | "cpu") => {
+  const rs = Bun.spawnSync(["ps", "-p", pid, "-o", `%${type}`]);
+  const out = rs.stdout.toString()?.split("\n")?.at(1);
+  return out ? `${out}%` : "none";
+};
+
 const mapProcessItem = (e: IBunProcessVO, i: number) => {
-  const name = e.name.slice(-16).padEnd(16);
+  const name = e.name.slice(-14).padEnd(14);
   const pid = String(e.pid).padEnd(8);
   const status = colors[BunProcessStatusColor[e.status]](e.status).padEnd(11);
-  return `${i + 1}.${name} ${pid}  ${status}`;
+  const mem = `MEM:${getMemeryOrCPUByPID(e.pid, "mem")}`.padEnd(8);
+  const cpu = `CPU:${getMemeryOrCPUByPID(e.pid, "cpu")}`.padEnd(8);
+  return `${i + 1}.${name} ${pid}  ${status}  ${mem}  ${cpu}`;
 };
 
 const mapRow = (obj: Record<string, any>) =>
@@ -115,6 +124,7 @@ const getCustomConfig = async (metricsBox: blessed.Widgets.BoxElement) => {
 };
 
 const getList = async (
+  list: blessed.Widgets.ListElement,
   listBox: blessed.Widgets.BoxElement,
   logBox: blessed.Widgets.BoxElement,
   metaBox: blessed.Widgets.BoxElement,
@@ -133,33 +143,12 @@ const getList = async (
     listBox.setContent(t("process.listEmpty"));
     return;
   }
-  const processList = rs.data;
-  globalRef.currentProcess = globalRef.currentProcess || processList[0];
-  const list = blessed.list({
-    parent: listBox,
-    top: 0,
-    left: 0,
-    keys: true,
-    vi: true,
-    mouse: true,
-    style: {
-      fg: "white",
-      selected: {
-        bg: "blue",
-      },
-    },
-  });
+  globalRef.processList = rs.data;
+  globalRef.currentProcess =
+    globalRef.currentProcess || globalRef.processList[0];
 
-  list.setItems(processList.map(mapProcessItem));
+  list.setItems(globalRef.processList.map(mapProcessItem));
 
-  const onSelect = async (_: blessed.Widgets.BlessedElement, i: number) => {
-    globalRef.currentProcess = processList[i];
-    setMetadata(metaBox);
-    await setLog(logBox, true);
-    await getCustomConfig(metricsBox);
-  };
-
-  list.on("select item", onSelect);
   setMetadata(metaBox);
   await setLog(logBox);
   await getCustomConfig(metricsBox);
@@ -223,8 +212,32 @@ export default async function monit() {
     return process.exit(0);
   });
 
+  const list = blessed.list({
+    parent: listBox,
+    top: 0,
+    left: 0,
+    keys: true,
+    vi: true,
+    mouse: true,
+    style: {
+      fg: "white",
+      selected: {
+        bg: "blue",
+      },
+    },
+  });
+
+  const onSelect = async (_: blessed.Widgets.BlessedElement, i: number) => {
+    globalRef.currentProcess = globalRef.processList?.[i];
+    setMetadata(metadataBox);
+    await setLog(logBox, true);
+    await getCustomConfig(metricsBox);
+  };
+
+  list.on("select item", onSelect);
+
   await getGlobalConfig();
-  await getList(listBox, logBox, metadataBox, metricsBox);
+  await getList(list, listBox, logBox, metadataBox, metricsBox);
 
   listBox.focus();
   screen.render();
@@ -233,7 +246,7 @@ export default async function monit() {
    * keep alive
    */
   const alive = () => {
-    setLog(logBox).finally(() => {
+    getList(list, listBox, logBox, metadataBox, metricsBox).finally(() => {
       screen.render();
       clearTimeout(globalRef.timer);
       globalRef.timer = setTimeout(() => {
