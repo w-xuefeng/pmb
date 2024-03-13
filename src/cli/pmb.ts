@@ -20,6 +20,7 @@ import {
 import { Setting } from "../shared/utils/setting";
 import { getCurrentLang, useI18n } from "../i18n";
 import { unlinkSync } from "../shared/utils/file";
+import { getCommand } from "../shared/const/commands";
 import type { IBunProcessVO } from "../shared/utils/types";
 import type { IResponse } from "../shared/utils/http";
 
@@ -308,7 +309,7 @@ class PMB {
   async daemonStop(output = true) {
     const { exists, pid, logExists, logPath } = await this.daemonStatus(false);
     if (exists && pid) {
-      pid && Bun.spawn(["kill", "-9", `${pid}`]).unref();
+      pid && Bun.spawn(getCommand('taskkill', `${pid}`)).unref();
       unlinkSync(DAEMON_PID_PATH);
     }
     if (logExists) {

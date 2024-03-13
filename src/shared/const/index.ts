@@ -19,11 +19,11 @@ export const ROOT_DIR = __DEV__
   ? /**
      * for local dev and test
      */
-    resolve(import.meta.dir, "../../..")
+  resolve(import.meta.dir, "../../..")
   : /**
      * for production
      */
-    resolve(os.homedir(), ".pm-bun");
+  resolve(os.homedir(), ".pm-bun");
 
 /**
  * daemon service root directory
@@ -139,8 +139,8 @@ export async function readConf<K extends string | string[]>(
     typeof config === "function"
       ? config()
       : typeof config === "object" && md.default !== null
-      ? config
-      : defaultValue;
+        ? config
+        : defaultValue;
   if (!Array.isArray(nameOrNames)) {
     return rs?.[names[0]] ?? defaultValue;
   }
@@ -148,3 +148,14 @@ export async function readConf<K extends string | string[]>(
     names.map((name) => [name, rs?.[name] ?? defaultValue?.[name]])
   );
 }
+
+/**
+ * operation system platform
+ * 'aix', 'darwin', 'freebsd','linux','openbsd', 'sunos', and 'win32'
+ */
+export const OSP = os.platform();
+
+/**
+ * operation system platform is windows
+ */
+export const isWin = OSP === 'win32';

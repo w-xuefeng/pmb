@@ -27,20 +27,20 @@
   "author": "w-xuefeng",
   "license": "MIT",
   "devDependencies": {
-    "@types/figlet": "^1.5.6",
-    "@types/node": "^20.5.0",
-    "bun-types": "^0.7.3"
+    "@types/figlet": "^1.5.8",
+    "@types/node": "^20.11.26",
+    "bun-types": "^1.0.30"
   },
   "dependencies": {
-    "@types/blessed": "^0.1.23",
+    "@types/blessed": "^0.1.25",
     "blessed": "^0.1.81",
     "colors": "^1.4.0",
-    "commander": "^11.0.0",
+    "commander": "^12.0.0",
     "easy-table": "^1.2.0",
-    "figlet": "^1.6.0",
-    "glob": "^10.3.3",
-    "hono": "^3.5.0",
-    "nanoid": "^4.0.2",
-    "open": "^9.1.0"
+    "figlet": "^1.7.0",
+    "glob": "^10.3.10",
+    "hono": "^4.1.0",
+    "nanoid": "^5.0.6",
+    "open": "^10.1.0"
   }
 }

@@ -15,6 +15,7 @@ import {
 import { useI18n } from "../../../i18n";
 import { BunProcess } from "./bun-process";
 import { globalSubprocess } from "./schedule";
+import { getCommand } from "../../../shared/const/commands";
 
 export class BunProcessRuntime {
   static path = processPath;
@@ -113,7 +114,7 @@ export class BunProcessRuntime {
       isRunning = !sp.killed;
     } else {
       const subps = Bun.spawn({
-        cmd: ["ps", "-p", `${pid}`, "-o", "comm="],
+        cmd: getCommand('taskInfo', `${pid}`),
       });
       const path = await new Response(subps.stdout).text();
       isRunning = !!path;
@@ -257,7 +258,7 @@ export class BunProcessRuntime {
       p.kill();
       globalSubprocess.delete(p.pid);
     } else {
-      Bun.spawn(["kill", "-9", `${pid}`]).unref();
+      Bun.spawn(getCommand('taskkill', `${pid}`)).unref();
     }
   }
 

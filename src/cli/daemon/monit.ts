@@ -9,6 +9,7 @@ import {
   PROCESS_MAX_RESTART_COUNT,
   readConf,
 } from "../../shared/const";
+import { getCommand } from "../../shared/const/commands";
 import type { IBunProcessVO } from "../../shared/utils/types";
 
 /**
@@ -35,7 +36,7 @@ const globalRef = {
   processList: [] as IBunProcessVO[],
   currentProcess: null as IBunProcessVO | null,
   config: "\n",
-  timer: void 0 as NodeJS.Timeout | undefined,
+  timer: void 0 as Timer | undefined,
 };
 
 /**
@@ -56,7 +57,7 @@ const createBox = (
 };
 
 const getMemeryOrCPUByPID = (pid: string, type: "mem" | "cpu") => {
-  const rs = Bun.spawnSync(["ps", "-p", pid, "-o", `%${type}`]);
+  const rs = Bun.spawnSync(getCommand('taskMemCPUInfo', `${pid}`, type));
   const out = rs.stdout.toString()?.split("\n")?.at(1);
   return out ? `${out}%` : "none";
 };

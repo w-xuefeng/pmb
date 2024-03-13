@@ -6,7 +6,7 @@ import { customAlphabet } from "nanoid";
 import { BunProcessStatus, BunProcessStatusColor, __DEV__ } from "../const";
 import type { BunProcess } from "../../service/app/runtime/bun-process";
 import type { DeepKeyOf, IBunProcessVO } from "./types";
-import type { Errorlike, Subprocess } from "bun";
+import type { ErrorLike, Subprocess } from "bun";
 
 export const nanoid = customAlphabet(
   "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
@@ -260,7 +260,7 @@ export function logProcessExit(
   ps: Subprocess,
   signalCode?: Subprocess["signalCode"] | number,
   exitCode?: Subprocess["exitCode"],
-  error?: Errorlike
+  error?: ErrorLike
 ) {
   console.log(`\n------------------exit------------------`);
   console.log(`time: ${intlTimeFormat(new Date())}`);

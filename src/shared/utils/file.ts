@@ -1,13 +1,13 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { glob } from "glob";
-import { resolve } from "path";
+import { resolve, sep } from "path";
 
 export { existsSync, unlinkSync } from "node:fs";
 
 export function pathJoin(
   prevPath: string | number | (string | number)[],
   nextPath: string | number | (string | number)[],
-  separator = "/"
+  separator = sep
 ) {
   const handleSinglePath = (singlePath: string | number) => {
     return `${singlePath}`.endsWith(separator)
@@ -35,9 +35,9 @@ export function createPathSync(
     mkdirSync(path, { recursive: true });
     return;
   }
-  const paths = path.split("/");
+  const paths = path.split(sep);
   paths.pop();
-  const dirPath = paths.join("/");
+  const dirPath = paths.join(sep);
   mkdirSync(dirPath, { recursive: true });
   writeFileSync(path, content);
 }

@@ -34,7 +34,7 @@ export async function autoRestartDaemon() {
   }
 }
 
-export async function startHeadrCheck() {
+export async function startHeartbeatCheck() {
   const interval = await Setting.getSetting("polling.interval", 10 * 1000);
   globalAlive?.free?.();
   globalAlive = KeepProcessAlive.create(async () => {

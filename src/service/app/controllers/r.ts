@@ -32,7 +32,7 @@ export default class R {
 }
 
 export async function bodyCheck(c: Context) {
-  if (!c.req.body) {
+  if (!c.req.raw.body) {
     const { t } = await useI18n();
     return {
       hasBody: false,
@@ -41,7 +41,7 @@ export async function bodyCheck(c: Context) {
   }
   return {
     hasBody: true,
-    res: new Response(c.req.body),
+    res: new Response(c.req.raw.body),
   };
 }
 

@@ -1,3 +1,4 @@
+import { getCommand } from "../const/commands";
 import daemonStarter from "./daemon-starter";
 
 /**
@@ -6,7 +7,7 @@ import daemonStarter from "./daemon-starter";
 
 try {
   const pid = process.argv.slice(2)[0];
-  Bun.spawnSync(["kill", "-9", `${pid}`]);
+  Bun.spawnSync(getCommand('taskkill', `${pid}`));
   const ps = await daemonStarter();
   ps.unref();
 } catch (error) {

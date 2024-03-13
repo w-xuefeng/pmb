@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { startHeadrCheck } from "./runtime/schedule";
+import { startHeartbeatCheck } from "./runtime/schedule";
 import { useRouters } from "./routers";
 
 const port = 9501;
@@ -11,7 +11,7 @@ async function startService() {
     port,
     fetch: app.fetch,
   });
-  await startHeadrCheck();
+  await startHeartbeatCheck();
   return server;
 }
 
