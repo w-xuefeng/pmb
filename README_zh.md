@@ -48,12 +48,12 @@ pmb monit
 - `start` 通过项目入口文件启动一个服务
 
 ```bash
-# pmb start <entry-file-path> [-n name] [-s starter]
+# pmb start <entry-file-path> [-n name] [-s starter] [-a args]
 pmb start path/app.ts
 pmb start path/bun-app.ts -n app
 # 默认使用 [bun] 启动，等价于 [-s bun]
 
-pmb start path/bun-app.ts -n bun-app -s bun
+pmb start path/bun-app.ts -n bun-app -s bun -a "--mode production"
 pmb start path/node-app.js -n node-project -s node
 pmb start path/deno-app.ts -n deno-project -s 'deno run -A'
 

@@ -49,12 +49,12 @@ pmb monit
 - `start` Start a service from the entry file
 
 ```bash
-# pmb start <entry-file-path> [-n name] [-s starter]
+# pmb start <entry-file-path> [-n name] [-s starter] [-a args]
 pmb start path/app.ts
 pmb start path/bun-app.ts -n app 
 # using [bun] by default, equivalent to [-s bun]
 
-pmb start path/bun-app.ts -n bun-app -s bun
+pmb start path/bun-app.ts -n bun-app -s bun -a "--mode production"
 pmb start path/node-app.js -n node-project -s node
 pmb start path/deno-app.ts -n deno-project -s 'deno run -A'
 
