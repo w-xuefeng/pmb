@@ -114,7 +114,7 @@ export class BunProcessRuntime {
       isRunning = !sp.killed;
     } else {
       const subps = Bun.spawn({
-        cmd: getCommand('taskInfo', `${pid}`),
+        cmd: getCommand("taskInfo", `${pid}`),
       });
       const path = await new Response(subps.stdout).text();
       isRunning = !!path;
@@ -230,7 +230,8 @@ export class BunProcessRuntime {
        * it does not consume the number of times
        */
       force ? pc.restRestartCount : pc.restRestartCount - 1,
-      pc.cwd
+      pc.cwd,
+      pc.args
     );
     next.startTimes = pc.startTimes;
     next.reStart(force);
@@ -258,7 +259,7 @@ export class BunProcessRuntime {
       p.kill();
       globalSubprocess.delete(p.pid);
     } else {
-      Bun.spawn(getCommand('taskkill', `${pid}`)).unref();
+      Bun.spawn(getCommand("taskkill", `${pid}`)).unref();
     }
   }
 

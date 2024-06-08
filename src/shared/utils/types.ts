@@ -7,6 +7,7 @@ export interface IBunProcessVO {
   startTime: string;
   restRestartCount: number | string;
   cwd: string;
+  args?: string;
 }
 
 export type DeepKeyOf<T> = T extends Record<string, any>

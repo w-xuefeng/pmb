@@ -23,6 +23,7 @@ export default class Tell {
     cwd: string;
     starter?: string;
     restart?: number;
+    args?: string;
   }) {
     return this.talk.post<IBunProcessVO[]>(SERVICE_PATH.START, data);
   }

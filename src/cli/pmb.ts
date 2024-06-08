@@ -69,7 +69,7 @@ class PMB {
    * manage process
    */
 
-  async start(entry: string, name?: string, starter?: string) {
+  async start(entry: string, name?: string, starter?: string, args?: string) {
     /**
      * say hello to daemon process
      */
@@ -117,7 +117,7 @@ class PMB {
     /**
      * Tell the daemon to start the service
      */
-    const res = await tell.start({ name, entry, cwd, starter, restart });
+    const res = await tell.start({ name, entry, cwd, starter, restart, args });
     this.#output(tell, res);
   }
 
@@ -309,7 +309,7 @@ class PMB {
   async daemonStop(output = true) {
     const { exists, pid, logExists, logPath } = await this.daemonStatus(false);
     if (exists && pid) {
-      pid && Bun.spawn(getCommand('taskkill', `${pid}`)).unref();
+      pid && Bun.spawn(getCommand("taskkill", `${pid}`)).unref();
       unlinkSync(DAEMON_PID_PATH);
     }
     if (logExists) {

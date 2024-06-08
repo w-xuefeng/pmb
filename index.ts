@@ -19,8 +19,9 @@ program
   .argument("<entry>", t("cli.start.entry"))
   .option("-n, --name <process-name>", t("cli.start.name"))
   .option("-s, --starter <starter-program>", t("cli.start.starter"))
+  .option("-a, --args <starter-program-args>", t("cli.start.starterArgs"))
   .action((entry, options) => {
-    pmb.start(entry, options?.name, options?.starter);
+    pmb.start(entry, options?.name, options?.starter, options?.args);
   });
 
 program

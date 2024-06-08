@@ -8,6 +8,7 @@ export default {
       entry: "指定服务启动的入口文件路径",
       name: "为服务创建一个名称",
       starter: "指定启动服务的应用程序",
+      starterArgs: "指定要传入的参数",
     },
     restart: {
       description: "通过名称或者PID重启服务",
@@ -79,6 +80,7 @@ export default {
     listError: "获取进程列表时出错",
     notExist: "进程不存在",
     notLog: "暂无日志",
+    args: "启动参数",
   },
   exception: {
     ENTRY_NOT_EXISTS: "入口文件不存在",

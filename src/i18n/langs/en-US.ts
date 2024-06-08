@@ -8,6 +8,7 @@ export default {
       entry: "specify the entry file path for service startup",
       name: "create a name for the service",
       starter: "specify the application to start the service",
+      starterArgs: "specify the parameters to be passed in",
     },
     restart: {
       description: "Restart a service from the name or pid",
@@ -80,6 +81,7 @@ export default {
     listError: "Error fetching process list",
     notExist: "Process does not exist",
     notLog: "There are currently no logs available",
+    args: "args",
   },
   exception: {
     ENTRY_NOT_EXISTS: "Entry file not exists",

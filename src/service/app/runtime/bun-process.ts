@@ -16,21 +16,26 @@ export class BunProcess {
   startTimes: number[] = [];
   port?: number;
   pid?: string | number;
+  args?: string;
   starter = "bun";
   restRestartCount = 10;
   cwd = process.cwd();
+  cmd?: string;
+
   constructor(
     name: string,
     entryFile: string,
     starter = "bun",
     restart = 10,
-    cwd = process.cwd()
+    cwd = process.cwd(),
+    args = ""
   ) {
     this.name = name;
     this.entryFile = entryFile;
     this.starter = starter;
     this.restRestartCount = restart ?? Infinity;
     this.cwd = cwd;
+    this.args = args;
   }
 
   async start() {
@@ -45,7 +50,14 @@ export class BunProcess {
     if (!exists) {
       createPathSync("file", logPath);
     }
-    const cmd = [...this.starter.split(" "), this.entryFile];
+    const args =
+      this.args
+        ?.split(" ")
+        ?.map((e) => e.split("="))
+        ?.flat()
+        ?.filter((e) => !!e) || [];
+    const cmd = [...this.starter.split(" "), this.entryFile, ...args];
+    this.cmd = cmd.join(" ");
     const ps = Bun.spawn({
       cmd,
       cwd: this.cwd,

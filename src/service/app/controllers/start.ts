@@ -9,7 +9,7 @@ export default async function start(c: Context) {
     return res;
   }
   const body = await res.json();
-  const { name, entry, cwd, starter, restart } = body;
+  const { name, entry, cwd, starter, restart, args } = body;
 
   const entryBunfFile = Bun.file(resolve(cwd, entry));
   const entryBunfFileExists = await entryBunfFile.exists();
@@ -24,7 +24,7 @@ export default async function start(c: Context) {
     return exception;
   }
 
-  const p = new BunProcess(name, entry, starter, restart, cwd);
+  const p = new BunProcess(name, entry, starter, restart, cwd, args);
   await p.start();
 
   return c.json(R.ok([p.toVO()]));
