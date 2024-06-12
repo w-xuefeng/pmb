@@ -106,6 +106,7 @@ body {
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       .action {
         white-space: nowrap;

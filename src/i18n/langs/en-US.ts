@@ -47,8 +47,7 @@ export default {
       start: "start",
       restart: "restart",
       stopped: "Daemon service has been stopped!",
-      manageTips:
-        "You can use status|start|stop|restart to manage the daemon process!",
+      manageTips: "You can use status|start|stop|restart to manage the daemon process!",
     },
     ui: {
       description: "Show list of service started by pmb in browser",
@@ -87,9 +86,35 @@ export default {
     ENTRY_NOT_EXISTS: "Entry file not exists",
     MISSING_BODY: "Required parameter missing",
     NOT_ENABLED: "This feature is not enabled",
-    OUTDATED:
-      "Please upgrade your pmb version or restart daemon via [pmb daemon restart]",
-    NAME_EXISTS:
-      "A service with the same name [{name}] is already running, entry is [{entry}], pid is [{pid}]",
+    OUTDATED: "Please upgrade your pmb version or restart daemon via [pmb daemon restart]",
+    NAME_EXISTS: "A service with the same name [{name}] is already running, entry is [{entry}], pid is [{pid}]",
   },
+  ui: {
+    pmb: "P(rocess) M(anager) for B(un)",
+    start: "START",
+    startProcess: "Start a process",
+    cwd: "CWD",
+    entry: "ENTRY",
+    name: "NAME",
+    starter: "STARTER",
+    restart: "RESTART",
+    args: "ARGS",
+    confirm: "CONFIRM",
+    index: "index",
+    processName: "name",
+    processId: "pid",
+    processStarter: "starter",
+    processEntry: "entry",
+    processStatus: "status",
+    processStartTime: "startTime",
+    processRestRestartCount: "rest-restart-count",
+    processArgs: "args",
+    actions: "actions",
+    loading: "Loading...",
+    processing: "Processing...",
+    empty: "No process running by pmb!",
+    actionRemove: "remove",
+    actionRestart: "restart",
+    actionStop: "stop"
+  }
 };

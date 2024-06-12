@@ -1,7 +1,26 @@
 /**
+ * config
+ */
+function getConfig(key = '') {
+  return key
+    ? key in window.__$GLOBAL_UI_CONFIG
+      ? window.__$GLOBAL_UI_CONFIG[key]
+      : void 0
+    : window.__$GLOBAL_UI_CONFIG;
+}
+
+function getLang(key = '', defaultValue = '') {
+  const langConf = getConfig('lang');
+  return key
+    ? key in langConf
+      ? langConf[key] ?? defaultValue
+      : defaultValue
+    : langConf;
+}
+
+/**
  * dom
  */
-
 const STATUS_COLOR = {
   NOT_RUNNING: "red",
   RUNNING: "green",
@@ -9,19 +28,19 @@ const STATUS_COLOR = {
 };
 
 const restartAction = {
-  text: "restart",
+  text: getLang("actionRestart", "restart"),
   handler: restart,
   classNames: "restart-btn btn action",
 };
 
 const stopAction = {
-  text: "stop",
+  text: getLang("actionStop", "stop"),
   handler: stop,
   classNames: "stop-btn btn action",
 };
 
 const removeAction = {
-  text: "remove",
+  text: getLang("actionRemove", "remove"),
   handler: remove,
   classNames: "remove-btn btn action",
 };
@@ -35,7 +54,7 @@ const ACTION_MAP = {
 function createLoading() {
   const div = document.createElement("div");
   div.className = "loading";
-  div.innerText = "processing...";
+  div.innerText = getLang("processing", "processing...");
   return div;
 }
 
@@ -125,7 +144,7 @@ function replaceTable(data) {
   if (data?.length <= 0) {
     const emptyText = empty?.querySelector(".empty");
     empty.hidden = false;
-    emptyText.innerText = "No process running by pmb!";
+    emptyText.innerText = getLang("empty", "No process running by pmb!")
     return;
   }
   empty.hidden = true;
@@ -252,7 +271,7 @@ async function startProcess(value) {
 function initDialogValue() {
   return {
     entry: "",
-    cwd: "",
+    cwd: getConfig("cwd"),
     name: "",
     starter: "bun",
     restart: 10,
@@ -271,6 +290,13 @@ function initStartDialog() {
   const restartInput = document.querySelector("#restart");
   const argsInput = document.querySelector("#args");
   const closeBtn = document.querySelector(".close-btn");
+
+  entryInput.value = dialogValue.entry;
+  cwdInput.value = dialogValue.cwd;
+  nameInput.value = dialogValue.name;
+  starterInput.value = dialogValue.starter;
+  restartInput.value = dialogValue.restart;
+  argsInput.value = dialogValue.args;
 
   addEvent(entryInput, "input", async (e) => {
     dialogValue.entry = e?.target?.value;
@@ -300,7 +326,7 @@ function initStartDialog() {
     if (dialogValue.entry && dialogValue.cwd) {
       startProcess(dialogValue);
       entryInput.value = "";
-      cwdInput.value = "";
+      cwdInput.value = getConfig("cwd");
       nameInput.value = "";
       starterInput.value = "bun";
       restartInput.value = 10;
@@ -325,7 +351,18 @@ function startLoop(gapTime) {
   }, gapTime);
 }
 
+async function displayLang() {
+  const lang = getLang();
+  Object.keys(lang).forEach(k => {
+    const dom = document.querySelector(`[data-lang-key=${k}]`)
+    if (dom) {
+      dom.innerText = lang[k];
+    }
+  })
+}
+
 window.onload = async () => {
+  displayLang();
   initStartDialog();
   addEvent(".start-btn", "click", showStartDialog);
   list();

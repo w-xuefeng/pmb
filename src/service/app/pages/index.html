@@ -7,6 +7,7 @@
   <link rel="icon" href="./favicon.ico" />
   <title>PMB | P(rocess) M(anager) for B(un)</title>
   <link rel="stylesheet" href="./static/css.css">
+  <script src="/config/ui?type=script"></script>
 </head>
 
 <body>
@@ -19,12 +20,12 @@
  / ____/ /  / / /_/ /
 /_/   /_/  /_/_____/
       </pre>
-      <span class="title">P(rocess) M(anager) for B(un)</span>
+      <span class="title" data-lang-key="pmb">P(rocess) M(anager) for B(un)</span>
     </header>
-    <span class="btn start-btn">START</span>
+    <span class="btn start-btn" data-lang-key="start">START</span>
     <dialog class="start-dialog">
       <header class="start-dialog-header">
-        <span>Start a process</span>
+        <span data-lang-key="startProcess">Start a process</span>
         <svg class="close-btn" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4008"
           width="20" height="20">
           <path
@@ -36,33 +37,33 @@
       <form method="dialog">
         <div class="form-container">
           <label for="cwd">
-            <span class="label"><span class="required">* </span>CWD</span>
+            <span class="label"><span class="required">* </span><span data-lang-key="cwd">CWD</span></span>
             <input class="input" placeholder="fill in the cwd" id="cwd" required>
           </label>
           <label for="entry">
-            <span class="label"><span class="required">* </span>ENTRY</span>
+            <span class="label"><span class="required">* </span><span data-lang-key="entry">ENTRY</span></span>
             <input class="input" placeholder="fill in the entry file path relative cwd" id="entry" required>
           </label>
           <label for="name">
-            <span class="label">NAME</span>
+            <span class="label" data-lang-key="name">NAME</span>
             <input class="input" placeholder="fill in the name" id="name">
           </label>
           <label for="starter">
-            <span class="label">STARTER</span>
+            <span class="label" data-lang-key="starter">STARTER</span>
             <input class="input" placeholder="fill in the starter" id="starter" type="text" value="bun">
           </label>
           <label for="restart">
-            <span class="label">RESTART</span>
+            <span class="label" data-lang-key="restart">RESTART</span>
             <input class="input" placeholder="fill in the restart count" id="restart" type="number" value="10">
           </label>
           <label for="args">
-            <span class="label">ARGS</span>
+            <span class="label" data-lang-key="args">ARGS</span>
             <input class="input" placeholder="fill in the args" id="args" type="text">
           </label>
         </div>
         <div>
           <button class="btn confirm-btn" value="confirm">
-            <span>CONFIRM</span>
+            <span data-lang-key="confirm">CONFIRM</span>
           </button>
         </div>
       </form>
@@ -71,20 +72,20 @@
 
     <table class="table">
       <tr class="thead">
-        <td class="index">index</td>
-        <td class="name">name</td>
-        <td class="pid">pid</td>
-        <td class="starter">starter</td>
-        <td class="entry">entry</td>
-        <td class="status">status</td>
-        <td class="startTime">startTime</td>
-        <td class="restRestartCount">rest-Restart-Count</td>
-        <td class="args">args</td>
-        <td class="actions">actions</td>
+        <td class="index" data-lang-key="index">index</td>
+        <td class="name" data-lang-key="processName">name</td>
+        <td class="pid" data-lang-key="processId">pid</td>
+        <td class="starter" data-lang-key="processStarter">starter</td>
+        <td class="entry" data-lang-key="processEntry">entry</td>
+        <td class="status" data-lang-key="processStatus">status</td>
+        <td class="startTime" data-lang-key="processStartTime">startTime</td>
+        <td class="restRestartCount" data-lang-key="processRestRestartCount">rest-Restart-Count</td>
+        <td class="args" data-lang-key="processArgs">args</td>
+        <td class="actions" data-lang-key="actions">actions</td>
       </tr>
       <tr class="empty-container">
         <td colspan="9">
-          <div class="empty">
+          <div class="empty" data-lang-key="loading">
             Loading...
           </div>
         </td>

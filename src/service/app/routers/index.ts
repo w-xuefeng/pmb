@@ -6,6 +6,7 @@ import restart from "../controllers/restart";
 import stop from "../controllers/stop";
 import remove from "../controllers/remove";
 import setLang from "../controllers/lang";
+import UIConfig from "../controllers/ui-config";
 import { serveStatic } from "hono/bun";
 import { useI18n } from "../../../i18n";
 import { Setting } from "../../../shared/utils/setting";
@@ -16,6 +17,7 @@ export async function useRouters(app: Hono) {
   app.get(SERVICE_PATH.PING, ping);
   app.get(SERVICE_PATH.LIST, list);
   app.get(SERVICE_PATH.LOG, log);
+  app.get(SERVICE_PATH.UICONFIG, UIConfig);
   app.post(SERVICE_PATH.START, start);
   app.post(SERVICE_PATH.RESTART, restart);
   app.post(SERVICE_PATH.STOP, stop);

@@ -7,4 +7,5 @@ export enum SERVICE_PATH {
   REMOVE = "/process/remove",
   LOG = "/process/log",
   SETLANG = "/config/set-lang",
+  UICONFIG = '/config/ui'
 }
