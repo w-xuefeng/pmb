@@ -13,7 +13,7 @@ export default async function UIConfig(c: Context) {
     const rsType = 'application/javascript';
     const jsFile = `window.__$GLOBAL_UI_CONFIG = ${JSON.stringify(data)}`;
     const content = await new Blob([jsFile], { type: rsType }).arrayBuffer();
-    return c.newResponse(content, 200, { 'content-type': rsType });
+    return c.newResponse(content, 200, { 'content-type': `${rsType};charset=utf-8;` });
   }
   return c.json(R.ok(data));
 }
