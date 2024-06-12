@@ -79,6 +79,7 @@ function createTableRow(index, row) {
     "status",
     "startTime",
     "restRestartCount",
+    "args"
   ];
   const indexTd = document.createElement("td");
   indexTd.className = "index";
@@ -93,6 +94,7 @@ function createTableRow(index, row) {
     } else {
       td.innerText = row[k];
     }
+    td.title = row[k];
     return td;
   });
   const actionTd = createTableAction(row, index);
@@ -211,8 +213,8 @@ async function list() {
   replaceTable(list.data);
 }
 
-async function start(entry, name, starter, restart, cwd) {
-  await tell.start({ entry, name, starter, restart, cwd });
+async function start(entry, name, starter, restart, cwd, args) {
+  await tell.start({ entry, name, starter, restart, cwd, args });
   await list();
 }
 
@@ -242,8 +244,9 @@ async function startProcess(value) {
     name = createName(entry),
     starter = "bun",
     restart = 10,
+    args = ""
   } = value;
-  await start(entry, name, starter, restart, cwd);
+  await start(entry, name, starter, restart, cwd, args);
 }
 
 function initDialogValue() {
@@ -253,6 +256,7 @@ function initDialogValue() {
     name: "",
     starter: "bun",
     restart: 10,
+    args: ""
   };
 }
 
@@ -265,6 +269,7 @@ function initStartDialog() {
   const nameInput = document.querySelector("#name");
   const starterInput = document.querySelector("#starter");
   const restartInput = document.querySelector("#restart");
+  const argsInput = document.querySelector("#args");
   const closeBtn = document.querySelector(".close-btn");
 
   addEvent(entryInput, "input", async (e) => {
@@ -282,6 +287,9 @@ function initStartDialog() {
   addEvent(restartInput, "input", (e) => {
     dialogValue.restart = e?.target?.value;
   });
+  addEvent(argsInput, "input", (e) => {
+    dialogValue.args = e?.target?.value;
+  });
   addEvent(closeBtn, "click", () => {
     startDialog?.close?.();
   });
@@ -296,6 +304,7 @@ function initStartDialog() {
       nameInput.value = "";
       starterInput.value = "bun";
       restartInput.value = 10;
+      argsInput.value = "";
     } else {
       console.log("missing param");
     }

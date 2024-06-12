@@ -108,7 +108,7 @@ export function bunProcessToVO(pc: BunProcess) {
       ? "Infinity"
       : pc.restRestartCount,
     cwd: pc.cwd,
-    args: pc.args,
+    args: pc.args ?? '-',
   } as IBunProcessVO;
 }
 
