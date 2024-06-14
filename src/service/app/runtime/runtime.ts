@@ -113,11 +113,12 @@ export class BunProcessRuntime {
     if (sp) {
       isRunning = !sp.killed;
     } else {
+      const { command, parseOutput } = getCommand("taskInfo", `${pid}`);
       const subps = Bun.spawn({
-        cmd: getCommand("taskInfo", `${pid}`),
+        cmd: command,
       });
       const path = await new Response(subps.stdout).text();
-      isRunning = !!path;
+      isRunning = !!parseOutput(path);
     }
     return isRunning;
   }
@@ -259,7 +260,7 @@ export class BunProcessRuntime {
       p.kill();
       globalSubprocess.delete(p.pid);
     } else {
-      Bun.spawn(getCommand("taskkill", `${pid}`)).unref();
+      Bun.spawn(getCommand("taskkill", `${pid}`).command).unref();
     }
   }
 

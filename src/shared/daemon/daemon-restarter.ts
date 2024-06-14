@@ -7,7 +7,8 @@ import daemonStarter from "./daemon-starter";
 
 try {
   const pid = process.argv.slice(2)[0];
-  Bun.spawnSync(getCommand('taskkill', `${pid}`));
+  const c = getCommand('taskkill', `${pid}`);
+  Bun.spawnSync(c.command);
   const ps = await daemonStarter();
   ps.unref();
 } catch (error) {

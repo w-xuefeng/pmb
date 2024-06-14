@@ -8,6 +8,22 @@ import type { BunProcess } from "../../service/app/runtime/bun-process";
 import type { DeepKeyOf, IBunProcessVO } from "./types";
 import type { ErrorLike, Subprocess } from "bun";
 
+export const handleSize = (size: number) => {
+  if (size >= 1024 ** 4) {
+    return `${Math.ceil(size / 1024 ** 4)}TB`;
+  }
+  if (size >= 1024 ** 3) {
+    return `${Math.ceil(size / 1024 ** 3)}GB`;
+  }
+  if (size >= 1024 ** 2) {
+    return `${Math.ceil(size / 1024 ** 2)}MB`;
+  }
+  if (size >= 1024) {
+    return `${Math.ceil(size / 1024)}KB`;
+  }
+  return `${size}B`;
+};
+
 export const nanoid = customAlphabet(
   "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
   6

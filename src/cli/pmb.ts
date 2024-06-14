@@ -309,7 +309,7 @@ class PMB {
   async daemonStop(output = true) {
     const { exists, pid, logExists, logPath } = await this.daemonStatus(false);
     if (exists && pid) {
-      pid && Bun.spawn(getCommand("taskkill", `${pid}`)).unref();
+      Bun.spawn(getCommand("taskkill", `${pid}`).command).unref();
       unlinkSync(DAEMON_PID_PATH);
     }
     if (logExists) {

@@ -57,9 +57,10 @@ const createBox = (
 };
 
 const getMemeryOrCPUByPID = (pid: string, type: "mem" | "cpu") => {
-  const rs = Bun.spawnSync(getCommand('taskMemCPUInfo', `${pid}`, type));
-  const out = rs.stdout.toString()?.split("\n")?.at(1);
-  return out ? `${out}%` : "none";
+  const { command, parseOutput } = getCommand('taskMemCPUInfo', `${pid}`, type);
+  const rs = Bun.spawnSync(command);
+  const out = rs.stdout.toString();
+  return parseOutput(out);
 };
 
 const mapProcessItem = (e: IBunProcessVO, i: number) => {
@@ -72,7 +73,7 @@ const mapProcessItem = (e: IBunProcessVO, i: number) => {
 };
 
 const mapRow = (obj: Record<string, any>) =>
-  Object.keys(obj).map((k) => `${k}: ${obj[k]}`);
+  Object.keys(obj).map((k) => `${k}: ${obj[k] || '-'}`);
 
 const setMetadata = (metaBox: blessed.Widgets.BoxElement) => {
   if (!globalRef.currentProcess) return;
