@@ -66,6 +66,9 @@ export default {
       description: "Switch display language to 【简体中文】",
       set: "Current display language is [en-US]",
     },
+    upgrade: {
+      description: "Upgrade pm-bun",
+    }
   },
   process: {
     name: "name",

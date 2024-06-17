@@ -356,6 +356,33 @@ class PMB {
       L.success(t("cli.lang.set"));
     });
   }
+
+  async upgrade(currentVersion: string) {
+    const rs = Bun.spawnSync(['npm', 'view', 'pm-bun', 'version']);
+    const latestVersion = rs.stdout.toString().trim();
+    if (currentVersion === latestVersion) {
+      L.color(
+        ['Congrats!', ` You're already on the latest version of pm-bun`, `(which is v${latestVersion})`],
+        ['green', 'white', 'gray']
+      );
+      return
+    }
+    L.color(
+      [`Find latest version ${latestVersion},`, `Start downloading...`],
+      ['green', 'white']
+    );
+    Bun.spawn({
+      cmd: ['bun', 'install', '-g', `pm-bun@${latestVersion}`],
+      stdout: "inherit",
+      onExit() {
+        Bun.spawnSync(['pmb', 'daemon', 'restart']);
+        L.color(
+          ['Congrats!', ` You're already on the latest version of pm-bun`, `(which is v${latestVersion})`],
+          ['green', 'white', 'gray']
+        );
+      }
+    })
+  }
 }
 
 export default singleton<PMB, typeof PMB>(PMB);

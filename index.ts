@@ -122,4 +122,11 @@ program
     pmb.setLang();
   });
 
+program
+  .command("upgrade")
+  .description(t("cli.upgrade.description"))
+  .action(() => {
+    pmb.upgrade(pkg.version);
+  });
+
 program.parse();
