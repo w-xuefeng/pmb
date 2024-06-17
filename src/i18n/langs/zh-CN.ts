@@ -68,6 +68,11 @@ export default {
     },
     upgrade: {
       description: "升级 pm-bun",
+      congrats: "恭喜!",
+      latestVersion: "你使用的已经是最新版本的 pm-bun",
+      whichIsVersion: "版本:",
+      findNewVersion: "发现了新版本",
+      startDownloading: "开始下载"
     }
   },
   process: {

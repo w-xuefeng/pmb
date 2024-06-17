@@ -68,6 +68,11 @@ export default {
     },
     upgrade: {
       description: "Upgrade pm-bun",
+      congrats: "Congrats!",
+      latestVersion: "You're already on the latest version of pm-bun",
+      whichIsVersion: "which is",
+      findNewVersion: "Discovered a new version",
+      startDownloading: "Start downloading"
     }
   },
   process: {

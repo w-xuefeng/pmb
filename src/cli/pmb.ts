@@ -360,24 +360,25 @@ class PMB {
   async upgrade(currentVersion: string) {
     const rs = Bun.spawnSync(['npm', 'view', 'pm-bun', 'version']);
     const latestVersion = rs.stdout.toString().trim();
+    const { t } = await useI18n();
     if (currentVersion === latestVersion) {
       L.color(
-        ['Congrats!', ` You're already on the latest version of pm-bun`, `(which is v${latestVersion})`],
+        [t('cli.upgrade.congrats'), t('cli.upgrade.latestVersion'), `(${t('cli.upgrade.whichIsVersion')} v${latestVersion})`],
         ['green', 'white', 'gray']
       );
       return
     }
     L.color(
-      [`Find latest version ${latestVersion},`, `Start downloading...`],
+      [`${t('cli.upgrade.findNewVersion')} ${latestVersion},`, `${t('cli.upgrade.startDownloading')}...`],
       ['green', 'white']
     );
     Bun.spawn({
-      cmd: ['bun', 'install', '-g', `pm-bun@${latestVersion}`],
+      cmd: ['bun', 'add', '-g', `pm-bun@${latestVersion}`],
       stdout: "inherit",
       onExit() {
         Bun.spawnSync(['pmb', 'daemon', 'restart']);
         L.color(
-          ['Congrats!', ` You're already on the latest version of pm-bun`, `(which is v${latestVersion})`],
+          [t('cli.upgrade.congrats'), t('cli.upgrade.latestVersion'), `(${t('cli.upgrade.whichIsVersion')} v${latestVersion})`],
           ['green', 'white', 'gray']
         );
       }
