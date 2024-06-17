@@ -120,6 +120,12 @@ pmb ui -d  # disabled Web UI
 pmb lang
 ```
 
+- `upgrade` Upgrade `pm-bun`
+
+```bash
+pmb upgrade 
+```
+
 ## Component Architecture Diagram
 
 <img src="component-diagram.svg" wdith="100%" />

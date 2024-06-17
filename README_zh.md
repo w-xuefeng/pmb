@@ -119,6 +119,13 @@ pmb ui -d  # 停用 Web UI 功能
 pmb lang
 ```
 
+- `upgrade` 升级 `pm-bun`
+
+```bash
+pmb upgrade 
+```
+
+
 ## 架构图
 
 <img src="component-diagram.svg" wdith="100%" />
