@@ -375,8 +375,9 @@ class PMB {
     Bun.spawn({
       cmd: ['bun', 'add', '-g', `pm-bun@${latestVersion}`],
       stdout: "inherit",
-      onExit() {
-        Bun.spawnSync(['pmb', 'daemon', 'restart']);
+      onExit: async () => {
+        await this.daemonStop(false);
+        await this.daemonStart("restart");
         L.color(
           [t('cli.upgrade.congrats'), t('cli.upgrade.latestVersion'), `(${t('cli.upgrade.whichIsVersion')} v${latestVersion})`],
           ['green', 'white', 'gray']
