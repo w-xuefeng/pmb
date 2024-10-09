@@ -47,7 +47,8 @@ export default {
       start: "start",
       restart: "restart",
       stopped: "Daemon service has been stopped!",
-      manageTips: "You can use status|start|stop|restart to manage the daemon process!",
+      manageTips:
+        "You can use status|start|stop|restart to manage the daemon process!",
     },
     ui: {
       description: "Show list of service started by pmb in browser",
@@ -60,7 +61,7 @@ export default {
     log: {
       description: "Show log of service from the pid or name",
       outputLogTip: "The log with a {type} of [{value}] is as follows:",
-      outputDaeemonLogTip: "The log of the daemon are as follows:",
+      outputDaemonLogTip: "The log of the daemon are as follows:",
     },
     lang: {
       description: "Switch display language to 【简体中文】",
@@ -72,8 +73,8 @@ export default {
       latestVersion: "You're already on the latest version of pm-bun",
       whichIsVersion: "which is",
       findNewVersion: "Discovered a new version",
-      startDownloading: "Start downloading"
-    }
+      startDownloading: "Start downloading",
+    },
   },
   process: {
     name: "name",
@@ -94,8 +95,10 @@ export default {
     ENTRY_NOT_EXISTS: "Entry file not exists",
     MISSING_BODY: "Required parameter missing",
     NOT_ENABLED: "This feature is not enabled",
-    OUTDATED: "Please upgrade your pmb version or restart daemon via [pmb daemon restart]",
-    NAME_EXISTS: "A service with the same name [{name}] is already running, entry is [{entry}], pid is [{pid}]",
+    OUTDATED:
+      "Please upgrade your pmb version or restart daemon via [pmb daemon restart]",
+    NAME_EXISTS:
+      "A service with the same name [{name}] is already running, entry is [{entry}], pid is [{pid}]",
   },
   ui: {
     pmb: "P(rocess) M(anager) for B(un)",
@@ -123,6 +126,6 @@ export default {
     empty: "No process running by pmb!",
     actionRemove: "remove",
     actionRestart: "restart",
-    actionStop: "stop"
-  }
+    actionStop: "stop",
+  },
 };

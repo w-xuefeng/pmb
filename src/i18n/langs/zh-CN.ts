@@ -60,7 +60,7 @@ export default {
     log: {
       description: "通过名称或者PID查询服务日志",
       outputLogTip: "{type}为[{value}]的日志如下：",
-      outputDaeemonLogTip: "守护进程的日志如下：",
+      outputDaemonLogTip: "守护进程的日志如下：",
     },
     lang: {
       description: "切换展示语言为 【en-US】",
@@ -72,8 +72,8 @@ export default {
       latestVersion: "你使用的已经是最新版本的 pm-bun",
       whichIsVersion: "版本:",
       findNewVersion: "发现了新版本",
-      startDownloading: "开始下载"
-    }
+      startDownloading: "开始下载",
+    },
   },
   process: {
     name: "名称",
@@ -95,7 +95,8 @@ export default {
     MISSING_BODY: "缺少必要参数",
     NOT_ENABLED: "未启用该功能",
     OUTDATED: "请升级您的 pmb 版本或通过【pmb daemon restart】重启守护进程",
-    NAME_EXISTS: "具体相同名称【{name}】的服务已经在运行, 入口文件为【{entry}】, PID为【{pid}】",
+    NAME_EXISTS:
+      "具体相同名称【{name}】的服务已经在运行, 入口文件为【{entry}】, PID为【{pid}】",
   },
   ui: {
     pmb: "由 Bun 驱动的进程管理器",
@@ -123,6 +124,6 @@ export default {
     empty: "暂无通过PMB启动的进程",
     actionRemove: "删除",
     actionRestart: "重启",
-    actionStop: "停止"
-  }
+    actionStop: "停止",
+  },
 };

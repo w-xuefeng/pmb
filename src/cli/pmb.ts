@@ -59,7 +59,7 @@ class PMB {
           })}\n`
         );
       } else {
-        L.info(`${t("cli.log.outputDaeemonLogTip")}\n`);
+        L.info(`${t("cli.log.outputDaemonLogTip")}\n`);
       }
       console.log(data);
     });
@@ -358,32 +358,43 @@ class PMB {
   }
 
   async upgrade(currentVersion: string) {
-    const rs = Bun.spawnSync(['npm', 'view', 'pm-bun', 'version']);
+    const rs = Bun.spawnSync(["npm", "view", "pm-bun", "version"]);
     const latestVersion = rs.stdout.toString().trim();
     const { t } = await useI18n();
     if (currentVersion === latestVersion) {
       L.color(
-        [t('cli.upgrade.congrats'), t('cli.upgrade.latestVersion'), `(${t('cli.upgrade.whichIsVersion')} v${latestVersion})`],
-        ['green', 'white', 'gray']
+        [
+          t("cli.upgrade.congrats"),
+          t("cli.upgrade.latestVersion"),
+          `(${t("cli.upgrade.whichIsVersion")} v${latestVersion})`,
+        ],
+        ["green", "white", "gray"]
       );
-      return
+      return;
     }
     L.color(
-      [`${t('cli.upgrade.findNewVersion')} ${latestVersion},`, `${t('cli.upgrade.startDownloading')}...`],
-      ['green', 'white']
+      [
+        `${t("cli.upgrade.findNewVersion")} ${latestVersion},`,
+        `${t("cli.upgrade.startDownloading")}...`,
+      ],
+      ["green", "white"]
     );
     Bun.spawn({
-      cmd: ['bun', 'add', '-g', `pm-bun@${latestVersion}`],
+      cmd: ["bun", "add", "-g", `pm-bun@${latestVersion}`],
       stdout: "inherit",
       onExit: async () => {
         await this.daemonStop(false);
         await this.daemonStart("restart");
         L.color(
-          [t('cli.upgrade.congrats'), t('cli.upgrade.latestVersion'), `(${t('cli.upgrade.whichIsVersion')} v${latestVersion})`],
-          ['green', 'white', 'gray']
+          [
+            t("cli.upgrade.congrats"),
+            t("cli.upgrade.latestVersion"),
+            `(${t("cli.upgrade.whichIsVersion")} v${latestVersion})`,
+          ],
+          ["green", "white", "gray"]
         );
-      }
-    })
+      },
+    });
   }
 }
 
