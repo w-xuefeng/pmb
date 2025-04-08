@@ -25,8 +25,7 @@ export async function autoRestartDaemon() {
    * if the duration of the daemon exceeds 24 hours,
    * restart the daemon
    */
-  // if (duration > 24 * 60 * 60 * 1000) {
-  if (duration > 10 * 1000) {
+  if (duration > 24 * 60 * 60 * 1000) {
     Logger(`daemon service will restart from process [${process.pid}]`);
     Bun.spawn({
       cmd: [
