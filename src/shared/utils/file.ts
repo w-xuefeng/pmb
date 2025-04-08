@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { glob } from "glob";
 import { resolve, sep } from "path";
+import { useLogger } from ".";
+import type { BunFile } from "bun";
 
 export { existsSync, unlinkSync, rmdirSync } from "node:fs";
 export { appendFile } from "node:fs/promises";
@@ -45,4 +47,14 @@ export function createPathSync(
 
 export function getFilesFromDir(dir: string, fileType = "*") {
   return glob(resolve(dir, fileType));
+}
+
+export async function tryDeleteBunFile(file: BunFile | string) {
+  const Logger = useLogger("delete bun file");
+  const bunFile = typeof file === "string" ? Bun.file(file) : file;
+  try {
+    bunFile.delete();
+  } catch (error) {
+    Logger(error);
+  }
 }

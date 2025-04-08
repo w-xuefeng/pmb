@@ -10,7 +10,7 @@ import {
   createPathSync,
   existsSync,
   getFilesFromDir,
-  unlinkSync,
+  tryDeleteBunFile,
 } from "../../../shared/utils/file";
 import { useI18n } from "../../../i18n";
 import { BunProcess } from "./bun-process";
@@ -85,10 +85,10 @@ export class BunProcessRuntime {
       if (pc.status === BunProcessStatus.RUNNING) {
         this.stop(pc.pid);
       }
-      unlinkSync(filePath);
+      await tryDeleteBunFile(bunFile);
     }
     if (logExists) {
-      unlinkSync(logPath);
+      await tryDeleteBunFile(bunLogFile);
     }
   }
 
