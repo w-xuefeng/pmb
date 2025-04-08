@@ -1,7 +1,7 @@
 /**
  * config
  */
-function getConfig(key = '') {
+function getConfig(key = "") {
   return key
     ? key in window.__$GLOBAL_UI_CONFIG
       ? window.__$GLOBAL_UI_CONFIG[key]
@@ -9,8 +9,8 @@ function getConfig(key = '') {
     : window.__$GLOBAL_UI_CONFIG;
 }
 
-function getLang(key = '', defaultValue = '') {
-  const langConf = getConfig('lang');
+function getLang(key = "", defaultValue = "") {
+  const langConf = getConfig("lang");
   return key
     ? key in langConf
       ? langConf[key] ?? defaultValue
@@ -98,7 +98,7 @@ function createTableRow(index, row) {
     "status",
     "startTime",
     "restRestartCount",
-    "args"
+    "args",
   ];
   const indexTd = document.createElement("td");
   indexTd.className = "index";
@@ -144,7 +144,7 @@ function replaceTable(data) {
   if (data?.length <= 0) {
     const emptyText = empty?.querySelector(".empty");
     empty.hidden = false;
-    emptyText.innerText = getLang("empty", "No process running by pmb!")
+    emptyText.innerText = getLang("empty", "No process running by pmb!");
     return;
   }
   empty.hidden = true;
@@ -263,7 +263,7 @@ async function startProcess(value) {
     name = createName(entry),
     starter = "bun",
     restart = 10,
-    args = ""
+    args = "",
   } = value;
   await start(entry, name, starter, restart, cwd, args);
 }
@@ -275,7 +275,7 @@ function initDialogValue() {
     name: "",
     starter: "bun",
     restart: 10,
-    args: ""
+    args: "",
   };
 }
 
@@ -353,12 +353,12 @@ function startLoop(gapTime) {
 
 async function displayLang() {
   const lang = getLang();
-  Object.keys(lang).forEach(k => {
-    const dom = document.querySelector(`[data-lang-key=${k}]`)
+  Object.keys(lang).forEach((k) => {
+    const dom = document.querySelector(`[data-lang-key=${k}]`);
     if (dom) {
       dom.innerText = lang[k];
     }
-  })
+  });
 }
 
 window.onload = async () => {

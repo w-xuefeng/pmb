@@ -77,6 +77,7 @@ export default {
   },
   process: {
     name: "名称",
+    daemonPID: "守护进程PID",
     pid: "PID",
     starter: "启动程序",
     entry: "入口文件",

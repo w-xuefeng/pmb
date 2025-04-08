@@ -2,32 +2,37 @@ import type { Subprocess } from "bun";
 import { resolve } from "path";
 import { BunProcessRuntime } from "./runtime";
 import { KeepProcessAlive } from "./keep-alive";
-import { DAEMON_PID_PATH } from "../../../shared/const";
 import { Setting } from "../../../shared/utils/setting";
+import { getDaemonInfo, useLogger } from "../../../shared/utils";
 
 export let globalAlive: KeepProcessAlive;
 
 export const globalSubprocess = new Map<number, Subprocess>();
 
+const Logger = useLogger("heart beat schedule");
+
 export async function autoRestartDaemon() {
-  const file = Bun.file(DAEMON_PID_PATH);
-  const exists = await file.exists();
-  if (!exists) {
+  const daemon = await getDaemonInfo();
+
+  if (!daemon.length) {
     return;
   }
-  const content = await file.text();
-  const [pid, _port, startTime] = content?.split("|");
-  const duration = Date.now() - Number(startTime);
+  const current = daemon.find((e) => Number(e.pid) === process.pid);
+  const lastStartTime = current?.timeStamp || 0;
+
+  const duration = Date.now() - Number(lastStartTime);
   /**
    * if the duration of the daemon exceeds 24 hours,
    * restart the daemon
    */
-  if (duration > 24 * 60 * 60 * 1000) {
+  // if (duration > 24 * 60 * 60 * 1000) {
+  if (duration > 10 * 1000) {
+    Logger(`daemon service will restart from process [${process.pid}]`);
     Bun.spawn({
       cmd: [
         "bun",
         resolve(import.meta.dir, "../../../shared/daemon/daemon-restarter.ts"),
-        `${process.pid || pid}`,
+        `${process.pid}`,
       ],
       stdout: "inherit",
     }).unref();
@@ -44,6 +49,6 @@ export async function startHeartbeatCheck() {
   globalAlive.start();
 }
 
-export function stopHeadrCheck() {
+export function stopHeartbeatCheck() {
   globalAlive?.stop();
 }

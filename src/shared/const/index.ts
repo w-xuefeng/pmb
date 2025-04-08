@@ -19,11 +19,11 @@ export const ROOT_DIR = __DEV__
   ? /**
      * for local dev and test
      */
-  resolve(import.meta.dir, "../../..")
+    resolve(import.meta.dir, "../../..")
   : /**
      * for production
      */
-  resolve(os.homedir(), ".pm-bun");
+    resolve(os.homedir(), ".pm-bun");
 
 /**
  * daemon service root directory
@@ -45,6 +45,21 @@ export const DAEMON_PID_PATH = resolve(
   ".pmb",
   ".pmb-daemon"
 );
+
+/**
+ * daemon lock file for cluster worker handle daemon pid file
+ */
+export const DAEMON_PID_PATH_LOCK = resolve(
+  ROOT_DIR,
+  ".runtime",
+  ".pmb",
+  ".pmb-daemon.lock"
+);
+
+/**
+ * daemon service default port
+ * */
+export const DEFAULT_DAEMON_PORT = 9501;
 
 /**
  * i18n config file path
@@ -103,7 +118,7 @@ export enum BunProcessStatus {
    */
   RUNNING = 1,
   /**
-   * process stoped by manual
+   * process stopped by manual
    */
   MANUAL_STOP = 3,
 }
@@ -139,8 +154,8 @@ export async function readConf<K extends string | string[]>(
     typeof config === "function"
       ? config()
       : typeof config === "object" && md.default !== null
-        ? config
-        : defaultValue;
+      ? config
+      : defaultValue;
   if (!Array.isArray(nameOrNames)) {
     return rs?.[names[0]] ?? defaultValue;
   }
@@ -158,4 +173,4 @@ export const OSP = os.platform();
 /**
  * operation system platform is windows
  */
-export const isWin = OSP === 'win32';
+export const isWin = OSP === "win32";

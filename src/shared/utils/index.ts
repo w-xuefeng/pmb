@@ -3,7 +3,12 @@ import figlet from "figlet";
 import EasyTable from "easy-table";
 import pkg from "../../../package.json";
 import { customAlphabet } from "nanoid";
-import { BunProcessStatus, BunProcessStatusColor, __DEV__ } from "../const";
+import {
+  BunProcessStatus,
+  BunProcessStatusColor,
+  DAEMON_PID_PATH,
+  __DEV__,
+} from "../const";
 import type { BunProcess } from "../../service/app/runtime/bun-process";
 import type { DeepKeyOf, IBunProcessVO } from "./types";
 import type { ErrorLike, Subprocess } from "bun";
@@ -116,6 +121,7 @@ export function bunProcessToVO(pc: BunProcess) {
   return {
     name: pc.name,
     pid: pc.pid,
+    daemonPID: pc.daemonPID,
     starter: pc.starter,
     entry: pc.entryFile,
     status: BunProcessStatus[pc.status],
@@ -124,7 +130,7 @@ export function bunProcessToVO(pc: BunProcess) {
       ? "Infinity"
       : pc.restRestartCount,
     cwd: pc.cwd,
-    args: pc.args ?? '-',
+    args: pc.args ?? "-",
   } as IBunProcessVO;
 }
 
@@ -271,6 +277,37 @@ export function deepGet<T, K extends DeepKeyOf<T> | undefined, V>(
   return res;
 }
 
+export async function getDaemonInfo() {
+  const file = Bun.file(DAEMON_PID_PATH);
+  const exists = await file.exists();
+  if (!exists) {
+    return [];
+  }
+  const content = await file.text();
+  return content
+    .trim()
+    .split("\n")
+    .filter((e) => !!e)
+    .map((e) => {
+      const [type, pid, port, time] = e.trim().split("|");
+      return {
+        type: type as "primary" | "worker",
+        pid,
+        port: Number(port),
+        time: time ? intlTimeFormat(Number(time)) : void 0,
+        timeStamp: Number(time),
+      };
+    });
+}
+
+export function useLogger(
+  prefix: string,
+  type: "info" | "log" | "warn" | "error" = "info"
+) {
+  return (...content: any[]) =>
+    console[type](`[${prefix}::${intlTimeFormat(new Date())}]`, ...content);
+}
+
 export function logProcessExit(
   cmd: string[],
   pc: BunProcess,
@@ -282,6 +319,7 @@ export function logProcessExit(
   console.log(`\n------------------exit------------------`);
   console.log(`time: ${intlTimeFormat(new Date())}`);
   console.log(`name: ${pc.name}`);
+  console.log(`daemonPID: ${pc.daemonPID}`);
   console.log(`pid: ${ps.pid}`);
   console.log(`cwd: ${pc.cwd}`);
   console.log(`cmd: ${cmd.join(" ")}`);
@@ -301,6 +339,7 @@ export function logProcessStart(cmd: string[], pc: BunProcess, ps: Subprocess) {
   console.log(`\n------------------start------------------`);
   console.log(`time: ${intlTimeFormat(new Date())}`);
   console.log(`name: ${pc.name}`);
+  console.log(`daemonPID: ${pc.daemonPID}`);
   console.log(`pid: ${ps.pid}`);
   console.log(`cwd: ${pc.cwd}`);
   console.log(`cmd: ${cmd.join(" ")}`);

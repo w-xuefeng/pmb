@@ -5,7 +5,7 @@ import Tell from "../shared/utils/tell";
 import {
   L,
   bunProcessVOToTable,
-  intlTimeFormat,
+  getDaemonInfo,
   nanoid,
   singleton,
 } from "../shared/utils";
@@ -73,7 +73,7 @@ class PMB {
     /**
      * say hello to daemon process
      */
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
 
     /**
      * if the process has a name,
@@ -125,7 +125,7 @@ class PMB {
     /**
      * say hello to daemon process
      */
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
     /**
      * tell the daemon to use name or pid to restart this service
      */
@@ -137,7 +137,7 @@ class PMB {
     /**
      * say hello to daemon process
      */
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
     /**
      * tell the daemon to use name or pid to stop this service
      */
@@ -149,7 +149,7 @@ class PMB {
     /**
      * say hello to daemon process
      */
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
     /**
      * tell the daemon to use name or pid to stop and remove this service
      */
@@ -174,7 +174,7 @@ class PMB {
     /**
      * say hello to daemon process
      */
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
     const rs = await tell.list();
     if (rs.data) {
       render(rs.data);
@@ -187,7 +187,7 @@ class PMB {
 
   async ui(enabled?: boolean) {
     const { t } = await useI18n();
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
 
     const openUI = async (logPrefix = "") => {
       const url = tell.uiPath().toString();
@@ -220,7 +220,7 @@ class PMB {
     /**
      * say hello to daemon process
      */
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
     /**
      * tell the daemon to use name or pid to get logs
      * if not value, get daemon log
@@ -239,30 +239,27 @@ class PMB {
    */
 
   async daemonStatus(output = true) {
-    const file = Bun.file(DAEMON_PID_PATH);
+    const daemonInfo = await getDaemonInfo();
     const logPath = DAEMON_LOG_PATH();
     const logFile = Bun.file(logPath);
-    const exists = await file.exists();
+    const exists = daemonInfo.length > 0;
     const logExists = await logFile.exists();
     const { t } = await useI18n();
     let pid: string | undefined = void 0;
-
     /**
      * if daemon file exists
      * check file content and try ping port
      */
     if (exists) {
-      const content = await file.text();
-      const data = content?.split("|");
-      const port = data[1];
-      const time = data[2] ? intlTimeFormat(Number(data[2])) : void 0;
-      pid = data[0];
+      const port = daemonInfo.find((e) => e.port)?.port;
+      const time = daemonInfo[0].time;
+      pid = daemonInfo.find((e) => e.type === "primary")?.pid;
       if (pid && port && time) {
         const tell = new Tell(port);
         try {
           const pong = await tell.ping();
           if (pong === DaemonPingStatus.PONG) {
-            output &&
+            if (output) {
               L.info(
                 `${t("cli.daemon.hasRunning", {
                   port,
@@ -270,6 +267,8 @@ class PMB {
                   time,
                 })}\n`
               );
+              console.log(Bun.inspect.table(daemonInfo));
+            }
           } else {
             output && L.warn(`${t("cli.daemon.unexpected")}\n`);
           }
@@ -284,39 +283,55 @@ class PMB {
     }
 
     return {
-      file,
+      pid,
       exists,
       logExists,
       logPath,
-      pid,
+      daemonInfo,
     };
   }
 
   async daemonStart(type: "start" | "restart" = "start") {
-    const tell = await greetDaemon();
+    const { tell, daemonInfo } = await greetDaemon();
     const pong = await tell.ping();
     const { t } = await useI18n();
-    if (pong === DaemonPingStatus.PONG) {
+    if (pong === DaemonPingStatus.PONG && daemonInfo) {
       L.success(
         `${t("cli.daemon.started", {
           type: t(`cli.daemon.${type}`),
           port: tell.talk.port,
         })}\n`
       );
+      console.log(Bun.inspect.table(daemonInfo));
     }
   }
 
   async daemonStop(output = true) {
-    const { exists, pid, logExists, logPath } = await this.daemonStatus(false);
-    if (exists && pid) {
-      Bun.spawn(getCommand("taskkill", `${pid}`).command).unref();
+    const { exists, logExists, logPath, daemonInfo } = await this.daemonStatus(
+      false
+    );
+    if (exists) {
+      daemonInfo.forEach((e) => {
+        Bun.spawn(getCommand("taskkill", `${e.pid}`).command).unref();
+      });
       unlinkSync(DAEMON_PID_PATH);
     }
     if (logExists) {
       unlinkSync(logPath);
     }
     const { t } = await useI18n();
-    output && L.success(`${t("cli.daemon.stopped")}\n`);
+    if (output) {
+      if (!exists) {
+        L.info(`${t("cli.daemon.notRunning")}\n`);
+        return;
+      }
+      L.success(`${t("cli.daemon.stopped")}\n`);
+      console.log(
+        Bun.inspect.table(
+          daemonInfo.map((e) => ({ pid: e.pid, status: "Terminated" }))
+        )
+      );
+    }
   }
 
   async daemon(type: "status" | "start" | "stop" | "restart") {
@@ -346,7 +361,7 @@ class PMB {
   }
 
   async setLang() {
-    const tell = await greetDaemon();
+    const { tell } = await greetDaemon();
     const current = await getCurrentLang();
     const res = await tell.setLang({
       lang: current === "zhCN" ? "enUS" : "zhCN",

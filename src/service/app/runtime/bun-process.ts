@@ -21,6 +21,7 @@ export class BunProcess {
   restRestartCount = 10;
   cwd = process.cwd();
   cmd?: string;
+  daemonPID = process.pid;
 
   constructor(
     name: string,

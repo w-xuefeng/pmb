@@ -2,7 +2,6 @@ import blessed from "blessed";
 import colors from "colors";
 import greetDaemon, { checkDaemon } from "./run";
 import { useI18n } from "../../i18n";
-import { intlTimeFormat } from "../../shared/utils";
 import { Setting } from "../../shared/utils/setting";
 import {
   BunProcessStatusColor,
@@ -56,8 +55,8 @@ const createBox = (
   return box;
 };
 
-const getMemeryOrCPUByPID = (pid: string, type: "mem" | "cpu") => {
-  const { command, parseOutput } = getCommand('taskMemCPUInfo', `${pid}`, type);
+const getMemoryOrCPUByPID = (pid: string, type: "mem" | "cpu") => {
+  const { command, parseOutput } = getCommand("taskMemCPUInfo", `${pid}`, type);
   const rs = Bun.spawnSync(command);
   const out = rs.stdout.toString();
   return parseOutput(out);
@@ -67,13 +66,13 @@ const mapProcessItem = (e: IBunProcessVO, i: number) => {
   const name = e.name.slice(-14).padEnd(14);
   const pid = String(e.pid).padEnd(8);
   const status = colors[BunProcessStatusColor[e.status]](e.status).padEnd(11);
-  const mem = `MEM:${getMemeryOrCPUByPID(e.pid, "mem")}`.padEnd(8);
-  const cpu = `CPU:${getMemeryOrCPUByPID(e.pid, "cpu")}`.padEnd(8);
+  const mem = `MEM:${getMemoryOrCPUByPID(e.pid, "mem")}`.padEnd(8);
+  const cpu = `CPU:${getMemoryOrCPUByPID(e.pid, "cpu")}`.padEnd(8);
   return `${i + 1}.${name} ${pid}  ${status}  ${mem}  ${cpu}`;
 };
 
 const mapRow = (obj: Record<string, any>) =>
-  Object.keys(obj).map((k) => `${k}: ${obj[k] || '-'}`);
+  Object.keys(obj).map((k) => `${k}: ${obj[k] || "-"}`);
 
 const setMetadata = (metaBox: blessed.Widgets.BoxElement) => {
   if (!globalRef.currentProcess) return;
@@ -88,7 +87,7 @@ const setLog = async (logBox: blessed.Widgets.BoxElement, loading = false) => {
   if (loading) {
     logBox.setContent("loading...");
   }
-  const tell = await greetDaemon();
+  const { tell } = await greetDaemon();
   const res = await tell.log({ name: globalRef.currentProcess.name });
   logBox.setContent(res.data);
 };
@@ -103,10 +102,11 @@ const getGlobalConfig = async () => {
     daemonStatus: daemon
       ? colors[BunProcessStatusColor["RUNNING"]]("RUNNING")
       : colors[BunProcessStatusColor["NOT_RUNNING"]]("NOT_RUNNING"),
-    daemonPID: daemon ? daemon.at(0) : null,
-    daemonPort: daemon ? daemon.at(1) : null,
-    daemonStartTime:
-      daemon && daemon.at(2) ? intlTimeFormat(daemon.at(2)) : null,
+    daemonPID: daemon ? daemon.map((e) => e.pid).join(",") : null,
+    daemonPort: daemon
+      ? Array.from(new Set(daemon.map((e) => e.port))).join(",")
+      : null,
+    daemonStartTime: daemon[0]?.time ?? null,
     roundRobinInterval: `${interval}ms`,
     UIEnable,
   };
@@ -133,7 +133,7 @@ const getList = async (
   metricsBox: blessed.Widgets.BoxElement
 ) => {
   const { t } = await useI18n();
-  const tell = await greetDaemon();
+  const { tell } = await greetDaemon();
   const rs = await tell.list();
 
   if (!rs?.success) {
@@ -191,7 +191,7 @@ export default async function monit() {
   });
 
   /**
-   * custome metrics
+   * custom metrics
    */
   const metricsBox = createBox(screen, t("cli.monit.customMetrics"), {
     top: "60%",

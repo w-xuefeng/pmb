@@ -2,7 +2,8 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { glob } from "glob";
 import { resolve, sep } from "path";
 
-export { existsSync, unlinkSync } from "node:fs";
+export { existsSync, unlinkSync, rmdirSync } from "node:fs";
+export { appendFile } from "node:fs/promises";
 
 export function pathJoin(
   prevPath: string | number | (string | number)[],

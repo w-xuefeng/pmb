@@ -1,8 +1,9 @@
 import { Hono } from "hono";
 import { startHeartbeatCheck } from "./runtime/schedule";
+import { DEFAULT_DAEMON_PORT } from "../../shared/const";
 import { useRouters } from "./routers";
 
-const port = 9501;
+const port = DEFAULT_DAEMON_PORT;
 const app = new Hono();
 useRouters(app);
 

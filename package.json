@@ -1,6 +1,6 @@
 {
   "name": "pm-bun",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "P(rocess) M(anager) for B(un)",
   "main": "index.ts",
   "module": "index.ts",
@@ -27,20 +27,20 @@
   "author": "w-xuefeng",
   "license": "MIT",
   "devDependencies": {
-    "@types/figlet": "^1.5.8",
-    "@types/node": "^20.11.26",
-    "bun-types": "^1.0.30"
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^22.14.0",
+    "bun-types": "^1.2.8"
   },
   "dependencies": {
     "@types/blessed": "^0.1.25",
     "blessed": "^0.1.81",
     "colors": "^1.4.0",
-    "commander": "^12.0.0",
+    "commander": "^13.1.0",
     "easy-table": "^1.2.0",
-    "figlet": "^1.7.0",
-    "glob": "^10.3.10",
-    "hono": "^4.1.0",
-    "nanoid": "^5.0.6",
+    "figlet": "^1.8.0",
+    "glob": "^11.0.1",
+    "hono": "^4.7.5",
+    "nanoid": "^5.1.5",
     "open": "^10.1.0"
   }
 }

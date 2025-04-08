@@ -1,5 +1,6 @@
 export interface IBunProcessVO {
   name: string;
+  daemonPID: number;
   pid: string;
   starter: string;
   entry: string;

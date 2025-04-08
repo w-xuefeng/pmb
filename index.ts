@@ -11,7 +11,11 @@ const { t } = await useI18n();
 
 L.Logo();
 
-program.name("PMB").description(t("cli.pmb.description")).version(pkg.version);
+program
+  .name("PMB")
+  .description(t("cli.pmb.description"))
+  .version(pkg.version, "-v, --version")
+  .version(pkg.version, "-V, --VERSION");
 
 program
   .command("start")

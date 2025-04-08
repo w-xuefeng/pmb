@@ -78,6 +78,7 @@ export default {
   },
   process: {
     name: "name",
+    daemonPID: "daemon pid",
     pid: "pid",
     starter: "starter",
     entry: "entry",

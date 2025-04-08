@@ -1,6 +1,6 @@
 import Tell from "../../shared/utils/tell";
-import { L } from "../../shared/utils";
-import { DAEMON_PID_PATH, DaemonPingStatus } from "../../shared/const";
+import { getDaemonInfo, L } from "../../shared/utils";
+import { DaemonPingStatus } from "../../shared/const";
 import { useI18n } from "../../i18n";
 import daemonStarter from "../../shared/daemon/daemon-starter";
 
@@ -12,11 +12,20 @@ const tell = new Tell();
 /**
  * Update talk port
  */
-const updatePort = (running: false | number[]) => {
+const updatePort = (
+  running:
+    | false
+    | {
+        pid: string;
+        port: number;
+        time: string | undefined;
+        timeStamp: number;
+      }[]
+) => {
   if (!running) {
     return;
   }
-  const [_, port] = running;
+  const { port } = running[0];
   if (!port) {
     return;
   }
@@ -27,14 +36,8 @@ const updatePort = (running: false | number[]) => {
  * Check if the daemon is running
  */
 export async function checkDaemon() {
-  const file = Bun.file(DAEMON_PID_PATH);
-  const exists = await file.exists();
-  if (exists) {
-    const content = await file.text();
-    const [pid, port, startTime] = content?.split("|");
-    return [pid, port, startTime].map((e) => Number(e)).filter((e) => !!e);
-  }
-  return false;
+  const daemonInfo = await getDaemonInfo();
+  return daemonInfo.length ? daemonInfo : false;
 }
 
 /**
@@ -46,6 +49,7 @@ async function startDaemon() {
   const running = await checkDaemon();
   updatePort(running);
   ps.unref();
+  return typeof running !== "boolean" && running.length ? running : false;
 }
 
 /**
@@ -70,25 +74,31 @@ export default async function greetDaemon() {
   /**
    * check daemon service has been running or not
    */
-  const daemonHasRunning = await checkDaemon();
+  let daemonHasRunning = await checkDaemon();
 
   /**
    * if it is not running,
    * start it
    */
   if (!daemonHasRunning) {
-    await startDaemon();
-    return tell;
+    daemonHasRunning = await startDaemon();
+    return {
+      tell,
+      daemonInfo: daemonHasRunning || null,
+    };
   }
 
   /**
    * if pid or port is unavailable,
    * start it
    */
-  const [pid, port] = daemonHasRunning;
+  const { pid, port } = daemonHasRunning[0];
   if (!pid || !port) {
-    await startDaemon();
-    return tell;
+    daemonHasRunning = await startDaemon();
+    return {
+      tell,
+      daemonInfo: daemonHasRunning,
+    };
   }
 
   /**
@@ -102,7 +112,10 @@ export default async function greetDaemon() {
    */
   if (pong === DaemonPingStatus.ERROR) {
     await startDaemon();
-    return tell;
+    return {
+      tell,
+      daemonInfo: daemonHasRunning,
+    };
   }
 
   /**
@@ -112,8 +125,14 @@ export default async function greetDaemon() {
   if (pong === DaemonPingStatus.OUTDATED) {
     const { t } = await useI18n();
     L.warn(`${t("exception.OUTDATED")}\n`);
-    return tell;
+    return {
+      tell,
+      daemonInfo: daemonHasRunning,
+    };
   }
 
-  return tell;
+  return {
+    tell,
+    daemonInfo: daemonHasRunning,
+  };
 }

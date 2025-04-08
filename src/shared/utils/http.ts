@@ -18,7 +18,7 @@ export default class Talk {
   async get<T>(
     path: string,
     params?: Record<string, any>,
-    config?: Partial<FetchRequestInit>
+    config?: Partial<BunFetchRequestInit>
   ) {
     const url = new URL(path, `${this.base}:${this.port}`);
     let search = "";
@@ -59,7 +59,7 @@ export default class Talk {
   async post<T>(
     path: string,
     data?: Record<string, any>,
-    config?: Partial<FetchRequestInit>
+    config?: Partial<BunFetchRequestInit>
   ) {
     const url = new URL(path, `${this.base}:${this.port}`);
     return fetch(url, {
