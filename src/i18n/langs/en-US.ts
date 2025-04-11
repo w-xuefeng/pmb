@@ -54,6 +54,7 @@ export default {
       description: "Show list of service started by pmb in browser",
       enabled: "enabled Web UI",
       disabled: "disabled Web UI",
+      password: "set password",
       visit: "Please visit",
       enabledSuccess: "Web UI has been enabled",
       disabledSuccess: "Web UI has been disabled",

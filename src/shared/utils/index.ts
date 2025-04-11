@@ -12,6 +12,7 @@ import {
 import type { BunProcess } from "../../service/app/runtime/bun-process";
 import type { DeepKeyOf, IBunProcessVO } from "./types";
 import type { ErrorLike, Subprocess } from "bun";
+import type { Context } from "hono";
 
 export const handleSize = (size: number) => {
   if (size >= 1024 ** 4) {
@@ -347,4 +348,21 @@ export function logProcessStart(cmd: string[], pc: BunProcess, ps: Subprocess) {
   console.log(`exitCode: ${ps.exitCode}`);
   console.log(`killed: ${ps.killed}`);
   console.log(`----------------------------------------\n`);
+}
+
+export function getCookie(c: Context): Record<string, any> {
+  const cookieString = c.req.header("Cookie");
+  if (!cookieString) {
+    return {};
+  }
+  return Object.fromEntries(cookieString.split(";").map((e) => e.split("=")));
+}
+
+export function useHandlePassword() {
+  return {
+    key: "key",
+    handle: (originalPassword: string) => {
+      return Buffer.from(originalPassword).toBase64();
+    },
+  };
 }

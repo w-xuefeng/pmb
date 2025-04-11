@@ -115,8 +115,9 @@ program
   .description(t("cli.ui.description"))
   .option("-e, --enabled", t("cli.ui.enabled"))
   .option("-d, --disabled", t("cli.ui.disabled"))
-  .action(({ enabled, disabled }) => {
-    pmb.ui(enabled ? true : disabled ? false : void 0);
+  .option("-p, --password [password]", t("cli.ui.password"))
+  .action(({ enabled, disabled, password }) => {
+    pmb.ui(enabled ? true : disabled ? false : void 0, password);
   });
 
 program

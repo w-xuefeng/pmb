@@ -53,6 +53,7 @@ export default {
       description: "在浏览器中列出通过PMB启动的服务",
       enabled: "启用 Web UI 功能",
       disabled: "停用 Web UI 功能",
+      password: "设置密码",
       visit: "请访问",
       enabledSuccess: "Web UI 功能已启用",
       disabledSuccess: "Web UI 功能已停用",

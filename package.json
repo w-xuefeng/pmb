@@ -41,6 +41,7 @@
     "glob": "^11.0.1",
     "hono": "^4.7.5",
     "nanoid": "^5.1.5",
-    "open": "^10.1.0"
+    "open": "^10.1.0",
+    "remote-directory-services": "^0.0.5"
   }
 }

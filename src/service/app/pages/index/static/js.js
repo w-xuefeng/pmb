@@ -1,24 +1,4 @@
 /**
- * config
- */
-function getConfig(key = "") {
-  return key
-    ? key in window.__$GLOBAL_UI_CONFIG
-      ? window.__$GLOBAL_UI_CONFIG[key]
-      : void 0
-    : window.__$GLOBAL_UI_CONFIG;
-}
-
-function getLang(key = "", defaultValue = "") {
-  const langConf = getConfig("lang");
-  return key
-    ? key in langConf
-      ? langConf[key] ?? defaultValue
-      : defaultValue
-    : langConf;
-}
-
-/**
  * dom
  */
 const STATUS_COLOR = {
@@ -77,8 +57,8 @@ function createTableAction(row, index) {
     addEvent(span, "click", async () => {
       const container = document.querySelector(`.action-container-${index}`);
       container.style.display = "none";
-      const lodaing = createLoading();
-      container.parentElement.append(lodaing);
+      const loading = createLoading();
+      container.parentElement.append(loading);
       await act.handler(row.name);
     });
     return span;
@@ -190,14 +170,6 @@ class Talk {
     }).then((rs) => rs.json());
   }
 }
-
-const SERVICE_PATH = {
-  LIST: "/process/list",
-  START: "/process/start",
-  RESTART: "/process/restart",
-  STOP: "/process/stop",
-  REMOVE: "/process/remove",
-};
 
 class Tell {
   talk = new Talk();

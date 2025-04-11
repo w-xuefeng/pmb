@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./favicon.ico" />
+  <title>PMB | P(rocess) M(anager) for B(un)</title>
+  <script src="/config/ui?type=script"></script>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      height: 100%;
+      overflow: hidden;
+      background-color: #1d1d1d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .interrupt {
+      min-width: 300px;
+      width: 50vw;
+      max-width: 500px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .password {
+        flex: 1;
+        height: 40px;
+        background-color: #252829;
+        outline: none;
+        border: unset;
+        border-block-end: 1px solid #666;
+        color: #1557a8;
+        font-size: 16px;
+        transition: all 500ms;
+
+        &:hover {
+          border-block-end: 1px solid #fff;
+          transition: all 500ms;
+        }
+      }
+
+      .submit {
+        height: 40px;
+        width: 80px;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        color: #1557a8;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <form class="interrupt" method="post" enctype="text/plain">
+    <input type="password" class="password" name="password" placeholder="Please fill in the password ..." />
+    <button type="submit" class="submit">Confirm</button>
+  </form>
+  <script>
+    window.onload = function () {
+      const submit = document.querySelector('.submit');
+      submit.setAttribute('formaction', SERVICE_PATH.AUTH);
+    }
+  </script>
+</body>
+
+</html>

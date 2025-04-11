@@ -185,9 +185,14 @@ class PMB {
     await monit();
   }
 
-  async ui(enabled?: boolean) {
+  async ui(enabled?: boolean, password?: string | true) {
     const { t } = await useI18n();
     const { tell } = await greetDaemon();
+
+    const originalPassword = await Setting.getSetting("ui.password", "");
+    await Setting.setSetting("ui", {
+      password: password === true ? "" : password || originalPassword,
+    });
 
     const openUI = async (logPrefix = "") => {
       const url = tell.uiPath().toString();

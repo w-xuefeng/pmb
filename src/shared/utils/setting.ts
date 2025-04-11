@@ -12,6 +12,7 @@ export interface ISetting {
    */
   ui: {
     enable: boolean;
+    password: string;
   };
   /**
    * process status polling by daemon
@@ -28,6 +29,7 @@ export function getDefaultSetting(): ISetting {
   return {
     ui: {
       enable: true,
+      password: "",
     },
     polling: {
       interval: 10 * 1000,

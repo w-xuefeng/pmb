@@ -7,10 +7,14 @@ import stop from "../controllers/stop";
 import remove from "../controllers/remove";
 import setLang from "../controllers/lang";
 import UIConfig from "../controllers/ui-config";
-import { serveStatic } from "hono/bun";
+import ls from "../controllers/ls";
+import auth from "../controllers/auth";
+import uiPages from "../controllers/ui-pages";
+
 import { useI18n } from "../../../i18n";
 import { Setting } from "../../../shared/utils/setting";
 import { SERVICE_PATH } from "../../../shared/const/service-path";
+
 import type { Hono } from "hono";
 
 export async function useRouters(app: Hono) {
@@ -23,14 +27,18 @@ export async function useRouters(app: Hono) {
   app.post(SERVICE_PATH.STOP, stop);
   app.post(SERVICE_PATH.REMOVE, remove);
   app.post(SERVICE_PATH.SETLANG, setLang);
+  app.post(SERVICE_PATH.LS, ls);
+  app.post(SERVICE_PATH.AUTH, auth);
   app.use("/*", async (c, next) => {
     /**
      * check customer ui enable setting
      */
     const enableUI = await Setting.getSetting("ui.enable", true);
     const { t } = await useI18n();
+    const pages = await uiPages(c);
+
     return enableUI
-      ? await serveStatic({ root: "app/pages" })(c, next)
+      ? await pages(c, next)
       : new Response(t("exception.NOT_ENABLED"));
   });
 }
