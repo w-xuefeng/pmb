@@ -128,5 +128,11 @@ export default {
     actionRestart: "重启",
     actionStop: "停止",
     fillInPassword: "请输入口令",
+    fillInCwd: "请输入当前进程工作目录",
+    fillInEntry: "请输入入口文件相对工作目录的地址",
+    fillInName: "请输入要启动进程的名称",
+    fillInStarter: "请输入要使用的启动程序",
+    fillInRestartCount: "请输入重启次数",
+    fillInArgs: "请输入启动参数",
   },
 };

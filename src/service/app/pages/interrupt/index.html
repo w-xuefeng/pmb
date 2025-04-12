@@ -103,20 +103,6 @@
     <button type="submit" class="submit" data-lang-key="confirm">Confirm</button>
   </form>
   <script>
-    function displayLang() {
-      const lang = getLang();
-      Object.keys(lang).forEach((k) => {
-        const dom = document.querySelector(`[data-lang-key=${k}]`);
-        if (dom) {
-          dom.innerText = lang[k];
-        }
-        const placeholderDom = document.querySelector(`[data-lang-placeholder-key=${k}]`);
-        if (placeholderDom) {
-          placeholderDom.placeholder = `${lang[k]}...`;
-        }
-      });
-    }
-
     window.onload = function () {
       displayLang();
       const submit = document.querySelector('.submit');

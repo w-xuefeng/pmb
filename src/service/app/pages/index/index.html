@@ -38,27 +38,31 @@
         <div class="form-container">
           <label for="cwd">
             <span class="label"><span class="required">* </span><span data-lang-key="cwd">CWD</span></span>
-            <input class="input" placeholder="fill in the cwd" id="cwd" required>
+            <input class="input" placeholder="fill in the cwd" data-lang-placeholder-key="fillInCwd" id="cwd" required>
           </label>
           <label for="entry">
             <span class="label"><span class="required">* </span><span data-lang-key="entry">ENTRY</span></span>
-            <input class="input" placeholder="fill in the entry file path relative cwd" id="entry" required>
+            <input class="input" placeholder="fill in the entry file path relative cwd"
+              data-lang-placeholder-key="fillInEntry" id="entry" required>
           </label>
           <label for="name">
             <span class="label" data-lang-key="name">NAME</span>
-            <input class="input" placeholder="fill in the name" id="name">
+            <input class="input" placeholder="fill in the name" data-lang-placeholder-key="fillInName" id="name">
           </label>
           <label for="starter">
             <span class="label" data-lang-key="starter">STARTER</span>
-            <input class="input" placeholder="fill in the starter" id="starter" type="text" value="bun">
+            <input class="input" placeholder="fill in the starter" data-lang-placeholder-key="fillInStarter"
+              id="starter" type="text" value="bun">
           </label>
           <label for="restart">
             <span class="label" data-lang-key="restart">RESTART</span>
-            <input class="input" placeholder="fill in the restart count" id="restart" type="number" value="10">
+            <input class="input" placeholder="fill in the restart count" data-lang-placeholder-key="fillInRestartCount"
+              id="restart" type="number" value="10" min="0">
           </label>
           <label for="args">
             <span class="label" data-lang-key="args">ARGS</span>
-            <input class="input" placeholder="fill in the args" id="args" type="text">
+            <input class="input" placeholder="fill in the args" data-lang-placeholder-key="fillInArgs" id="args"
+              type="text">
           </label>
         </div>
         <div>

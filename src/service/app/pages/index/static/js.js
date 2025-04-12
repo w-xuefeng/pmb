@@ -323,16 +323,6 @@ function startLoop(gapTime) {
   }, gapTime);
 }
 
-function displayLang() {
-  const lang = getLang();
-  Object.keys(lang).forEach((k) => {
-    const dom = document.querySelector(`[data-lang-key=${k}]`);
-    if (dom) {
-      dom.innerText = lang[k];
-    }
-  });
-}
-
 window.onload = async () => {
   displayLang();
   initStartDialog();

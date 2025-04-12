@@ -29,7 +29,8 @@ export default async function UIConfig(c: Context) {
 
     const rsType = "application/javascript";
     const jsFile = `window.__$GLOBAL_UI_CONFIG = ${JSON.stringify(data)};`;
-    const jsContent = `/**
+    const jsContent = `
+/**
  * config
  */
 function getConfig(key = "") {
@@ -46,6 +47,21 @@ function getLang(key = "", defaultValue = "") {
       ? langConf[key] ?? defaultValue
       : defaultValue
     : langConf;
+}
+function displayLang() {
+  const lang = getLang();
+  Object.keys(lang).forEach((k) => {
+    const dom = document.querySelector("[data-lang-key=" + k + "]");
+    if (dom) {
+      dom.innerText = lang[k];
+    }
+    const placeholderDom = document.querySelector(
+      "[data-lang-placeholder-key="+ k + "]"
+    );
+    if (placeholderDom) {
+      placeholderDom.placeholder = lang[k] + '...';
+    }
+  });
 }
 const SERVICE_PATH = getConfig("servicePaths");
 `;

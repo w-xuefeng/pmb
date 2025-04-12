@@ -130,5 +130,11 @@ export default {
     actionRestart: "restart",
     actionStop: "stop",
     fillInPassword: "Please fill in the password",
+    fillInCwd: "fill in the cwd",
+    fillInEntry: "fill in the entry file path relative cwd",
+    fillInName: "fill in the name",
+    fillInStarter: "fill in the starter",
+    fillInRestartCount: "fill in the restart count",
+    fillInArgs: "fill in the args",
   },
 };
