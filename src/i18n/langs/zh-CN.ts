@@ -127,5 +127,6 @@ export default {
     actionRemove: "删除",
     actionRestart: "重启",
     actionStop: "停止",
+    fillInPassword: "请输入口令",
   },
 };

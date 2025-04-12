@@ -8,11 +8,18 @@
   <title>PMB | P(rocess) M(anager) for B(un)</title>
   <script src="/config/ui?type=script"></script>
   <style>
+    :root {
+      --logo-color: #005524;
+      --title-color: #008aff;
+    }
+
     html {
       height: 100%;
+      width: 100%;
     }
 
     body {
+      width: 100%;
       height: 100%;
       overflow: hidden;
       background-color: #1d1d1d;
@@ -20,6 +27,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
+
+      .header {
+        width: 90%;
+        max-width: 800px;
+        border-block-end: 2px solid var(--title-color);
+        padding-block-end: 5px;
+        margin-block-end: 50px;
+
+        .logo {
+          color: var(--logo-color);
+          margin: 0;
+        }
+
+        .title {
+          color: var(--title-color);
+        }
+      }
     }
 
     .interrupt {
@@ -33,6 +58,7 @@
       .password {
         flex: 1;
         height: 40px;
+        padding-inline-start: 10px;
         background-color: #252829;
         outline: none;
         border: unset;
@@ -61,12 +87,38 @@
 </head>
 
 <body>
+  <header class="header">
+    <pre class="logo">
+          ____  __  _______
+         / __ \/  |/  / __ )
+        / /_/ / /|_/ / __  |
+       / ____/ /  / / /_/ /
+      /_/   /_/  /_/_____/
+            </pre>
+    <span class="title" data-lang-key="pmb">P(rocess) M(anager) for B(un)</span>
+  </header>
   <form class="interrupt" method="post" enctype="text/plain">
-    <input type="password" class="password" name="password" placeholder="Please fill in the password ..." />
-    <button type="submit" class="submit">Confirm</button>
+    <input type="password" class="password" name="password" placeholder="Please fill in the password ..."
+      data-lang-placeholder-key="fillInPassword" required />
+    <button type="submit" class="submit" data-lang-key="confirm">Confirm</button>
   </form>
   <script>
+    function displayLang() {
+      const lang = getLang();
+      Object.keys(lang).forEach((k) => {
+        const dom = document.querySelector(`[data-lang-key=${k}]`);
+        if (dom) {
+          dom.innerText = lang[k];
+        }
+        const placeholderDom = document.querySelector(`[data-lang-placeholder-key=${k}]`);
+        if (placeholderDom) {
+          placeholderDom.placeholder = `${lang[k]}...`;
+        }
+      });
+    }
+
     window.onload = function () {
+      displayLang();
       const submit = document.querySelector('.submit');
       submit.setAttribute('formaction', SERVICE_PATH.AUTH);
     }

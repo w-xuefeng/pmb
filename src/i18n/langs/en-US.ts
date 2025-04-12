@@ -129,5 +129,6 @@ export default {
     actionRemove: "remove",
     actionRestart: "restart",
     actionStop: "stop",
+    fillInPassword: "Please fill in the password",
   },
 };

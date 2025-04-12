@@ -323,7 +323,7 @@ function startLoop(gapTime) {
   }, gapTime);
 }
 
-async function displayLang() {
+function displayLang() {
   const lang = getLang();
   Object.keys(lang).forEach((k) => {
     const dom = document.querySelector(`[data-lang-key=${k}]`);
