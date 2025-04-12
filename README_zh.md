@@ -111,6 +111,8 @@ pmb daemon restart  # 重启守护进程
 pmb ui     # 在浏览器中列出通过PMB启动的服务
 pmb ui -e  # 启用 Web UI 功能
 pmb ui -d  # 停用 Web UI 功能
+pmb ui -p "123456789abcdefg" # 设置 Web UI 口令
+pmb ui -p # 取消 Web UI 口令
 ```
 
 - `lang` 切换展示语言, 中英切换
@@ -128,4 +130,4 @@ pmb upgrade
 
 ## 架构图
 
-<img src="component-diagram.svg" wdith="100%" />
+<img src="component-diagram.svg" width="100%" />

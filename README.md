@@ -90,9 +90,9 @@ pmb rm 12347
 
 ```bash
 # pmb log [name-or-pid]
-pmb log           # Show log of daemon
-pmb log node-app  # Show log with the name of node-app
-pmb log 12345     # Show log with the pid of 12345 
+pmb log           # show log of daemon
+pmb log node-app  # show log with the name of node-app
+pmb log 12345     # show log with the pid of 12345 
 ```
 
 - `daemon` Manage daemon process
@@ -108,10 +108,12 @@ pmb daemon restart
 - `ui` Show list of service started by pmb in browser
 
 ```bash
-# pmb ui [-e] [-d]
-pmb ui     # Show list of service started by pmb in browser
+# pmb ui [-e --enabled] [-d --disabled] [-p --password]
+pmb ui     # show list of service started by pmb in browser
 pmb ui -e  # enabled Web UI
 pmb ui -d  # disabled Web UI
+pmb ui -p "123456789abcdefg" # set password for Web UI
+pmb ui -p # unset password for Web UI
 ```
 
 - `lang` Switch display language between Chinese and English
@@ -128,4 +130,4 @@ pmb upgrade
 
 ## Component Architecture Diagram
 
-<img src="component-diagram.svg" wdith="100%" />
+<img src="component-diagram.svg" width="100%" />

@@ -21,7 +21,7 @@ const windowsTaskInfo: TCommand = (pid: TPID) => [
   "/NH",
 ];
 
-const uninxTaskMemCPUInfo: TCommand = (pid: TPID, type: "mem" | "cpu") => {
+const unixTaskMemCPUInfo: TCommand = (pid: TPID, type: "mem" | "cpu") => {
   if (type === "cpu") {
     return {
       command: ["ps", "-p", `${pid}`, "-o", "%cpu="],
@@ -86,42 +86,42 @@ export const commands: Record<NodeJS.Platform, ICommands> = {
   aix: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   android: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   darwin: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   freebsd: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   haiku: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   linux: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   openbsd: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   sunos: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   win32: {
     taskkill: windowsTaskKill,
@@ -131,12 +131,12 @@ export const commands: Record<NodeJS.Platform, ICommands> = {
   cygwin: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
   netbsd: {
     taskkill: unixTaskKill,
     taskInfo: unixTaskInfo,
-    taskMemCPUInfo: uninxTaskMemCPUInfo,
+    taskMemCPUInfo: unixTaskMemCPUInfo,
   },
 };
 
