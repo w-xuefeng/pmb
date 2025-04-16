@@ -26,8 +26,6 @@ export default async function UIConfig(c: Context) {
     /**
      * check customer ui password setting
      */
-
-    const rsType = "application/javascript";
     const jsFile = `window.__$GLOBAL_UI_CONFIG = ${JSON.stringify(data)};`;
     const jsContent = `
 /**
@@ -48,14 +46,14 @@ function getLang(key = "", defaultValue = "") {
       : defaultValue
     : langConf;
 }
-function displayLang() {
+function displayLang(parent = document) {
   const lang = getLang();
   Object.keys(lang).forEach((k) => {
-    const dom = document.querySelector("[data-lang-key=" + k + "]");
+    const dom = parent.querySelector("[data-lang-key=" + k + "]");
     if (dom) {
       dom.innerText = lang[k];
     }
-    const placeholderDom = document.querySelector(
+    const placeholderDom = parent.querySelector(
       "[data-lang-placeholder-key="+ k + "]"
     );
     if (placeholderDom) {
@@ -65,12 +63,7 @@ function displayLang() {
 }
 const SERVICE_PATH = getConfig("servicePaths");
 `;
-    const content = await new Blob([jsFile, jsContent], {
-      type: rsType,
-    }).arrayBuffer();
-    return c.newResponse(content, 200, {
-      "content-type": `${rsType};charset=utf-8;`,
-    });
+    return R.js([jsFile, jsContent], c);
   }
   return c.json(R.ok(data));
 }

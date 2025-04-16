@@ -141,7 +141,7 @@ class Talk {
     let search = "";
     if (params) {
       const searchParams = new URLSearchParams();
-      const keys = Object.getOwnPropertyNames(params).forEach((k) => {
+      Object.getOwnPropertyNames(params).forEach((k) => {
         searchParams.append(k, params[k]);
       });
       search = searchParams.toString();
@@ -256,12 +256,21 @@ let dialogValue = initDialogValue();
 function initStartDialog() {
   const startDialog = document.querySelector(".start-dialog");
   const entryInput = document.querySelector("#entry");
+  const selectEntry = document.querySelector(".select-entry");
   const cwdInput = document.querySelector("#cwd");
+  const selectCWD = document.querySelector(".select-cwd");
   const nameInput = document.querySelector("#name");
   const starterInput = document.querySelector("#starter");
   const restartInput = document.querySelector("#restart");
   const argsInput = document.querySelector("#args");
   const closeBtn = document.querySelector(".close-btn");
+  const selectDirectoryDialog = document.querySelector(
+    ".remote-directory-select-dialog"
+  );
+  const selectDirectoryDialogFooter =
+    selectDirectoryDialog.querySelector("form");
+
+  displayLang(selectDirectoryDialogFooter);
 
   entryInput.value = dialogValue.entry;
   cwdInput.value = dialogValue.cwd;
@@ -269,6 +278,37 @@ function initStartDialog() {
   starterInput.value = dialogValue.starter;
   restartInput.value = dialogValue.restart;
   argsInput.value = dialogValue.args;
+
+  const selectDirectory = new remoteDirectory.SelectDirectory();
+  selectDirectory.setAttribute("api", SERVICE_PATH.LS);
+  selectDirectory.setAttribute("method", "POST");
+  selectDirectory.mapData = ({ data }) => data;
+  selectDirectoryDialog.insertBefore(
+    selectDirectory,
+    selectDirectoryDialogFooter
+  );
+
+  selectDirectoryDialog.addEventListener("close", () => {
+    if (selectDirectoryDialog.returnValue !== "confirm") {
+      return;
+    }
+    cwdInput.value = selectDirectory.currentPath;
+    dialogValue.cwd = selectDirectory.currentPath;
+    if (selectDirectory.selectFile) {
+      entryInput.value = selectDirectory.selectFile.path;
+      dialogValue.entry = selectDirectory.selectFile.path;
+      nameInput.value = selectDirectory.selectFile.name;
+      dialogValue.name = selectDirectory.selectFile.name;
+    }
+  });
+
+  addEvent(selectCWD, "click", async () => {
+    selectDirectoryDialog.showModal();
+  });
+
+  addEvent(selectEntry, "click", () => {
+    selectDirectoryDialog.showModal();
+  });
 
   addEvent(entryInput, "input", async (e) => {
     dialogValue.entry = e?.target?.value;

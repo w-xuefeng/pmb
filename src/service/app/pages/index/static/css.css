@@ -20,6 +20,9 @@
   --dialog-bg-color: #ffffff;
   --dialog-header-bg-color: #c4c4c4;
   --dialog-input-color: #000;
+  --cancel-btn-color: #000;
+  --cancel-btn-bg-color: transparent;
+  --dialog-border-color: #eeeeee;
 }
 
 body {
@@ -28,6 +31,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+dialog {
+  border: 1px solid var(--dialog-border-color);
 }
 
 .app {
@@ -145,6 +152,7 @@ body {
     .required {
       color: #ff4d4f;
     }
+
     .input {
       margin: 4px 0 10px 0;
       width: 100%;
@@ -156,6 +164,23 @@ body {
       background-color: transparent;
       color: var(--dialog-input-color);
     }
+
+    .flex-input {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      .input {
+        width: calc(100% - 40px);
+      }
+
+      .select-cwd,
+      .select-entry {
+        cursor: pointer;
+        color: var(--dialog-input-color);
+      }
+    }
+
     .confirm-btn {
       width: 130px;
       height: 40px;
@@ -164,6 +189,38 @@ body {
       background-color: var(--start-btn-bg-color);
       float: right;
       outline: none;
+    }
+
+    .remote-directory-select-dialog {
+      width: 80%;
+      max-width: 800px;
+      min-width: 300px;
+      padding: 0;
+      form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: flex-end;
+        background-color: var(--bg-color);
+        padding: 20px;
+
+        .confirm-btn {
+          width: 130px;
+          height: 40px;
+          margin: 0;
+          color: var(--start-btn-color);
+          background-color: var(--start-btn-bg-color);
+          outline: none;
+        }
+        .cancel-btn {
+          width: 130px;
+          height: 40px;
+          margin: 0;
+          color: var(--cancel-btn-color);
+          background-color: var(--cancel-btn-bg-color);
+          outline: none;
+        }
+      }
     }
   }
 }
@@ -205,6 +262,9 @@ td {
     --dialog-bg-color: #44494e;
     --dialog-header-bg-color: #6a6a6a;
     --dialog-input-color: #fff;
+    --cancel-btn-color: #fff;
+    --cancel-btn-bg-color: transparent;
+    --dialog-border-color: #333333;
   }
 }
 

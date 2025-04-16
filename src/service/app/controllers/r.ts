@@ -29,6 +29,22 @@ export default class R {
       data: null,
     });
   }
+
+  static async file(file: Blob, c: Context) {
+    const content = await file.arrayBuffer();
+    return c.newResponse(content, 200, {
+      "content-type": `${file.type};charset=utf-8;`,
+    });
+  }
+
+  static js(jsContent: string | string[], c: Context) {
+    return this.file(
+      new Blob(Array.isArray(jsContent) ? jsContent : [jsContent], {
+        type: "application/javascript",
+      }),
+      c
+    );
+  }
 }
 
 export async function bodyCheck(c: Context) {

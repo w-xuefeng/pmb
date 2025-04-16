@@ -113,6 +113,7 @@ export default {
     restart: "RESTART",
     args: "ARGS",
     confirm: "CONFIRM",
+    cancel: "CANCEL",
     index: "index",
     processName: "name",
     processId: "pid",

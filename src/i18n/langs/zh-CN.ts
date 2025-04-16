@@ -111,6 +111,7 @@ export default {
     restart: "重启次数",
     args: "启动参数",
     confirm: "确定",
+    cancel: "取消",
     index: "序号",
     processName: "名称",
     processId: "PID",

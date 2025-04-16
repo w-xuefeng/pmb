@@ -8,6 +8,7 @@
   <title>PMB | P(rocess) M(anager) for B(un)</title>
   <link rel="stylesheet" href="./static/css.css">
   <script src="/config/ui?type=script"></script>
+  <script src="https://cdn.jsdelivr.net/npm/remote-directory-views/lib/index.umd.js"></script>
 </head>
 
 <body>
@@ -38,12 +39,32 @@
         <div class="form-container">
           <label for="cwd">
             <span class="label"><span class="required">* </span><span data-lang-key="cwd">CWD</span></span>
-            <input class="input" placeholder="fill in the cwd" data-lang-placeholder-key="fillInCwd" id="cwd" required>
+            <div class="flex-input">
+              <input class="input" placeholder="fill in the cwd" data-lang-placeholder-key="fillInCwd" id="cwd"
+                required>
+              <svg class="select-cwd" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="2690" width="30" height="30">
+                <path
+                  d="M418.133333 298.666667l-42.666666-42.666667H213.333333v512h640V298.666667H418.133333zM896 298.666667v512H170.666667V213.333333h226.133333l42.666667 42.666667H896v42.666667z m-298.666667 341.333333h170.666667v42.666667h-170.666667v-42.666667z"
+                  fill="currentColor" p-id="2691"></path>
+              </svg>
+            </div>
           </label>
           <label for="entry">
             <span class="label"><span class="required">* </span><span data-lang-key="entry">ENTRY</span></span>
-            <input class="input" placeholder="fill in the entry file path relative cwd"
-              data-lang-placeholder-key="fillInEntry" id="entry" required>
+            <div class="flex-input">
+              <input class="input" placeholder="fill in the entry file path relative cwd"
+                data-lang-placeholder-key="fillInEntry" id="entry" required>
+              <svg class="select-entry" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="2451" width="30" height="30">
+                <path d="M313.0368 429.40416h399.36v40.96h-399.36zM313.0368 618.86464h399.36v40.96h-399.36z"
+                  fill="currentColor" p-id="2452">
+                </path>
+                <path
+                  d="M816.20992 823.86944H209.26464V200.13056h478.35136l128.57344 134.22592v489.51296z m-565.98528-40.96h525.02528V350.8224l-105.10336-109.73184H250.22464v541.81888z"
+                  fill="currentColor" p-id="2453"></path>
+              </svg>
+            </div>
           </label>
           <label for="name">
             <span class="label" data-lang-key="name">NAME</span>
@@ -71,6 +92,17 @@
           </button>
         </div>
       </form>
+
+      <dialog class="remote-directory-select-dialog">
+        <form method="dialog">
+          <button class="btn cancel-btn" value="cancel">
+            <span data-lang-key="cancel">CANCEL</span>
+          </button>
+          <button class="btn confirm-btn" value="confirm">
+            <span data-lang-key="confirm">CONFIRM</span>
+          </button>
+        </form>
+      </dialog>
     </dialog>
 
 
