@@ -14,6 +14,7 @@ import {
   DAEMON_LOG_PATH,
   DAEMON_PID_PATH,
   DaemonPingStatus,
+  getDate,
   PROCESS_MAX_RESTART_COUNT,
   readConf,
 } from "../shared/const";
@@ -47,8 +48,10 @@ class PMB {
   #outputLog(
     tell: Tell,
     res: IResponse<string>,
+    date?: string,
     tips?: { type: "name" | "pid"; value: string }
   ) {
+    const logDate = date || getDate();
     tell.handleResponse(res, async ({ data }) => {
       const { t } = await useI18n();
       if (tips) {
@@ -56,10 +59,15 @@ class PMB {
           `${t("cli.log.outputLogTip", {
             type: t(`process.${tips.type}`),
             value: tips.value,
+            date: logDate,
           })}\n`
         );
       } else {
-        L.info(`${t("cli.log.outputDaemonLogTip")}\n`);
+        L.info(
+          `${t("cli.log.outputDaemonLogTip", {
+            date: logDate,
+          })}\n`
+        );
       }
       console.log(data);
     });
@@ -221,7 +229,7 @@ class PMB {
     }
   }
 
-  async log(type?: "pid" | "name", value?: string) {
+  async log(type?: "pid" | "name", value?: string, date?: string) {
     /**
      * say hello to daemon process
      */
@@ -232,11 +240,14 @@ class PMB {
      */
     const data =
       type && value
-        ? { [type]: type === "pid" ? Number(value) : value }
-        : void 0;
+        ? {
+            [type]: type === "pid" ? Number(value) : value,
+            date,
+          }
+        : { date };
     const tips = type && value ? { type, value } : void 0;
     const res = await tell.log(data);
-    this.#outputLog(tell, res, tips);
+    this.#outputLog(tell, res, date, tips);
   }
 
   /**
@@ -371,7 +382,7 @@ class PMB {
     const res = await tell.setLang({
       lang: current === "zhCN" ? "enUS" : "zhCN",
     });
-    tell.handleResponse(res, async ({ data }) => {
+    tell.handleResponse(res, async () => {
       const { t } = await useI18n();
       L.success(t("cli.lang.set"));
     });

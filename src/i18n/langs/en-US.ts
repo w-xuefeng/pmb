@@ -61,8 +61,10 @@ export default {
     },
     log: {
       description: "Show log of service from the pid or name",
-      outputLogTip: "The log with a {type} of [{value}] is as follows:",
-      outputDaemonLogTip: "The log of the daemon are as follows:",
+      outputLogTip:
+        "The log with a {type} of [{value}] at the {date} is as follows:",
+      outputDaemonLogTip: "The log of the daemon at the {date} are as follows:",
+      date: "Specify the date in the format of YYYY-MM-DD",
     },
     lang: {
       description: "Switch display language to 【简体中文】",
@@ -91,6 +93,7 @@ export default {
     listError: "Error fetching process list",
     notExist: "Process does not exist",
     notLog: "There are currently no logs available",
+    notDateLog: "There are currently no logs at the {date} available",
     args: "args",
   },
   exception: {

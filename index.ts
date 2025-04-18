@@ -4,6 +4,7 @@ import PMB from "./src/cli/pmb";
 import { L } from "./src/shared/utils";
 import { Command } from "commander";
 import { useI18n } from "./src/i18n";
+import { getDate } from "./src/shared/const";
 
 const pmb = new PMB();
 const program = new Command();
@@ -80,12 +81,16 @@ program
   .command("log")
   .description(t("cli.log.description"))
   .argument("[name-or-pid]", t("cli.log.description"))
-  .action((value) => {
+  .option("-d, --date [date]", t("cli.log.date"))
+  .action((value, { date }) => {
+    const dateTime = /^\d{4}-\d{1,2}-\d{1,2}$/.test(date)
+      ? getDate(new Date(date))
+      : getDate();
     if (!isNaN(value)) {
-      pmb.log("pid", value);
+      pmb.log("pid", value, dateTime);
       return;
     }
-    pmb.log("name", value);
+    pmb.log("name", value, dateTime);
   });
 
 program

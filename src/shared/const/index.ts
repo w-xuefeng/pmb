@@ -80,10 +80,26 @@ export const CUSTOM_SETTING_PATH = resolve(
 );
 
 /**
+ * date to `YYYY-MM-DD`
+ */
+export const getDate = (date = new Date()) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(date.getDate()).padStart(2, "0")}`;
+
+/**
  * daemon service and other process log path
  */
-export const DAEMON_LOG_PATH = (name = "") =>
-  resolve(ROOT_DIR, ".runtime", ".pmb", "logs", `${name}.pmb.log`);
+export const DAEMON_LOG_PATH = (name = "", date = new Date()) =>
+  resolve(
+    ROOT_DIR,
+    ".runtime",
+    ".pmb",
+    "logs",
+    `${getDate(date)}`,
+    `${name}.pmb.log`
+  );
 
 /**
  * process record file path

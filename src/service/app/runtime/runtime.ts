@@ -291,19 +291,19 @@ export class BunProcessRuntime {
     }
   }
 
-  static async catLogByName(name?: string) {
+  static async catLogByName(name?: string, date?: string) {
     const { t } = await useI18n();
     /**
      * if not name,
      * return daemon log
      */
-    const logPath = DAEMON_LOG_PATH(name);
+    const logPath = DAEMON_LOG_PATH(name, new Date(date ?? Date.now()));
     const log = Bun.file(logPath);
     const exists = await log.exists();
     if (!exists) {
       return {
         status: false,
-        content: t("process.notExist"),
+        content: date ? t("process.notDateLog", { date }) : t("process.notLog"),
       };
     }
     /**
@@ -319,20 +319,20 @@ export class BunProcessRuntime {
     };
   }
 
-  static async catLogByPid(pid?: number | string) {
+  static async catLogByPid(pid?: number | string, date?: string) {
     if (!pid) {
       /**
        * if not pid,
        * return daemon log
        */
-      return await this.catLogByName();
+      return await this.catLogByName(void 0, date);
     }
     const ps = await this.getProcesses();
     const { t } = await useI18n();
     const item = ps.find((e) => Number(e[1].pid) === Number(pid));
     if (item) {
       const [name] = item;
-      return await this.catLogByName(name);
+      return await this.catLogByName(name, date);
     }
     return {
       status: false,

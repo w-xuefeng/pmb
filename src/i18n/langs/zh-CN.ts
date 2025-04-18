@@ -60,8 +60,9 @@ export default {
     },
     log: {
       description: "通过名称或者PID查询服务日志",
-      outputLogTip: "{type}为[{value}]的日志如下：",
-      outputDaemonLogTip: "守护进程的日志如下：",
+      outputLogTip: "{type}为[{value}]在{date}的日志如下：",
+      outputDaemonLogTip: "守护进程在{date}的日志如下：",
+      date: "指定日期，格式为YYYY-MM-DD",
     },
     lang: {
       description: "切换展示语言为 【en-US】",
@@ -90,6 +91,7 @@ export default {
     listError: "获取进程列表时出错",
     notExist: "进程不存在",
     notLog: "暂无日志",
+    notDateLog: "没有{date}的日志",
     args: "启动参数",
   },
   exception: {
