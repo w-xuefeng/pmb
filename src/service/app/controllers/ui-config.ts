@@ -2,6 +2,7 @@ import R from "./r";
 import { useI18n } from "../../../i18n";
 import { Setting } from "../../../shared/utils/setting";
 import { SERVICE_PATH } from "../../../shared/const/service-path";
+import path from "node:path";
 import type { Context } from "hono";
 
 const servicePaths = Object.fromEntries(
@@ -65,5 +66,21 @@ const SERVICE_PATH = getConfig("servicePaths");
 `;
     return R.js([jsFile, jsContent], c);
   }
+
+  if (type === "remote-directory-views-script") {
+    const jsFile = Bun.file(
+      path.resolve(
+        import.meta.dir,
+        "../../../../node_modules/remote-directory-views/lib/index.umd.js"
+      )
+    );
+    const isExists = await jsFile.exists();
+    if (!isExists) {
+      return R.js([], c);
+    }
+    const content = await jsFile.text();
+    return R.js([content], c);
+  }
+
   return c.json(R.ok(data));
 }

@@ -15,6 +15,7 @@
         "nanoid": "^5.1.5",
         "open": "^10.1.0",
         "remote-directory-services": "^0.0.7",
+        "remote-directory-views": "^0.0.5",
       },
       "devDependencies": {
         "@types/figlet": "^1.7.0",
@@ -111,6 +112,8 @@
     "path-scurry": ["path-scurry@2.0.0", "", { "dependencies": { "lru-cache": "^11.0.0", "minipass": "^7.1.2" } }, "sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg=="],
 
     "remote-directory-services": ["remote-directory-services@0.0.7", "", {}, "sha512-503RKK0VOC9LgukbPAK+tCbpe0zYZOdoiH6XQtCPFVYZkpeLICDIFuBE3TBhyrreKfnG0DnRSUWtfGqV5oydEQ=="],
+
+    "remote-directory-views": ["remote-directory-views@0.0.5", "", {}, "sha512-vNUgOCHUWMjQZFem+ytiahGjHg2nr2xgOycbh+ikCmanwjK70v5Gf+F108WqTsnLWc5CvuLZNJ29AZN1nnI5cg=="],
 
     "run-applescript": ["run-applescript@7.0.0", "", {}, "sha512-9by4Ij99JUr/MCFBUkDKLWK3G9HVXmabKz9U5MlIAIuvuzkiOicRYs8XJLxX+xahD+mLiiCYDqF9dKAgtzKP1A=="],
 

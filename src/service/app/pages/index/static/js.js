@@ -270,6 +270,8 @@ function initStartDialog() {
   const selectDirectoryDialogFooter =
     selectDirectoryDialog.querySelector("form");
 
+  let selectType = "cwd";
+
   displayLang(selectDirectoryDialogFooter);
 
   entryInput.value = dialogValue.entry;
@@ -279,34 +281,49 @@ function initStartDialog() {
   restartInput.value = dialogValue.restart;
   argsInput.value = dialogValue.args;
 
-  const selectDirectory = new remoteDirectory.SelectDirectory();
-  selectDirectory.setAttribute("api", SERVICE_PATH.LS);
-  selectDirectory.setAttribute("method", "POST");
-  selectDirectory.mapData = ({ data }) => data;
-  selectDirectoryDialog.insertBefore(
-    selectDirectory,
-    selectDirectoryDialogFooter
-  );
+  let selectDirectory;
+
+  const createSelectDirectory = (mode) => {
+    if (selectDirectory) {
+      selectDirectory.remove?.();
+    }
+    selectDirectory = new remoteDirectory.SelectDirectory();
+    selectDirectory.setAttribute("api", SERVICE_PATH.LS);
+    selectDirectory.setAttribute("method", "POST");
+    selectDirectory.setAttribute("mode", mode);
+    selectDirectory.mapData = ({ data }) => data;
+    selectDirectoryDialog.insertBefore(
+      selectDirectory,
+      selectDirectoryDialogFooter
+    );
+  };
 
   selectDirectoryDialog.addEventListener("close", () => {
-    if (selectDirectoryDialog.returnValue !== "confirm") {
+    if (selectDirectoryDialog.returnValue !== "confirm" || !selectDirectory) {
       return;
     }
-    cwdInput.value = selectDirectory.currentPath;
-    dialogValue.cwd = selectDirectory.currentPath;
-    if (selectDirectory.selectFile) {
+    if (selectType === "cwd") {
+      cwdInput.value = selectDirectory.currentPath;
+      dialogValue.cwd = selectDirectory.currentPath;
+    }
+    if (selectType === "entry" && selectDirectory.selectFile) {
       entryInput.value = selectDirectory.selectFile.path;
       dialogValue.entry = selectDirectory.selectFile.path;
       nameInput.value = selectDirectory.selectFile.name;
       dialogValue.name = selectDirectory.selectFile.name;
     }
+    selectDirectory.remove();
   });
 
   addEvent(selectCWD, "click", async () => {
+    selectType = "cwd";
+    createSelectDirectory("directory");
     selectDirectoryDialog.showModal();
   });
 
   addEvent(selectEntry, "click", () => {
+    selectType = "entry";
+    createSelectDirectory("file");
     selectDirectoryDialog.showModal();
   });
 
