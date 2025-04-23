@@ -65,7 +65,7 @@ async function pingDaemon(port: number) {
       default: () => DaemonPingStatus.FAILED,
     };
     return actionMap[text in actionMap ? text : "default"]();
-  } catch (error) {
+  } catch {
     return DaemonPingStatus.ERROR;
   }
 }
