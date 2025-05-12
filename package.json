@@ -43,6 +43,6 @@
     "nanoid": "^5.1.5",
     "open": "^10.1.0",
     "remote-directory-services": "^0.0.7",
-    "remote-directory-views": "^0.0.5"
+    "remote-directory-views": "^0.0.6"
   }
 }

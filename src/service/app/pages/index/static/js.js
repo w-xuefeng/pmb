@@ -291,6 +291,7 @@ function initStartDialog() {
     selectDirectory.setAttribute("api", SERVICE_PATH.LS);
     selectDirectory.setAttribute("method", "POST");
     selectDirectory.setAttribute("mode", mode);
+    selectDirectory.setAttribute("lang", getConfig("lang"));
     selectDirectory.mapData = ({ data }) => data;
     selectDirectoryDialog.insertBefore(
       selectDirectory,

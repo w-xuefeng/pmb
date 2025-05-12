@@ -14,11 +14,12 @@ const servicePaths = Object.fromEntries(
 
 export default async function UIConfig(c: Context) {
   const { type } = c.req.query();
-  const { t } = await useI18n();
+  const { t, lang } = await useI18n();
   const password = await Setting.getSetting("ui.password", "");
 
   const data = {
-    lang: t("ui"),
+    lang,
+    locales: t("ui"),
     cwd: process.cwd(),
     secret: !!password.trim(),
     servicePaths,
@@ -40,7 +41,7 @@ function getConfig(key = "") {
     : window.__$GLOBAL_UI_CONFIG;
 }
 function getLang(key = "", defaultValue = "") {
-  const langConf = getConfig("lang");
+  const langConf = getConfig("locales");
   return key
     ? key in langConf
       ? langConf[key] ?? defaultValue

@@ -15,7 +15,7 @@
         "nanoid": "^5.1.5",
         "open": "^10.1.0",
         "remote-directory-services": "^0.0.7",
-        "remote-directory-views": "^0.0.5",
+        "remote-directory-views": "^0.0.6",
       },
       "devDependencies": {
         "@types/figlet": "^1.7.0",
@@ -113,7 +113,7 @@
 
     "remote-directory-services": ["remote-directory-services@0.0.7", "", {}, "sha512-503RKK0VOC9LgukbPAK+tCbpe0zYZOdoiH6XQtCPFVYZkpeLICDIFuBE3TBhyrreKfnG0DnRSUWtfGqV5oydEQ=="],
 
-    "remote-directory-views": ["remote-directory-views@0.0.5", "", {}, "sha512-vNUgOCHUWMjQZFem+ytiahGjHg2nr2xgOycbh+ikCmanwjK70v5Gf+F108WqTsnLWc5CvuLZNJ29AZN1nnI5cg=="],
+    "remote-directory-views": ["remote-directory-views@0.0.6", "", {}, "sha512-/ctQjbiY57ufGiRjvfoSf2y/Sz+E5Ee6SmoxZM98HjZ2A41opbEAeq7t3ZrCfoPCWAmDpLJdmRapSu9Q4ptMlw=="],
 
     "run-applescript": ["run-applescript@7.0.0", "", {}, "sha512-9by4Ij99JUr/MCFBUkDKLWK3G9HVXmabKz9U5MlIAIuvuzkiOicRYs8XJLxX+xahD+mLiiCYDqF9dKAgtzKP1A=="],
 
