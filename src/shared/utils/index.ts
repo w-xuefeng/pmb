@@ -362,7 +362,7 @@ export function useHandlePassword() {
   return {
     key: "key",
     handle: (originalPassword: string) => {
-      return Buffer.from(originalPassword).toBase64();
+      return encodeURIComponent(Buffer.from(originalPassword).toBase64());
     },
   };
 }
