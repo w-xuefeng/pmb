@@ -1,6 +1,6 @@
 {
   "name": "pm-bun",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "P(rocess) M(anager) for B(un)",
   "main": "index.ts",
   "module": "index.ts",
